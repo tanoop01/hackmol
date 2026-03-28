@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
+import { Download, Trophy, Trash2, PenLine } from "lucide-react";
 
 import Navbar from "@/components/Navbar";
 import { useUser } from "@/lib/useUser";
@@ -185,23 +186,28 @@ export default function PetitionDetailPage() {
     URL.revokeObjectURL(url);
   }
 
+  // ── Loading state ──
   if (loading) {
     return (
-      <div style={{ display: "flex", minHeight: "100vh", alignItems: "center", justifyContent: "center", background: "#FAFAF8" }}>
-        <div style={{ height: "32px", width: "32px", borderRadius: "50%", border: "2px solid #4A6FA9", borderTopColor: "transparent", animation: "spin 0.7s linear infinite" }} />
+      <div style={{ display: "flex", minHeight: "100vh", alignItems: "center", justifyContent: "center", background: "#F8F7F4" }}>
+        <div style={{ width: 32, height: 32, borderRadius: "50%", border: "2.5px solid #F5C842", borderTopColor: "transparent", animation: "spin 0.8s linear infinite" }} />
         <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </div>
     );
   }
 
+  // ── Not found ──
   if (!petition) {
     return (
-      <div style={{ minHeight: "100vh", background: "#FAFAF8", fontFamily: "DM Sans, sans-serif" }}>
+      <div style={{ minHeight: "100vh", background: "#F8F7F4", fontFamily: "'DM Sans', sans-serif" }}>
         <Navbar />
-        <main style={{ maxWidth: "680px", margin: "0 auto", padding: "72px 24px 64px" }}>
-          <Link href="/petition" style={{ fontSize: "14px", color: "#4A6FA9", textDecoration: "none" }}>← All Petitions</Link>
-          <div style={{ marginTop: "16px", background: "#FFFFFF", borderRadius: "14px", padding: "48px 24px", textAlign: "center", border: "1px solid #E8E1D5" }}>
-            <p style={{ margin: 0, fontSize: "18px", fontWeight: 600, color: "#171717" }}>Petition not found</p>
+        <main style={{ maxWidth: 680, margin: "0 auto", padding: "88px 24px 64px" }}>
+          <Link href="/petition" style={{ fontSize: 13, fontWeight: 600, color: "#78716C", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6, padding: "7px 14px", borderRadius: 50, background: "#FFFFFF", border: "1px solid #EDE8DF" }}>
+            ← All Petitions
+          </Link>
+          <div style={{ marginTop: 20, background: "#FFFFFF", borderRadius: 16, padding: "48px 24px", textAlign: "center", border: "1px solid #EDE8DF" }}>
+            <p style={{ margin: 0, fontSize: 17, fontWeight: 700, color: "#0D1B2A" }}>Petition not found</p>
+            <p style={{ margin: "6px 0 0", fontSize: 14, color: "#A8A29E" }}>This petition may have been removed or the link is incorrect.</p>
           </div>
         </main>
       </div>
@@ -216,73 +222,93 @@ export default function PetitionDetailPage() {
     petition?.grievanceTitle || petition?.issueTitle || "";
 
   return (
-    <div style={{ minHeight: "100vh", background: "#FAFAF8", fontFamily: "DM Sans, sans-serif" }}>
+    <div style={{ minHeight: "100vh", background: "#F8F7F4", fontFamily: "'DM Sans', sans-serif" }}>
       <Navbar />
 
-      <main style={{ maxWidth: "680px", margin: "0 auto", padding: "72px 24px 64px" }}>
+      <main style={{ maxWidth: 740, margin: "0 auto", padding: "88px 24px 64px" }}>
 
         {/* Breadcrumb */}
-        <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "16px", fontSize: "13px" }}>
-          <Link href={dashboardHref} style={{ color: "#4A6FA9", textDecoration: "none" }}>← Dashboard</Link>
-          <span style={{ color: "#D1D5DB" }}>|</span>
-          <Link href="/petition" style={{ color: "#4A6FA9", textDecoration: "none" }}>All Petitions</Link>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 24, fontSize: 13, fontWeight: 600 }}>
+          <Link href={dashboardHref} style={{ color: "#78716C", textDecoration: "none", padding: "6px 13px", borderRadius: 50, background: "#FFFFFF", border: "1px solid #EDE8DF" }}>
+            ← Dashboard
+          </Link>
+          <span style={{ color: "#D6D3D1" }}>/</span>
+          <Link href="/petition" style={{ color: "#78716C", textDecoration: "none", padding: "6px 13px", borderRadius: 50, background: "#FFFFFF", border: "1px solid #EDE8DF" }}>
+            All Petitions
+          </Link>
         </div>
 
-        {/* Main article */}
-        <article style={{ background: "#FFFFFF", borderRadius: "16px", padding: "24px", border: "1px solid #E8E1D5" }}>
+        {/* ── Main card ── */}
+        <article style={{ background: "#FFFFFF", borderRadius: 20, border: "1px solid #EDE8DF", padding: "28px 28px 24px", marginBottom: 16 }}>
 
-          {/* Status badges */}
-          <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
-            <span style={{ borderRadius: "20px", padding: "4px 10px", fontSize: "11px", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.04em", background: "#EEF2FF", color: "#4A6FA9" }}>
+          {/* Badges */}
+          <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", marginBottom: 16 }}>
+            <span style={{ padding: "3px 11px", borderRadius: 50, fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.07em", background: "#EEF2FF", color: "#4A6FA9", display: "inline-flex", alignItems: "center", gap: 5 }}>
+              <PenLine size={11} />
               Petition
             </span>
-            <span style={{ borderRadius: "20px", padding: "4px 10px", fontSize: "11px", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.04em", ...(isClosed ? { background: "#DCFCE7", color: "#16A34A" } : { background: "#FEF3C7", color: "#B45309" }) }}>
+            <span style={{
+              padding: "3px 11px", borderRadius: 50, fontSize: 11, fontWeight: 700,
+              textTransform: "uppercase", letterSpacing: "0.07em",
+              ...(isClosed
+                ? { background: "#DCFCE7", color: "#16A34A" }
+                : { background: "#FEF3C7", color: "#B45309" }),
+            }}>
               {isClosed ? "Victory Declared" : "Active"}
             </span>
           </div>
 
           {/* Title */}
-          <h1 style={{ margin: "12px 0 0", fontSize: "clamp(22px, 3vw, 28px)", fontWeight: 700, lineHeight: 1.2, color: "#171717", fontFamily: "Fraunces, Georgia, serif" }}>
+          <h1 style={{ margin: "0 0 16px", fontFamily: "Fraunces, Georgia, serif", fontSize: "clamp(22px, 3vw, 30px)", fontWeight: 800, lineHeight: 1.18, color: "#0D1B2A" }}>
             {petition?.title || "Untitled petition"}
           </h1>
 
           {/* Linked issue */}
           {(linkedIssueId || linkedIssueTitle) && (
-            <div style={{ marginTop: "14px" }}>
-              <p style={{ margin: "0 0 5px", fontSize: "11px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "#999999" }}>Linked Issue</p>
-              <div style={{ borderRadius: "8px", background: "#FAFAF8", padding: "10px 12px", border: "1px solid #E8E1D5" }}>
-                <p style={{ margin: 0, fontSize: "14px", color: "#555555" }}>
-                  {linkedIssueTitle || "Linked grievance"}
-                </p>
-                {linkedIssueId && (
-                  <Link href={`/grievances/${linkedIssueId}`} style={{ display: "inline-block", marginTop: "4px", fontSize: "12px", color: "#4A6FA9", textDecoration: "none" }}>
-                    View Issue →
-                  </Link>
-                )}
-              </div>
+            <div style={{ marginBottom: 18, borderRadius: 12, background: "#FAFAF8", padding: "12px 14px", border: "1px solid #EDE8DF" }}>
+              <p style={{ margin: "0 0 4px", fontSize: 11, fontWeight: 700, letterSpacing: "0.09em", textTransform: "uppercase", color: "#A8A29E" }}>
+                Linked Issue
+              </p>
+              <p style={{ margin: 0, fontSize: 14, color: "#44403C", fontWeight: 500 }}>
+                {linkedIssueTitle || "Linked grievance"}
+              </p>
+              {linkedIssueId && (
+                <Link href={`/grievances/${linkedIssueId}`} style={{ display: "inline-block", marginTop: 4, fontSize: 12, fontWeight: 600, color: "#4A6FA9", textDecoration: "none" }}>
+                  View Issue →
+                </Link>
+              )}
             </div>
           )}
 
           {/* Description */}
-          <p style={{ margin: "14px 0 0", fontSize: "15px", lineHeight: 1.8, color: "#555555" }}>
+          <p style={{ margin: "0 0 22px", fontSize: 15, lineHeight: 1.8, color: "#57534E" }}>
             {petition?.description || "No description provided."}
           </p>
 
-          {/* Divider */}
-          <div style={{ height: "1px", background: "#F0EDE8", margin: "20px 0" }} />
+          <div style={{ height: 1, background: "#EDE8DF", marginBottom: 22 }} />
 
-          {/* Signature progress */}
+          {/* ── Signature block ── */}
           <div>
-            <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "8px" }}>
-              <p style={{ margin: 0, fontSize: "22px", fontWeight: 700, color: "#171717" }}>
-                {signatureCount} <span style={{ fontSize: "15px", fontWeight: 500, color: "#999999" }}>of 100 signatures</span>
+            {/* Count */}
+            <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 10 }}>
+              <p style={{ margin: 0, fontFamily: "Fraunces, Georgia, serif", fontSize: 26, fontWeight: 800, color: "#0D1B2A" }}>
+                {signatureCount}
+                <span style={{ fontSize: 15, fontWeight: 500, color: "#A8A29E", marginLeft: 6 }}>of 100 signatures</span>
               </p>
-              <span style={{ fontSize: "13px", color: "#999999" }}>{progressWidth}%</span>
+              <span style={{ fontSize: 13, fontWeight: 700, color: progressWidth >= 100 ? "#16A34A" : "#78716C" }}>
+                {progressWidth}%
+              </span>
             </div>
 
             {/* Progress bar */}
-            <div style={{ marginTop: "10px", height: "8px", borderRadius: "4px", background: "#F0EDE8", overflow: "hidden" }}>
-              <div style={{ height: "100%", borderRadius: "4px", background: "#4A6FA9", width: `${progressWidth}%`, transition: "width 0.3s ease" }} />
+            <div style={{ height: 8, borderRadius: 4, background: "#EDE8DF", overflow: "hidden", marginBottom: 14 }}>
+              <div style={{
+                height: "100%",
+                borderRadius: 4,
+                background: progressWidth >= 100 ? "#16A34A" : "#4A6FA9",
+                width: `${progressWidth}%`,
+                transition: "width 0.4s ease",
+              }} />
             </div>
 
             {/* Sign button */}
@@ -294,127 +320,150 @@ export default function PetitionDetailPage() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                gap: 8,
                 width: "100%",
-                marginTop: "14px",
-                borderRadius: "10px",
-                padding: "13px",
-                fontSize: "15px",
+                padding: "13px 0",
+                borderRadius: 50,
+                fontSize: 15,
                 fontWeight: 700,
                 border: "none",
                 cursor: hasSigned || isClosed ? "default" : "pointer",
                 fontFamily: "inherit",
-                transition: "background 0.15s",
+                transition: "background 0.15s, transform 0.1s",
                 ...(isClosed
-                  ? { background: "#F5F2ED", color: "#999999" }
+                  ? { background: "#F1F5F9", color: "#A8A29E" }
                   : hasSigned
-                  ? { background: "#ECFDF3", color: "#16A34A" }
-                  : { background: "#4A6FA9", color: "#FFFFFF" }),
+                    ? { background: "#DCFCE7", color: "#16A34A" }
+                    : { background: "#F5C842", color: "#0D1B2A" }),
               }}
+              onMouseEnter={(e) => { if (!hasSigned && !isClosed) e.currentTarget.style.background = "#EAB800"; }}
+              onMouseLeave={(e) => { if (!hasSigned && !isClosed) e.currentTarget.style.background = "#F5C842"; }}
             >
-              {signing ? "Signing…" : isClosed ? "Petition closed" : hasSigned ? "✓ You've signed this" : "Sign this Petition"}
+              {signing ? "Signing…" : isClosed ? "Petition closed" : hasSigned ? "✓ Signed" : "Sign this Petition"}
             </button>
 
-            <p style={{ margin: "8px 0 0", fontSize: "13px", color: "#999999", textAlign: "center" }}>
-              {signatureCount} {signatureCount === 1 ? "citizen has" : "citizens have"} signed
+            <p style={{ margin: "9px 0 0", fontSize: 13, color: "#A8A29E", textAlign: "center" }}>
+              {signatureCount} {signatureCount === 1 ? "citizen has" : "citizens have"} signed this petition
             </p>
           </div>
+        </article>
 
-          {/* Creator controls */}
-          {canManagePetition && (
-            <div style={{ marginTop: "20px", display: "flex", flexDirection: "column", gap: "10px" }}>
-              <div style={{ height: "1px", background: "#F0EDE8" }} />
-              <p style={{ margin: 0, fontSize: "12px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "#999999" }}>
-                Creator Controls
-              </p>
+        {/* ── Creator controls ── */}
+        {canManagePetition && (
+          <section style={{ background: "#FFFFFF", borderRadius: 20, border: "1px solid #EDE8DF", padding: "22px 24px" }}>
+            <p style={{ margin: "0 0 16px", fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#A8A29E" }}>
+              Creator Controls
+            </p>
 
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              {/* Declare victory */}
               {!isClosed && (
                 <button
                   type="button"
                   onClick={handleDeclareVictory}
                   disabled={actionLoading}
                   style={{
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    width: "100%", borderRadius: "10px", padding: "11px", fontSize: "14px", fontWeight: 600,
-                    background: "#EEF2FF", color: "#4A6FA9", border: "1px solid #C7D2F0",
-                    cursor: actionLoading ? "not-allowed" : "pointer", fontFamily: "inherit",
+                    display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+                    width: "100%", padding: "11px 0", borderRadius: 50,
+                    fontSize: 14, fontWeight: 700, fontFamily: "inherit",
+                    background: "#DCFCE7", color: "#16A34A",
+                    border: "1px solid #BBF7D0",
+                    cursor: actionLoading ? "not-allowed" : "pointer",
+                    transition: "background 0.15s",
                   }}
                 >
+                  <Trophy size={15} />
                   {actionLoading ? "Saving…" : "Declare Victory"}
                 </button>
               )}
 
+              {/* Delete */}
               <button
                 type="button"
                 onClick={handleDeletePetition}
                 disabled={actionLoading}
                 style={{
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  width: "100%", borderRadius: "10px", padding: "11px", fontSize: "14px", fontWeight: 600,
-                  background: "#FEE2E2", color: "#B91C1C", border: "1px solid #FCA5A5",
-                  cursor: actionLoading ? "not-allowed" : "pointer", fontFamily: "inherit",
+                  display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+                  width: "100%", padding: "11px 0", borderRadius: 50,
+                  fontSize: 14, fontWeight: 700, fontFamily: "inherit",
+                  background: "#FEE2E2", color: "#B91C1C",
+                  border: "1px solid #FCA5A5",
+                  cursor: actionLoading ? "not-allowed" : "pointer",
+                  transition: "background 0.15s",
                 }}
               >
+                <Trash2 size={15} />
                 {actionLoading ? "Please wait…" : "Delete Petition"}
               </button>
 
               {actionError && (
-                <p style={{ margin: 0, fontSize: "13px", color: "#B91C1C" }}>{actionError}</p>
+                <p style={{ margin: 0, fontSize: 13, color: "#B91C1C" }}>{actionError}</p>
+              )}
+            </div>
+
+            {/* Signers list */}
+            <div style={{ marginTop: 20, borderRadius: 14, background: "#FAFAF8", border: "1px solid #EDE8DF", padding: "16px" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
+                <p style={{ margin: 0, fontSize: 14, fontWeight: 700, color: "#0D1B2A" }}>
+                  Signer List
+                  {signers.length > 0 && (
+                    <span style={{ marginLeft: 8, fontSize: 12, fontWeight: 600, color: "#A8A29E" }}>({signers.length})</span>
+                  )}
+                </p>
+                <button
+                  type="button"
+                  onClick={handleExportSigners}
+                  disabled={signersLoading || signers.length === 0}
+                  style={{
+                    display: "inline-flex", alignItems: "center", gap: 5,
+                    padding: "6px 13px", borderRadius: 50, fontSize: 12, fontWeight: 700,
+                    background: signers.length === 0 ? "#F1F5F9" : "#EEF2FF",
+                    color: signers.length === 0 ? "#A8A29E" : "#4A6FA9",
+                    border: "1px solid",
+                    borderColor: signers.length === 0 ? "#EDE8DF" : "#C7D2F0",
+                    cursor: signers.length === 0 ? "not-allowed" : "pointer",
+                    fontFamily: "inherit",
+                  }}
+                >
+                  <Download size={12} />
+                  Export CSV
+                </button>
+              </div>
+
+              {signersError && (
+                <p style={{ margin: "0 0 10px", fontSize: 13, color: "#B91C1C" }}>{signersError}</p>
               )}
 
-              {/* Signers list */}
-              <div style={{ borderRadius: "12px", padding: "14px", background: "#FAFAF8", border: "1px solid #E8E1D5" }}>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "8px", marginBottom: "10px" }}>
-                  <p style={{ margin: 0, fontSize: "14px", fontWeight: 700, color: "#171717" }}>Signer List</p>
-                  <button
-                    type="button"
-                    onClick={handleExportSigners}
-                    disabled={signersLoading || signers.length === 0}
-                    style={{
-                      borderRadius: "8px", padding: "5px 12px", fontSize: "12px", fontWeight: 600,
-                      background: signers.length === 0 ? "#F5F2ED" : "#EEF2FF",
-                      color: signers.length === 0 ? "#999999" : "#4A6FA9",
-                      border: "1px solid #C7D2F0",
-                      cursor: signers.length === 0 ? "not-allowed" : "pointer",
-                      fontFamily: "inherit",
-                    }}
-                  >
-                    Export CSV
-                  </button>
-                </div>
-
-                {signersError && <p style={{ margin: "0 0 8px", fontSize: "13px", color: "#B91C1C" }}>{signersError}</p>}
-
-                <div style={{ maxHeight: "220px", overflowY: "auto", display: "flex", flexDirection: "column", gap: "6px" }}>
-                  {signersLoading ? (
-                    [1, 2].map((i) => (
-                      <div key={i} style={{ height: "56px", borderRadius: "8px", background: "#F5F2ED", animation: "pulse 1.5s ease-in-out infinite" }} />
-                    ))
-                  ) : signers.length === 0 ? (
-                    <p style={{ margin: 0, fontSize: "13px", color: "#999999" }}>No signatures yet.</p>
-                  ) : (
-                    signers.map((signer) => (
-                      <div
-                        key={`${signer.id}-${signer.signedAt}`}
-                        style={{ borderRadius: "8px", padding: "10px 12px", border: "1px solid #E8E1D5", background: "#FFFFFF" }}
-                      >
-                        <p style={{ margin: 0, fontSize: "13px", fontWeight: 600, color: "#171717" }}>{signer.name}</p>
-                        <p style={{ margin: "2px 0 0", fontSize: "12px", color: "#666666" }}>{signer.city}, {signer.state}</p>
-                        <p style={{ margin: "2px 0 0", fontSize: "11px", color: "#999999" }}>
-                          {signer.signedAt ? new Date(signer.signedAt).toLocaleString() : "N/A"}
-                        </p>
-                      </div>
-                    ))
-                  )}
-                </div>
+              <div style={{ maxHeight: 240, overflowY: "auto", display: "flex", flexDirection: "column", gap: 8 }}>
+                {signersLoading ? (
+                  [1, 2].map((i) => (
+                    <div key={i} style={{ height: 60, borderRadius: 10, background: "#EDE8DF", animation: "pulse 1.4s ease-in-out infinite" }} />
+                  ))
+                ) : signers.length === 0 ? (
+                  <p style={{ margin: 0, fontSize: 13, color: "#A8A29E" }}>No signatures yet.</p>
+                ) : (
+                  signers.map((signer) => (
+                    <div
+                      key={`${signer.id}-${signer.signedAt}`}
+                      style={{ borderRadius: 10, padding: "10px 13px", border: "1px solid #EDE8DF", background: "#FFFFFF" }}
+                    >
+                      <p style={{ margin: 0, fontSize: 13, fontWeight: 700, color: "#0D1B2A" }}>{signer.name}</p>
+                      <p style={{ margin: "2px 0 0", fontSize: 12, color: "#78716C" }}>{signer.city}, {signer.state}</p>
+                      <p style={{ margin: "2px 0 0", fontSize: 11, color: "#A8A29E" }}>
+                        {signer.signedAt ? new Date(signer.signedAt).toLocaleString("en-IN", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" }) : "N/A"}
+                      </p>
+                    </div>
+                  ))
+                )}
               </div>
             </div>
-          )}
-        </article>
+          </section>
+        )}
       </main>
 
       <style>{`
         @keyframes spin { to { transform: rotate(360deg); } }
-        @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.45; } }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
       `}</style>
     </div>
   );

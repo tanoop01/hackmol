@@ -2,12 +2,7 @@
 
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import {
-  Clock,
-  MapPin,
-  ThumbsUp,
-  Upload,
-} from "lucide-react";
+import { Clock, MapPin, ThumbsUp, Upload, CheckCircle, AlertCircle, Loader } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -35,52 +30,36 @@ export default function AuthorityIssueDetailPage() {
   }, [userLoading, user, router]);
 
   useEffect(() => {
-    if (!issueId) {
-      return;
-    }
+    if (!issueId) return;
 
     let isActive = true;
 
     async function fetchIssue() {
       setLoading(true);
-
       try {
         const response = await fetch(`/api/grievances/${issueId}`);
         const json = await response.json().catch(() => ({}));
 
-        if (!isActive) {
-          return;
-        }
+        if (!isActive) return;
 
         const issue = json?.grievance || json?.data || null;
         setGrievance(issue);
         setSelectedStatus(issue?.status || "reported");
       } catch (_error) {
-        if (!isActive) {
-          return;
-        }
-
+        if (!isActive) return;
         setGrievance(null);
       } finally {
-        if (!isActive) {
-          return;
-        }
-
+        if (!isActive) return;
         setLoading(false);
       }
     }
 
     fetchIssue();
-
-    return () => {
-      isActive = false;
-    };
+    return () => { isActive = false; };
   }, [issueId]);
 
   const statusHistory = useMemo(() => {
-    if (!grievance) {
-      return [];
-    }
+    if (!grievance) return [];
 
     if (Array.isArray(grievance.statusHistory) && grievance.statusHistory.length > 0) {
       return [...grievance.statusHistory].sort(
@@ -88,30 +67,20 @@ export default function AuthorityIssueDetailPage() {
       );
     }
 
-    const fallback = [
-      { status: "reported", date: grievance.createdAt || new Date().toISOString() },
-    ];
-
+    const fallback = [{ status: "reported", date: grievance.createdAt || new Date().toISOString() }];
     if (grievance.status && grievance.status !== "reported") {
       fallback.push({
         status: grievance.status,
         date: grievance.updatedAt || grievance.createdAt || new Date().toISOString(),
       });
     }
-
     return fallback;
   }, [grievance]);
 
   function statusBadgeStyle(status) {
-    if (status === "resolved") {
-      return { background: "#DCFCE7", color: "#16A34A" };
-    }
-
-    if (status === "in_progress") {
-      return { background: "#ECF0FF", color: "#4A6FA9" };
-    }
-
-    return { background: "#FEF3C7", color: "#B45309" };
+    if (status === "resolved") return { bg: "#DCFCE7", color: "#16A34A" };
+    if (status === "in_progress") return { bg: "#DBEAFE", color: "#1D4ED8" };
+    return { bg: "#FEF3C7", color: "#B45309" };
   }
 
   function prettyStatus(status) {
@@ -120,19 +89,13 @@ export default function AuthorityIssueDetailPage() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-
-    if (!issueId || !selectedStatus) {
-      return;
-    }
+    if (!issueId || !selectedStatus) return;
 
     setSubmitLoading(true);
-
     try {
       const response = await fetch(`/api/grievances/${issueId}`, {
         method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           status: selectedStatus,
           resolutionNote,
@@ -141,22 +104,13 @@ export default function AuthorityIssueDetailPage() {
       });
 
       const json = await response.json().catch(() => ({}));
-
-      if (!response.ok) {
-        throw new Error(json?.message || "Unable to update status");
-      }
+      if (!response.ok) throw new Error(json?.message || "Unable to update status");
 
       toast.success("Status updated successfully", {
-        style: {
-          border: "0.5px solid #BBEF63",
-          background: "#DCFCE7",
-          color: "#16A34A",
-        },
+        style: { border: "0.5px solid #BBEF63", background: "#DCFCE7", color: "#16A34A" },
       });
 
-      setTimeout(() => {
-        router.push("/dashboard/authority");
-      }, 600);
+      setTimeout(() => { router.push("/dashboard/authority"); }, 600);
     } catch (error) {
       toast.error(error.message || "Failed to update status");
     } finally {
@@ -166,148 +120,172 @@ export default function AuthorityIssueDetailPage() {
 
   if (userLoading || loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center" style={{ background: "#FAFAF8" }}>
-        <div className="h-8 w-8 animate-spin rounded-full border-2" style={{ borderColor: "#4A6FA9", borderTopColor: "transparent" }} />
+      <div style={{ display: "flex", minHeight: "100vh", alignItems: "center", justifyContent: "center", background: "#F8F7F4" }}>
+        <div style={{ width: 32, height: 32, borderRadius: "50%", border: "2.5px solid #F5C842", borderTopColor: "transparent", animation: "spin 0.8s linear infinite" }} />
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </div>
     );
   }
 
-  if (!user || user.role !== "authority") {
-    return null;
-  }
+  if (!user || user.role !== "authority") return null;
+
+  const badge = statusBadgeStyle(grievance?.status);
+
+  const statusOptions = [
+    { key: "in_progress", label: "In Progress", desc: "Actively being worked on", accentColor: "#B45309", tint: "#FEF3C7", icon: <Loader size={15} color="#B45309" /> },
+    { key: "resolved", label: "Resolved", desc: "Issue has been fixed", accentColor: "#16A34A", tint: "#DCFCE7", icon: <CheckCircle size={15} color="#16A34A" /> },
+    { key: "reported", label: "Reopen / Reported", desc: "Reset to reported state", accentColor: "#6B7280", tint: "#F1F5F9", icon: <AlertCircle size={15} color="#6B7280" /> },
+  ];
 
   return (
-    <div className="min-h-screen" style={{ background: "#FAFAF8" }}>
+    <div style={{ minHeight: "100vh", background: "#F8F7F4", fontFamily: "'DM Sans', sans-serif" }}>
       <Navbar />
       <Toaster position="top-center" />
 
-      <main className="px-10 pb-10 pt-20">
-        <Link href="/dashboard/authority" className="text-[14px] no-underline" style={{ color: "#4A6FA9" }}>
+      <main style={{ maxWidth: 1100, margin: "0 auto", padding: "88px 24px 64px" }}>
+
+        {/* Back link */}
+        <Link
+          href="/dashboard/authority"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 6,
+            fontSize: 13,
+            fontWeight: 600,
+            color: "#78716C",
+            textDecoration: "none",
+            padding: "7px 14px",
+            borderRadius: 50,
+            background: "#FFFFFF",
+            border: "1px solid #EDE8DF",
+            marginBottom: 24,
+          }}
+        >
           ← Back to Dashboard
         </Link>
 
-        <div className="mt-6 grid grid-cols-1 gap-6 xl:grid-cols-3">
-          <section className="xl:col-span-2">
-            <article
-              className="rounded-[14px] bg-white px-7 py-6"
-              style={{ border: "0.5px solid #E8E1D5" }}
-            >
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <span
-                  className="rounded-[20px] px-3 py-1.5 text-[11px] font-medium uppercase"
-                  style={{ background: "#ECF0FF", color: "#4A6FA9" }}
-                >
-                  {grievance?.category || "GENERAL"}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 340px", gap: 20, alignItems: "start" }}>
+
+          {/* ── Left: Issue detail ── */}
+          <section>
+            <article style={{ background: "#FFFFFF", borderRadius: 20, border: "1px solid #EDE8DF", padding: "28px 30px" }}>
+              {/* Category + status */}
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 8, marginBottom: 16 }}>
+                <span style={{ padding: "4px 12px", borderRadius: 50, fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.07em", background: "#EEF2FF", color: "#4A6FA9" }}>
+                  {grievance?.category || "General"}
                 </span>
-                <span
-                  className="rounded-[20px] px-[10px] py-[2px] text-[11px] font-medium"
-                  style={statusBadgeStyle(grievance?.status)}
-                >
+                <span style={{ padding: "4px 12px", borderRadius: 50, fontSize: 12, fontWeight: 600, textTransform: "capitalize", background: badge.bg, color: badge.color }}>
                   {prettyStatus(grievance?.status)}
                 </span>
               </div>
 
-              <h1 className="mt-2.5 text-[28px] font-semibold" style={{ color: "#171717" }}>
-                {grievance?.title || "Untitled issue"}
+              {/* Title */}
+              <h1 style={{ margin: "0 0 12px", fontFamily: "Fraunces, Georgia, serif", fontSize: "clamp(22px, 3vw, 30px)", fontWeight: 800, color: "#0D1B2A", lineHeight: 1.2 }}>
+                {grievance?.title || "Untitled Issue"}
               </h1>
 
-              <div className="mt-3 flex flex-wrap items-center gap-4 text-[13px]" style={{ color: "#666666" }}>
-                <span className="inline-flex items-center gap-1.5">
+              {/* Meta */}
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 16, fontSize: 13, color: "#A8A29E", marginBottom: 20 }}>
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}>
                   <MapPin size={14} />
                   {grievance?.location || grievance?.city || "Jalandhar"}
                 </span>
-                <span className="inline-flex items-center gap-1.5">
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}>
                   <Clock size={14} />
-                  {new Date(grievance?.createdAt || Date.now()).toLocaleDateString()}
+                  {new Date(grievance?.createdAt || Date.now()).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}
                 </span>
-                <span className="inline-flex items-center gap-1.5">
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 5, color: "#4A6FA9", fontWeight: 600 }}>
                   <ThumbsUp size={14} />
-                  {grievance?.supportCount || 0}
+                  {grievance?.supportCount || 0} supporters
                 </span>
               </div>
 
-              <div className="my-4 h-px" style={{ background: "#E8E1D5" }} />
+              <div style={{ height: 1, background: "#EDE8DF", marginBottom: 20 }} />
 
-              <p
-                className="text-[12px] uppercase tracking-[0.08em]"
-                style={{ color: "#999999" }}
-              >
-                Issue Description
+              {/* Description */}
+              <p style={{ margin: "0 0 4px", fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "#A8A29E" }}>
+                Description
               </p>
-              <p className="mt-2 text-[16px] leading-[1.7]" style={{ color: "#666666" }}>
+              <p style={{ margin: 0, fontSize: 15, lineHeight: 1.75, color: "#44403C" }}>
                 {grievance?.description || "No description provided."}
               </p>
 
-              {Array.isArray(grievance?.evidence) && grievance.evidence.length > 0 ? (
-                <div className="mt-6">
-                  <p
-                    className="text-[12px] uppercase tracking-[0.08em]"
-                    style={{ color: "#999999" }}
-                  >
+              {/* Evidence */}
+              {Array.isArray(grievance?.evidence) && grievance.evidence.length > 0 && (
+                <div style={{ marginTop: 24 }}>
+                  <p style={{ margin: "0 0 10px", fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "#A8A29E" }}>
                     Evidence
                   </p>
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    {grievance.evidence.map((imageUrl) => (
-                      <a key={imageUrl} href={imageUrl} target="_blank" rel="noreferrer">
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                    {grievance.evidence.map((url) => (
+                      <a key={url} href={url} target="_blank" rel="noreferrer">
                         <img
-                          src={imageUrl}
+                          src={url}
                           alt="Evidence"
-                          className="h-20 w-20 rounded-[8px] object-cover"
-                          style={{ border: "0.5px solid #E8E1D5", cursor: "pointer" }}
+                          style={{ width: 88, height: 88, objectFit: "cover", borderRadius: 10, border: "1px solid #EDE8DF", cursor: "pointer" }}
                         />
                       </a>
                     ))}
                   </div>
                 </div>
-              ) : null}
+              )}
 
-              {grievance?.legalContext ? (
-                <div className="mt-6">
-                  <p
-                    className="text-[12px] uppercase tracking-[0.08em]"
-                    style={{ color: "#999999" }}
-                  >
+              {/* Legal context */}
+              {grievance?.legalContext && (
+                <div style={{ marginTop: 24 }}>
+                  <p style={{ margin: "0 0 8px", fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "#A8A29E" }}>
                     Legal Context
                   </p>
-                  <div
-                    className="mt-2 rounded-[10px] px-4 py-3 text-[13px]"
-                    style={{ background: "#F0F3FF", border: "0.5px solid #D4DFF5", color: "#666666" }}
-                  >
+                  <div style={{ borderRadius: 12, padding: "14px 16px", background: "#EEF2FF", border: "1px solid #C7D2FE", fontSize: 13, lineHeight: 1.7, color: "#4A6FA9" }}>
                     {grievance.legalContext}
                   </div>
                 </div>
-              ) : null}
+              )}
 
-              <div className="mt-7">
-                <p className="text-[18px] font-semibold" style={{ color: "#171717" }}>
-                  Status History
+              {/* Status timeline */}
+              <div style={{ marginTop: 28 }}>
+                <p style={{ margin: "0 0 16px", fontSize: 16, fontWeight: 700, color: "#0D1B2A" }}>
+                  Status Timeline
                 </p>
+                <div style={{ position: "relative", paddingLeft: 20 }}>
+                  {/* Vertical line */}
+                  <div style={{ position: "absolute", left: 5, top: 10, bottom: 10, width: 1, background: "#EDE8DF" }} />
 
-                <div className="mt-4 relative">
                   {statusHistory.map((entry, index) => {
                     const isLatest = index === statusHistory.length - 1;
+                    const sBadge = statusBadgeStyle(entry?.status);
                     return (
-                      <div key={`${entry?.status}-${entry?.date}-${index}`} className="relative flex gap-3 pb-4">
-                        <div className="relative flex flex-col items-center">
-                          <span
-                            className="block h-2 w-2 rounded-full"
-                            style={{ background: isLatest ? "#4A6FA9" : "#D4D4D8" }}
-                          />
-                          {index < statusHistory.length - 1 ? (
-                            <span
-                              className="mt-1 block w-px flex-1"
-                              style={{ background: "#E8E1D5", minHeight: "20px" }}
-                            />
-                          ) : null}
-                        </div>
+                      <div
+                        key={`${entry?.status}-${entry?.date}-${index}`}
+                        style={{ position: "relative", display: "flex", gap: 14, paddingBottom: index < statusHistory.length - 1 ? 20 : 0 }}
+                      >
+                        {/* Dot */}
+                        <div style={{
+                          position: "absolute",
+                          left: -18,
+                          top: 3,
+                          width: 10,
+                          height: 10,
+                          borderRadius: "50%",
+                          background: isLatest ? "#F5C842" : "#D6D3D1",
+                          border: isLatest ? "2px solid #0D1B2A" : "2px solid #E7E5E4",
+                          flexShrink: 0,
+                        }} />
 
                         <div>
-                          <p className="text-[13px] font-medium" style={{ color: "#171717" }}>
+                          <span style={{ display: "inline-block", padding: "2px 10px", borderRadius: 50, fontSize: 11, fontWeight: 700, textTransform: "capitalize", background: sBadge.bg, color: sBadge.color, marginBottom: 2 }}>
                             {prettyStatus(entry?.status)}
+                          </span>
+                          <p style={{ margin: 0, fontSize: 12, color: "#A8A29E" }}>
+                            {new Date(entry?.date || Date.now()).toLocaleString("en-IN", {
+                              day: "numeric", month: "short", year: "numeric",
+                              hour: "2-digit", minute: "2-digit",
+                            })}
                           </p>
-                          <p className="text-[12px]" style={{ color: "#999999" }}>
-                            {new Date(entry?.date || Date.now()).toLocaleString()}
-                          </p>
+                          {entry?.note && (
+                            <p style={{ margin: "4px 0 0", fontSize: 13, color: "#78716C" }}>{entry.note}</p>
+                          )}
                         </div>
                       </div>
                     );
@@ -317,131 +295,167 @@ export default function AuthorityIssueDetailPage() {
             </article>
           </section>
 
+          {/* ── Right: Update status form ── */}
           <aside>
             <form
               onSubmit={handleSubmit}
-              className="rounded-[14px] bg-white px-6 py-6"
-              style={{ border: "0.5px solid #E8E1D5" }}
+              style={{ background: "#FFFFFF", borderRadius: 20, border: "1px solid #EDE8DF", padding: "24px 22px", position: "sticky", top: 88 }}
             >
-              <h2 className="text-[18px] font-semibold" style={{ color: "#171717" }}>
+              <h2 style={{ margin: "0 0 18px", fontFamily: "Fraunces, Georgia, serif", fontSize: 20, fontWeight: 800, color: "#0D1B2A" }}>
                 Update Status
               </h2>
 
-              <div className="mt-4 space-y-2">
-                {[
-                  {
-                    key: "in_progress",
-                    label: "In Progress",
-                    border: "#B45309",
-                    tint: "#FEF3C7",
-                  },
-                  {
-                    key: "resolved",
-                    label: "Resolved",
-                    border: "#2E7D32",
-                    tint: "#E8F5E9",
-                  },
-                  {
-                    key: "reported",
-                    label: "Reported / Reopen",
-                    border: "#8A9BA8",
-                    tint: "#EEF2F2",
-                  },
-                ].map((option) => {
-                  const isSelected = selectedStatus === option.key;
+              {/* Status options */}
+              <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 20 }}>
+                {statusOptions.map(({ key, label, desc, accentColor, tint, icon }) => {
+                  const isSelected = selectedStatus === key;
                   return (
                     <button
-                      key={option.key}
+                      key={key}
                       type="button"
-                      onClick={() => setSelectedStatus(option.key)}
-                      className="w-full rounded-[10px] px-4 py-3 text-left text-[14px]"
+                      onClick={() => setSelectedStatus(key)}
                       style={{
-                        border: `0.5px solid ${isSelected ? option.border : "#E8E1D5"}`,
-                        borderLeft: `3px solid ${option.border}`,
-                        background: isSelected ? option.tint : "#FFFFFF",
-                        color: "#171717",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 12,
+                        width: "100%",
+                        padding: "12px 14px",
+                        borderRadius: 12,
+                        border: `1.5px solid ${isSelected ? accentColor : "#EDE8DF"}`,
+                        background: isSelected ? tint : "#FDFCF9",
                         cursor: "pointer",
+                        textAlign: "left",
+                        fontFamily: "inherit",
+                        transition: "all 0.15s",
+                        borderLeft: `4px solid ${accentColor}`,
                       }}
                     >
-                      {option.label}
+                      {icon}
+                      <div>
+                        <p style={{ margin: 0, fontSize: 13, fontWeight: 700, color: "#0D1B2A" }}>{label}</p>
+                        <p style={{ margin: 0, fontSize: 11, color: "#A8A29E" }}>{desc}</p>
+                      </div>
                     </button>
                   );
                 })}
               </div>
 
-              {selectedStatus === "resolved" ? (
+              {/* Resolution note + proof (only when resolved) */}
+              {selectedStatus === "resolved" && (
                 <>
-                  <div className="mt-5">
+                  <div style={{ marginBottom: 16 }}>
                     <label
                       htmlFor="resolution-note"
-                      className="block text-[13px] font-medium"
-                      style={{ color: "#666666" }}
+                      style={{ display: "block", fontSize: 12, fontWeight: 700, color: "#78716C", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.07em" }}
                     >
                       Resolution Note
                     </label>
                     <textarea
                       id="resolution-note"
                       value={resolutionNote}
-                      onChange={(event) => setResolutionNote(event.target.value)}
+                      onChange={(e) => setResolutionNote(e.target.value)}
                       placeholder="Describe how this issue was resolved..."
-                      className="mt-1.5 w-full resize-none rounded-[10px] px-[14px] py-[10px] text-[14px] focus:outline-none"
                       style={{
-                        border: "0.5px solid #E8E1D5",
-                        background: "#F5F2ED",
-                        minHeight: "100px",
+                        width: "100%",
+                        minHeight: 100,
+                        borderRadius: 10,
+                        padding: "10px 12px",
+                        fontSize: 14,
+                        lineHeight: 1.6,
+                        border: "1px solid #EDE8DF",
+                        background: "#FAFAF8",
+                        color: "#0D1B2A",
+                        resize: "vertical",
+                        boxSizing: "border-box",
+                        outline: "none",
+                        fontFamily: "inherit",
                       }}
                     />
                   </div>
 
-                  <div className="mt-4">
-                    <p className="text-[13px] font-medium" style={{ color: "#666666" }}>
-                      Upload Proof (optional)
+                  <div style={{ marginBottom: 20 }}>
+                    <p style={{ fontSize: 12, fontWeight: 700, color: "#78716C", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.07em" }}>
+                      Upload Proof <span style={{ fontWeight: 400, color: "#A8A29E" }}>(optional)</span>
                     </p>
                     <label
                       htmlFor="proof-upload"
-                      className="mt-1.5 block cursor-pointer rounded-[10px] px-4 py-5 text-center"
-                      style={{ border: "1.5px dashed #E8E1D5", color: "#999999" }}
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        gap: 6,
+                        padding: "20px 16px",
+                        borderRadius: 10,
+                        border: "1.5px dashed #D6D3D1",
+                        background: "#FAFAF8",
+                        cursor: "pointer",
+                        textAlign: "center",
+                        transition: "border-color 0.15s",
+                      }}
                     >
-                      <div className="flex flex-col items-center gap-1">
-                        <Upload size={18} />
-                        <span className="text-[13px]">Click to upload image</span>
-                        {proofFile ? (
-                          <span className="text-[12px]" style={{ color: "#666666" }}>
-                            {proofFile.name}
-                          </span>
-                        ) : null}
-                      </div>
+                      <Upload size={18} color="#A8A29E" />
+                      <span style={{ fontSize: 13, color: "#78716C", fontWeight: 500 }}>
+                        {proofFile ? proofFile.name : "Click to upload image"}
+                      </span>
+                      {!proofFile && (
+                        <span style={{ fontSize: 11, color: "#A8A29E" }}>PNG, JPG, WEBP up to 10MB</span>
+                      )}
                       <input
                         id="proof-upload"
                         type="file"
                         accept="image/*"
-                        className="hidden"
-                        onChange={(event) => setProofFile(event.target.files?.[0] || null)}
+                        style={{ display: "none" }}
+                        onChange={(e) => setProofFile(e.target.files?.[0] || null)}
                       />
                     </label>
                   </div>
                 </>
-              ) : null}
+              )}
 
+              {/* Submit button */}
               <button
                 type="submit"
                 disabled={submitLoading}
-                className="mt-5 inline-flex w-full items-center justify-center rounded-[10px] px-4 py-[11px] text-[14px] font-medium text-white transition-colors hover:bg-[#5B79B3]"
-                style={{ background: "#4A6FA9" }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 8,
+                  width: "100%",
+                  padding: "12px 0",
+                  borderRadius: 50,
+                  border: "none",
+                  background: submitLoading ? "#D6D3D1" : "#F5C842",
+                  color: submitLoading ? "#FFFFFF" : "#0D1B2A",
+                  fontSize: 14,
+                  fontWeight: 700,
+                  cursor: submitLoading ? "not-allowed" : "pointer",
+                  fontFamily: "inherit",
+                  transition: "background 0.15s",
+                }}
+                onMouseEnter={(e) => { if (!submitLoading) e.currentTarget.style.background = "#EAB800"; }}
+                onMouseLeave={(e) => { if (!submitLoading) e.currentTarget.style.background = "#F5C842"; }}
               >
                 {submitLoading ? (
-                  <span className="inline-flex items-center gap-2">
-                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                    Updating...
-                  </span>
-                ) : (
-                  "Update Status"
-                )}
+                  <>
+                    <span style={{ width: 16, height: 16, borderRadius: "50%", border: "2px solid #FFFFFF", borderTopColor: "transparent", animation: "spin 0.8s linear infinite", display: "inline-block" }} />
+                    Updating…
+                  </>
+                ) : "Save Status Update"}
               </button>
             </form>
           </aside>
         </div>
       </main>
+
+      <style>{`
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @media (max-width: 768px) {
+          div[style*="grid-template-columns: 1fr 340px"] {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }
