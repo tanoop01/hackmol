@@ -399,12 +399,12 @@ export default function AuthorityDashboardPage() {
                         <span>{issue?.supportCount || 0}</span>
                       </div>
 
-                      <div className="inline-flex items-center gap-1.5 text-[13px]" style={{ color: \"#666666\" }}>
+                      <div className="inline-flex items-center gap-1.5 text-[13px]" style={{ color: "#666666" }}>
                         <MapPin size={14} />
-                        <span>{issue?.location || issue?.city || \"Jalandhar\"}</span>
+                        <span>{issue?.location || issue?.city || "Jalandhar"}</span>
                       </div>
 
-                      <div className="inline-flex items-center gap-1.5 text-[13px]" style={{ color: \"#666666\" }}>
+                      <div className="inline-flex items-center gap-1.5 text-[13px]" style={{ color: "#666666" }}>
                         <Clock size={14} />
                         <span>{getRelativeTime(issue?.createdAt)}</span>
                       </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import Navbar from "@/components/Navbar";
@@ -9,10 +9,9 @@ import { useUser } from "@/lib/useUser";
 
 export default function NewPetitionPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const { user, isLoading } = useUser();
+  const [grievanceId, setGrievanceId] = useState("");
 
-  const grievanceId = searchParams.get("grievanceId") || "";
   const dashboardHref = user?.role === "authority" ? "/dashboard/authority" : "/dashboard/citizen";
 
   const [title, setTitle] = useState("");
@@ -21,6 +20,15 @@ export default function NewPetitionPage() {
   const [linkedIssue, setLinkedIssue] = useState(null);
   const [issueLoading, setIssueLoading] = useState(false);
   const [ownerError, setOwnerError] = useState("");
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    setGrievanceId(params.get("grievanceId") || "");
+  }, []);
 
   useEffect(() => {
     if (!isLoading && !user) {
