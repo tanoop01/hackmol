@@ -102,8 +102,27 @@ export async function POST(request) {
       );
     }
 
-    await verifyPhoneToken(phoneIdToken, normalizedPhone);
-    await verifyEmailToken(emailIdToken, normalizedEmail);
+    try {
+      await verifyPhoneToken(phoneIdToken, normalizedPhone);
+      await verifyEmailToken(emailIdToken, normalizedEmail);
+    } catch (verifyError) {
+      const errorMsg = verifyError.message || "Token verification failed";
+      if (errorMsg.includes("Firebase admin credentials")) {
+        return NextResponse.json(
+          {
+            success: false,
+            message: "Server configuration error. Please try again later.",
+            debug: process.env.NODE_ENV === "development" ? errorMsg : undefined,
+          },
+          { status: 500 }
+        );
+      }
+
+      return NextResponse.json(
+        { success: false, message: errorMsg },
+        { status: 400 }
+      );
+    }
 
     const existingUser = await User.findOne({
       $or: [{ email: normalizedEmail }, { phone: normalizedPhone }],

@@ -31,16 +31,18 @@ export async function POST(request) {
   try {
     await db();
 
-    const { identifier, password } = await request.json();
+    const { identifier, email, phone, password } = await request.json();
 
-    if (!identifier || !password) {
+    // Support both old {email, password} and new {identifier, password} signatures
+    const normalizedIdentifier = String(identifier || email || phone || "").trim();
+
+    if (!normalizedIdentifier || !password) {
       return NextResponse.json(
         { success: false, message: "Email or mobile number and password are required" },
         { status: 400 }
       );
     }
 
-    const normalizedIdentifier = String(identifier).trim();
     const query = isEmailIdentifier(normalizedIdentifier)
       ? { email: normalizedIdentifier.toLowerCase() }
       : { phone: normalizePhone(normalizedIdentifier) };
@@ -52,10 +54,19 @@ export async function POST(request) {
       );
     }
 
-    const user = await User.findOne(query).select("+password");
+    let user = await User.findOne(query).select('+password');
+    
+    if (!user && isEmailIdentifier(normalizedIdentifier)) {
+      user = await User.findOne({ email: normalizedIdentifier.toLowerCase() }).select('+password');
+    }
+    
+    if (!user && !isEmailIdentifier(normalizedIdentifier)) {
+      user = await User.findOne({ phone: normalizePhone(normalizedIdentifier) }).select('+password');
+    }
+
     if (!user) {
       return NextResponse.json(
-        { success: false, message: "Invalid credentials" },
+        { success: false, message: 'Invalid credentials' },
         { status: 401 }
       );
     }

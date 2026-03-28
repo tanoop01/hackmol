@@ -19,4 +19,11 @@ const UserSchema = new Schema(
   { timestamps: true }
 );
 
+UserSchema.post("findOne", function (doc) {
+  if (doc) {
+    if (doc.isPhoneVerified === undefined) doc.isPhoneVerified = false;
+    if (doc.isEmailVerified === undefined) doc.isEmailVerified = false;
+  }
+});
+
 module.exports = mongoose.models.User || mongoose.model("User", UserSchema);

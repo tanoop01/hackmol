@@ -10,7 +10,14 @@ function assertFirebaseAdminEnv() {
   const privateKey = readPrivateKey();
 
   if (!projectId || !clientEmail || !privateKey) {
-    throw new Error("Firebase admin credentials are not configured");
+    const missingVars = [];
+    if (!projectId) missingVars.push("FIREBASE_PROJECT_ID");
+    if (!clientEmail) missingVars.push("FIREBASE_CLIENT_EMAIL");
+    if (!privateKey) missingVars.push("FIREBASE_PRIVATE_KEY");
+    throw new Error(
+      `Firebase admin credentials missing: ${missingVars.join(", ")}. ` +
+      "Ensure these environment variables are set in your deployment platform."
+    );
   }
 
   return { projectId, clientEmail, privateKey };
