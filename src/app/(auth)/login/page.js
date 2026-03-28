@@ -59,22 +59,32 @@ export default function LoginPage() {
 
   return (
     <div
-      className="flex min-h-screen items-center justify-center px-4"
-      style={{ background: "#F5F8F8" }}
+      className="flex min-h-screen flex-col items-center justify-center px-4"
+      style={{ background: "#FAFAF8" }}
     >
+      <div className="mb-8">
+        <Link
+          href="/"
+          className="inline-flex items-center text-[13px]"
+          style={{ color: "#4A6FA9", textDecoration: "none" }}
+        >
+          ← Back to Home
+        </Link>
+      </div>
+
       <div
         className="w-full max-w-[420px] rounded-[14px] bg-white px-9 py-8"
-        style={{ border: "0.5px solid #E4E8EA", boxShadow: "none" }}
+        style={{ border: "0.5px solid #E8E1D5", boxShadow: "none" }}
       >
-        <p className="text-center text-[16px] font-semibold" style={{ color: "#3A7D7B" }}>
-          NagarSeva
+        <p className="text-center text-[16px] font-semibold" style={{ color: "#4A6FA9" }}>
+          NyaySetu
         </p>
 
-        <h1 className="mt-2 text-center text-[22px] font-medium" style={{ color: "#1C2B2B" }}>
+        <h1 className="mt-2 text-center text-[22px] font-medium" style={{ color: "#171717" }}>
           Welcome back
         </h1>
 
-        <p className="mt-1 text-center text-[13px]" style={{ color: "#8A9BA8" }}>
+        <p className="mt-1 text-center text-[13px]" style={{ color: "#666666" }}>
           Login to report and track civic issues
         </p>
 
@@ -83,7 +93,7 @@ export default function LoginPage() {
             <label
               htmlFor="email"
               className="mb-1.5 block text-[12px] font-medium"
-              style={{ color: "#4A6060" }}
+              style={{ color: "#555555" }}
             >
               Email address
             </label>
@@ -95,15 +105,15 @@ export default function LoginPage() {
               required
               className="w-full rounded-[10px] border px-[14px] py-[10px] text-[14px] focus:outline-none focus:ring-0"
               style={{
-                border: "0.5px solid #E4E8EA",
-                background: "#EEF2F2",
-                color: "#1C2B2B",
+                border: "0.5px solid #E8E1D5",
+                background: "#F5F2ED",
+                color: "#171717",
               }}
               onFocus={(event) => {
-                event.target.style.borderColor = "#3A7D7B";
+                event.target.style.borderColor = "#4A6FA9";
               }}
               onBlur={(event) => {
-                event.target.style.borderColor = "#E4E8EA";
+                event.target.style.borderColor = "#E8E1D5";
               }}
             />
           </div>
@@ -112,7 +122,7 @@ export default function LoginPage() {
             <label
               htmlFor="password"
               className="mb-1.5 block text-[12px] font-medium"
-              style={{ color: "#4A6060" }}
+              style={{ color: "#555555" }}
             >
               Password
             </label>
@@ -125,22 +135,22 @@ export default function LoginPage() {
                 required
                 className="w-full rounded-[10px] border px-[14px] py-[10px] pr-10 text-[14px] focus:outline-none focus:ring-0"
                 style={{
-                  border: "0.5px solid #E4E8EA",
-                  background: "#EEF2F2",
-                  color: "#1C2B2B",
+                  border: "0.5px solid #E8E1D5",
+                  background: "#F5F2ED",
+                  color: "#171717",
                 }}
                 onFocus={(event) => {
-                  event.target.style.borderColor = "#3A7D7B";
+                  event.target.style.borderColor = "#4A6FA9";
                 }}
                 onBlur={(event) => {
-                  event.target.style.borderColor = "#E4E8EA";
+                  event.target.style.borderColor = "#E8E1D5";
                 }}
               />
               <button
                 type="button"
                 onClick={() => setShowPassword((prev) => !prev)}
                 className="absolute right-3 top-1/2 -translate-y-1/2"
-                style={{ color: "#8A9BA8" }}
+                style={{ color: "#999999" }}
                 aria-label={showPassword ? "Hide password" : "Show password"}
               >
                 {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -152,9 +162,9 @@ export default function LoginPage() {
             type="submit"
             disabled={loading}
             className={`mt-2 inline-flex w-full items-center justify-center rounded-[10px] px-4 py-[11px] text-[14px] font-medium text-white transition-colors ${
-              loading ? "" : "hover:bg-[#5DAFAD]"
+              loading ? "" : "hover:bg-[#5B79B3]"
             }`}
-            style={{ background: loading ? "#5DAFAD" : "#3A7D7B" }}
+            style={{ background: loading ? "#5B79B3" : "#4A6FA9" }}
           >
             {loading ? (
               <span className="inline-flex items-center gap-2">
@@ -177,11 +187,11 @@ export default function LoginPage() {
         </form>
 
         <div className="my-4 flex items-center gap-3">
-          <hr className="h-px w-full border-0" style={{ background: "#E4E8EA" }} />
-          <span className="text-[12px]" style={{ color: "#8A9BA8" }}>
+          <hr className="h-px w-full border-0" style={{ background: "#E8E1D5" }} />
+          <span className="text-[12px]" style={{ color: "#999999" }}>
             or
           </span>
-          <hr className="h-px w-full border-0" style={{ background: "#E4E8EA" }} />
+          <hr className="h-px w-full border-0" style={{ background: "#E8E1D5" }} />
         </div>
 
         <button
@@ -189,9 +199,9 @@ export default function LoginPage() {
           onClick={() => setShowOtp((prev) => !prev)}
           className="w-full rounded-[10px] px-4 py-[10px] text-[13px]"
           style={{
-            background: "#EEF2F2",
-            border: "0.5px solid #E4E8EA",
-            color: "#4A6060",
+            background: "#F5F2ED",
+            border: "0.5px solid #E8E1D5",
+            color: "#555555",
           }}
         >
           Login with Phone OTP
@@ -203,7 +213,7 @@ export default function LoginPage() {
               <label
                 htmlFor="phone"
                 className="mb-1.5 block text-[12px] font-medium"
-                style={{ color: "#4A6060" }}
+                style={{ color: "#555555" }}
               >
                 Phone number
               </label>
@@ -214,15 +224,15 @@ export default function LoginPage() {
                 onChange={(event) => setPhone(event.target.value)}
                 className="w-full rounded-[10px] border px-[14px] py-[10px] text-[14px] focus:outline-none focus:ring-0"
                 style={{
-                  border: "0.5px solid #E4E8EA",
-                  background: "#EEF2F2",
-                  color: "#1C2B2B",
+                  border: "0.5px solid #E8E1D5",
+                  background: "#F5F2ED",
+                  color: "#171717",
                 }}
                 onFocus={(event) => {
-                  event.target.style.borderColor = "#3A7D7B";
+                  event.target.style.borderColor = "#4A6FA9";
                 }}
                 onBlur={(event) => {
-                  event.target.style.borderColor = "#E4E8EA";
+                  event.target.style.borderColor = "#E8E1D5";
                 }}
                 placeholder="Enter your phone number"
               />
@@ -232,7 +242,7 @@ export default function LoginPage() {
               <label
                 htmlFor="otp"
                 className="mb-1.5 block text-[12px] font-medium"
-                style={{ color: "#4A6060" }}
+                style={{ color: "#555555" }}
               >
                 OTP
               </label>
@@ -243,15 +253,15 @@ export default function LoginPage() {
                 onChange={(event) => setOtp(event.target.value)}
                 className="w-full rounded-[10px] border px-[14px] py-[10px] text-[14px] focus:outline-none focus:ring-0"
                 style={{
-                  border: "0.5px solid #E4E8EA",
-                  background: "#EEF2F2",
-                  color: "#1C2B2B",
+                  border: "0.5px solid #E8E1D5",
+                  background: "#F5F2ED",
+                  color: "#171717",
                 }}
                 onFocus={(event) => {
-                  event.target.style.borderColor = "#3A7D7B";
+                  event.target.style.borderColor = "#4A6FA9";
                 }}
                 onBlur={(event) => {
-                  event.target.style.borderColor = "#E4E8EA";
+                  event.target.style.borderColor = "#E8E1D5";
                 }}
                 placeholder="Enter OTP"
               />
@@ -259,9 +269,9 @@ export default function LoginPage() {
           </div>
         ) : null}
 
-        <p className="mt-5 text-center text-[13px]" style={{ color: "#8A9BA8" }}>
+        <p className="mt-5 text-center text-[13px]" style={{ color: "#666666" }}>
           Don&apos;t have an account?{" "}
-          <Link href="/register" className="no-underline" style={{ color: "#3A7D7B" }}>
+          <Link href="/register" className="no-underline" style={{ color: "#4A6FA9" }}>
             Register
           </Link>
         </p>

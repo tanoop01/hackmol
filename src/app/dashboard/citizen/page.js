@@ -2,12 +2,6 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import {
-  CheckCircle,
-  FileText,
-  ScrollText,
-  Users,
-} from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
 import CitizenSidebar from "@/components/CitizenSidebar";
@@ -23,11 +17,6 @@ export default function CitizenDashboardPage() {
   const [publicPetitions, setPublicPetitions] = useState([]);
   const [signedPetitionIds, setSignedPetitionIds] = useState([]);
   const [signingId, setSigningId] = useState("");
-
-  const firstName = useMemo(() => {
-    const value = String(user?.name || "").trim();
-    return value ? value.split(/\s+/)[0] : "Citizen";
-  }, [user?.name]);
 
   const stats = useMemo(() => {
     const issuesReported = issues.length;
@@ -165,22 +154,10 @@ export default function CitizenDashboardPage() {
     }
   }
 
-  function getStatusBadgeStyle(status) {
-    if (status === "resolved") {
-      return { background: "#E8F5E9", color: "#2E7D32" };
-    }
-
-    if (status === "in_progress") {
-      return { background: "#EAF4F4", color: "#3A7D7B" };
-    }
-
-    return { background: "#FEF3C7", color: "#B45309" };
-  }
-
   if (isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center" style={{ background: "#F5F8F8" }}>
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-teal-600 border-t-transparent" />
+      <div className="flex min-h-screen items-center justify-center" style={{ background: "#FAFAF8" }}>
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#4A6FA9] border-t-transparent" />
       </div>
     );
   }
@@ -190,119 +167,130 @@ export default function CitizenDashboardPage() {
   }
 
   return (
-    <div className="min-h-screen" style={{ background: "#F5F8F8" }}>
+    <div className="min-h-screen" style={{ background: "#FAFAF8" }}>
       <Navbar />
       <main className="flex min-h-screen pt-14">
         <CitizenSidebar user={user} />
 
-        <section className="flex-1 px-6 py-8 md:px-10" style={{ paddingTop: "32px" }}>
-          <h1 className="text-[26px] font-medium" style={{ color: "#1C2B2B" }}>
-            Good morning, {firstName} 👋
-          </h1>
-          <p className="mt-1 text-[15px]" style={{ color: "#8A9BA8" }}>
-            Here&apos;s what&apos;s happening in Jalandhar today.
-          </p>
+        <section className="flex-1 px-6 py-10 md:px-12" style={{ paddingTop: "36px" }}>
+          <div>
+            <p
+              className="text-[12px] font-semibold uppercase tracking-[0.1em]"
+              style={{ color: "#6B7280" }}
+            >
+              Citizen Workspace
+            </p>
+            <h1
+              className="mt-2 text-[46px] font-semibold leading-[1.08]"
+              style={{ color: "#111827", fontFamily: "Georgia, 'Times New Roman', serif" }}
+            >
+              Dashboard
+            </h1>
+            <p className="mt-3 text-[19px] leading-[1.6]" style={{ color: "#4B5563" }}>
+              Track civic activity in {user?.city || "Jalandhar"} and take the next action quickly.
+            </p>
 
-          <div className="mt-7 grid grid-cols-1 gap-4 lg:grid-cols-4">
-            {statsLoading ? (
-              <>
-                <div className="h-[116px] animate-pulse rounded-[14px] bg-gray-100" />
-                <div className="h-[116px] animate-pulse rounded-[14px] bg-gray-100" />
-                <div className="h-[116px] animate-pulse rounded-[14px] bg-gray-100" />
-                <div className="h-[116px] animate-pulse rounded-[14px] bg-gray-100" />
-              </>
-            ) : (
-              <>
-                <div className="rounded-[14px] bg-white px-6 py-5" style={{ border: "0.5px solid #E4E8EA" }}>
-                  <div className="flex items-start justify-between">
-                    <p
-                      className="text-[12px] uppercase tracking-[0.08em]"
-                      style={{ color: "#8A9BA8" }}
-                    >
-                      Issues Reported
-                    </p>
-                    <FileText size={20} style={{ color: "#3A7D7B" }} />
-                  </div>
-                  <p className="mt-2 text-[28px] font-medium" style={{ color: "#1C2B2B" }}>
-                    {stats.issuesReported}
-                  </p>
-                </div>
-
-                <div className="rounded-[14px] bg-white px-6 py-5" style={{ border: "0.5px solid #E4E8EA" }}>
-                  <div className="flex items-start justify-between">
-                    <p
-                      className="text-[12px] uppercase tracking-[0.08em]"
-                      style={{ color: "#8A9BA8" }}
-                    >
-                      Public Petitions
-                    </p>
-                    <Users size={20} style={{ color: "#3A7D7B" }} />
-                  </div>
-                  <p className="mt-2 text-[28px] font-medium" style={{ color: "#1C2B2B" }}>
-                    {stats.publicPetitions}
-                  </p>
-                </div>
-
-                <div className="rounded-[14px] bg-white px-6 py-5" style={{ border: "0.5px solid #E4E8EA" }}>
-                  <div className="flex items-start justify-between">
-                    <p
-                      className="text-[12px] uppercase tracking-[0.08em]"
-                      style={{ color: "#8A9BA8" }}
-                    >
-                      Petitions Signed
-                    </p>
-                    <ScrollText size={20} style={{ color: "#3A7D7B" }} />
-                  </div>
-                  <p className="mt-2 text-[28px] font-medium" style={{ color: "#1C2B2B" }}>
-                    {stats.petitionsSigned}
-                  </p>
-                </div>
-
-                <div className="rounded-[14px] bg-white px-6 py-5" style={{ border: "0.5px solid #E4E8EA" }}>
-                  <div className="flex items-start justify-between">
-                    <p
-                      className="text-[12px] uppercase tracking-[0.08em]"
-                      style={{ color: "#8A9BA8" }}
-                    >
-                      Issues Resolved
-                    </p>
-                    <CheckCircle size={20} style={{ color: "#2E7D32" }} />
-                  </div>
-                  <p className="mt-2 text-[28px] font-medium" style={{ color: "#1C2B2B" }}>
-                    {stats.issuesResolved}
-                  </p>
-                </div>
-              </>
-            )}
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row md:hidden">
+              <Link
+                href="/petition/new"
+                className="inline-flex items-center justify-center rounded-[12px] px-6 py-3.5 text-[16px] no-underline"
+                style={{ background: "#111827", color: "#FFFFFF", fontWeight: 600 }}
+              >
+                Create Petition
+              </Link>
+              <Link
+                href="/grievances/new"
+                className="inline-flex items-center justify-center rounded-[12px] px-6 py-3.5 text-[16px] no-underline"
+                style={{ border: "1px solid #D1D5DB", background: "#FFFFFF", color: "#374151", fontWeight: 600 }}
+              >
+                Report an Issue
+              </Link>
+            </div>
           </div>
 
-          <section className="mt-10">
-            <div className="flex items-center justify-between">
-              <h2 className="text-[18px] font-medium" style={{ color: "#1C2B2B" }}>
-                Public petitions to sign
-              </h2>
-              <Link href="/petition" className="text-[13px] no-underline" style={{ color: "#3A7D7B" }}>
-                View all →
+          <section className="mt-10 rounded-[20px] bg-white px-6 py-6 md:px-8" style={{ border: "1px solid #E5E7EB" }}>
+            <div className="grid grid-cols-2 gap-y-6 md:grid-cols-4 md:gap-4">
+              {statsLoading ? (
+                <>
+                  <div className="h-[74px] animate-pulse rounded-[10px]" style={{ background: "#F3F4F6" }} />
+                  <div className="h-[74px] animate-pulse rounded-[10px]" style={{ background: "#F3F4F6" }} />
+                  <div className="h-[74px] animate-pulse rounded-[10px]" style={{ background: "#F3F4F6" }} />
+                  <div className="h-[74px] animate-pulse rounded-[10px]" style={{ background: "#F3F4F6" }} />
+                </>
+              ) : (
+                <>
+                  <div className="md:border-r md:border-[#E5E7EB] md:pr-5">
+                    <p className="text-[40px] font-semibold leading-none" style={{ color: "#111827" }}>
+                      {stats.issuesReported}
+                    </p>
+                    <p className="mt-2 text-[14px] font-medium" style={{ color: "#6B7280" }}>
+                      Issues reported
+                    </p>
+                  </div>
+                  <div className="md:border-r md:border-[#E5E7EB] md:px-5">
+                    <p className="text-[40px] font-semibold leading-none" style={{ color: "#111827" }}>
+                      {stats.publicPetitions}
+                    </p>
+                    <p className="mt-2 text-[14px] font-medium" style={{ color: "#6B7280" }}>
+                      Public petitions
+                    </p>
+                  </div>
+                  <div className="md:border-r md:border-[#E5E7EB] md:px-5">
+                    <p className="text-[40px] font-semibold leading-none" style={{ color: "#111827" }}>
+                      {stats.petitionsSigned}
+                    </p>
+                    <p className="mt-2 text-[14px] font-medium" style={{ color: "#6B7280" }}>
+                      Petitions signed
+                    </p>
+                  </div>
+                  <div className="md:pl-5">
+                    <p className="text-[40px] font-semibold leading-none" style={{ color: "#111827" }}>
+                      {stats.issuesResolved}
+                    </p>
+                    <p className="mt-2 text-[14px] font-medium" style={{ color: "#6B7280" }}>
+                      Issues resolved
+                    </p>
+                  </div>
+                </>
+              )}
+            </div>
+          </section>
+
+          <section className="mt-14">
+            <div className="flex items-end justify-between gap-4">
+              <div>
+                <h2
+                  className="text-[34px] font-semibold leading-[1.1]"
+                  style={{ color: "#111827", fontFamily: "Georgia, 'Times New Roman', serif" }}
+                >
+                  Public petitions
+                </h2>
+                <p className="mt-2 text-[17px]" style={{ color: "#6B7280" }}>
+                  Sign ongoing civic campaigns from your city.
+                </p>
+              </div>
+              <Link href="/petition" className="text-[16px] no-underline font-semibold" style={{ color: "#111827" }}>
+                View all
               </Link>
             </div>
 
-            <div className="mt-4 space-y-3">
+            <div className="mt-6 space-y-3">
               {petitionsLoading ? (
                 <>
-                  <div className="h-[74px] animate-pulse rounded-[12px] bg-gray-100" />
-                  <div className="h-[74px] animate-pulse rounded-[12px] bg-gray-100" />
-                  <div className="h-[74px] animate-pulse rounded-[12px] bg-gray-100" />
+                  <div className="h-[100px] animate-pulse rounded-[14px]" style={{ background: "#F3F4F6" }} />
+                  <div className="h-[100px] animate-pulse rounded-[14px]" style={{ background: "#F3F4F6" }} />
+                  <div className="h-[100px] animate-pulse rounded-[14px]" style={{ background: "#F3F4F6" }} />
                 </>
               ) : publicPetitions.length === 0 ? (
                 <div
-                  className="flex flex-col items-center rounded-[12px] bg-white px-6 py-10 text-center"
-                  style={{ border: "0.5px solid #E4E8EA" }}
+                  className="rounded-[16px] bg-white px-6 py-12 text-center"
+                  style={{ border: "1px solid #E5E7EB" }}
                 >
-                  <p className="mt-3 text-[16px] font-medium" style={{ color: "#1C2B2B" }}>
+                  <p className="text-[21px] font-semibold" style={{ color: "#111827" }}>
                     No public petitions yet
                   </p>
-                  <p className="mt-1 text-[13px]" style={{ color: "#8A9BA8" }}>
-                    Public petitions will appear here for community collaboration.
+                  <p className="mt-2 text-[15px]" style={{ color: "#6B7280" }}>
+                    Community petitions will appear here.
                   </p>
                 </div>
               ) : (
@@ -314,51 +302,53 @@ export default function CitizenDashboardPage() {
                     : Number(petition?.signatureCount || 0);
 
                   return (
-                  <div
-                    key={petitionId || petition?.title}
-                    className="flex items-center rounded-[12px] bg-white px-[18px] py-[14px]"
-                    style={{ border: "0.5px solid #E4E8EA" }}
-                  >
-                    <span
-                      className="mr-4 inline-block rounded-[20px] px-[10px] py-[2px] text-[11px] font-medium uppercase"
-                      style={{ background: petition?.issueId ? "#EAF4F4" : "#EEF2F2", color: petition?.issueId ? "#3A7D7B" : "#8A9BA8" }}
+                    <div
+                      key={petitionId || petition?.title}
+                      className="flex flex-col gap-4 rounded-[14px] bg-white px-5 py-5 md:flex-row md:items-center"
+                      style={{ border: "1px solid #E5E7EB" }}
                     >
-                      {petition?.issueId ? "Linked" : "Public"}
-                    </span>
+                      <span
+                        className="inline-flex w-fit rounded-[999px] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.08em]"
+                        style={{ background: petition?.issueId ? "#EEF2FF" : "#F3F4F6", color: petition?.issueId ? "#374151" : "#6B7280" }}
+                      >
+                        {petition?.issueId ? "Linked" : "Public"}
+                      </span>
 
-                    <div className="flex-1">
-                      <p className="text-[15px] font-medium" style={{ color: "#1C2B2B" }}>
-                        {petition?.title || "Untitled petition"}
-                      </p>
-                      <p className="text-[12px]" style={{ color: "#8A9BA8" }}>
-                        {signatureCount} signatures
-                      </p>
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-[20px] font-semibold" style={{ color: "#111827" }}>
+                          {petition?.title || "Untitled petition"}
+                        </p>
+                        <p className="mt-1 text-[15px]" style={{ color: "#6B7280" }}>
+                          {signatureCount} signatures
+                        </p>
+                      </div>
+
+                      <div className="flex items-center gap-3">
+                        <button
+                          type="button"
+                          onClick={() => handleSignPetition(petitionId)}
+                          disabled={isSigned || signingId === petitionId}
+                          className="rounded-[10px] px-4 py-2.5 text-[14px] font-semibold transition-colors"
+                          style={
+                            isSigned
+                              ? { background: "#ECFDF3", color: "#166534", border: "1px solid #BBF7D0" }
+                              : { background: "#111827", color: "#FFFFFF", border: "1px solid #111827" }
+                          }
+                        >
+                          {signingId === petitionId ? "Signing..." : isSigned ? "Signed" : "Sign"}
+                        </button>
+
+                        <Link
+                          href={`/petition/${petitionId}`}
+                          className="inline-flex items-center justify-center rounded-[10px] px-3 py-2 text-[14px] font-semibold no-underline"
+                          style={{ border: "1px solid #D1D5DB", color: "#374151", background: "#FFFFFF" }}
+                        >
+                          View
+                        </Link>
+                      </div>
                     </div>
-
-                    <button
-                      type="button"
-                      onClick={() => handleSignPetition(petitionId)}
-                      disabled={isSigned || signingId === petitionId}
-                      className="mr-3 rounded-[8px] px-3 py-1.5 text-[12px]"
-                      style={
-                        isSigned
-                          ? { background: "#E8F5E9", color: "#2E7D32" }
-                          : { background: "#3A7D7B", color: "#FFFFFF" }
-                      }
-                    >
-                      {signingId === petitionId ? "Signing..." : isSigned ? "Signed ✓" : "Sign"}
-                    </button>
-
-                    <Link
-                      href={`/petition/${petitionId}`}
-                      className="inline-flex h-7 w-7 items-center justify-center rounded-full no-underline"
-                      style={{ color: "#8A9BA8" }}
-                    >
-                      →
-                    </Link>
-                  </div>
-                );
-              })
+                  );
+                })
               )}
             </div>
           </section>

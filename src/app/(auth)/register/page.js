@@ -17,6 +17,7 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [city, setCity] = useState("Jalandhar");
+  const [state, setState] = useState("Punjab");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -45,18 +46,18 @@ export default function RegisterPage() {
 
   function getInputStyle() {
     return {
-      border: "0.5px solid #E4E8EA",
-      background: "#EEF2F2",
-      color: "#1C2B2B",
+      border: "0.5px solid #E8E1D5",
+      background: "#F5F2ED",
+      color: "#171717",
     };
   }
 
   function handleInputFocus(event) {
-    event.target.style.borderColor = "#3A7D7B";
+    event.target.style.borderColor = "#4A6FA9";
   }
 
   function handleInputBlur(event) {
-    event.target.style.borderColor = "#E4E8EA";
+    event.target.style.borderColor = "#E8E1D5";
   }
 
   async function sendOtp() {
@@ -132,6 +133,7 @@ export default function RegisterPage() {
           email,
           password,
           city,
+          state,
           phone,
           phoneVerified: true,
         }),
@@ -153,22 +155,32 @@ export default function RegisterPage() {
 
   return (
     <div
-      className="flex min-h-screen items-center justify-center px-4"
-      style={{ background: "#F5F8F8" }}
+      className="flex min-h-screen flex-col items-center justify-center px-4"
+      style={{ background: "#FAFAF8" }}
     >
+      <div className="mb-8">
+        <Link
+          href="/"
+          className="inline-flex items-center text-[13px]"
+          style={{ color: "#4A6FA9", textDecoration: "none" }}
+        >
+          ← Back to Home
+        </Link>
+      </div>
+
       <div
         className="w-full max-w-[420px] rounded-[14px] bg-white px-9 py-8"
-        style={{ border: "0.5px solid #E4E8EA" }}
+        style={{ border: "0.5px solid #E8E1D5" }}
       >
-        <p className="text-center text-[16px] font-semibold" style={{ color: "#3A7D7B" }}>
-          NagarSeva
+        <p className="text-center text-[16px] font-semibold" style={{ color: "#4A6FA9" }}>
+          NyaySetu
         </p>
 
-        <h1 className="mt-2 text-center text-[22px] font-medium" style={{ color: "#1C2B2B" }}>
+        <h1 className="mt-2 text-center text-[22px] font-medium" style={{ color: "#171717" }}>
           Create your account
         </h1>
 
-        <p className="mt-1 text-center text-[13px]" style={{ color: "#8A9BA8" }}>
+        <p className="mt-1 text-center text-[13px]" style={{ color: "#666666" }}>
           Join thousands reporting civic issues in your city
         </p>
 
@@ -177,8 +189,8 @@ export default function RegisterPage() {
             className="rounded-[20px] px-3 py-[3px] text-[12px] font-medium"
             style={
               step === 1
-                ? { background: "#3A7D7B", color: "#FFFFFF" }
-                : { background: "#EEF2F2", color: "#8A9BA8" }
+                ? { background: "#4A6FA9", color: "#FFFFFF" }
+                : { background: "#F5F2ED", color: "#999999" }
             }
           >
             Verify Phone
@@ -187,8 +199,8 @@ export default function RegisterPage() {
             className="rounded-[20px] px-3 py-[3px] text-[12px] font-medium"
             style={
               step === 2
-                ? { background: "#3A7D7B", color: "#FFFFFF" }
-                : { background: "#EEF2F2", color: "#8A9BA8" }
+                ? { background: "#4A6FA9", color: "#FFFFFF" }
+                : { background: "#F5F2ED", color: "#999999" }
             }
           >
             Your Details
@@ -201,7 +213,7 @@ export default function RegisterPage() {
               <label
                 htmlFor="phone"
                 className="mb-1.5 block text-[12px] font-medium"
-                style={{ color: "#4A6060" }}
+                style={{ color: "#555555" }}
               >
                 Mobile Number
               </label>
@@ -223,11 +235,11 @@ export default function RegisterPage() {
               onClick={sendOtp}
               disabled={loading || phone.trim().length < 10}
               className={`inline-flex w-full items-center justify-center rounded-[10px] px-4 py-[11px] text-[14px] font-medium text-white transition-colors ${
-                loading ? "" : "hover:bg-[#5DAFAD]"
+                loading ? "" : "hover:bg-[#5B79B3]"
               }`}
               style={{
                 background:
-                  loading || phone.trim().length < 10 ? "#5DAFAD" : "#3A7D7B",
+                  loading || phone.trim().length < 10 ? "#5B79B3" : "#4A6FA9",
               }}
             >
               {loading ? (
@@ -249,7 +261,7 @@ export default function RegisterPage() {
                   <label
                     htmlFor="otp"
                     className="mb-1.5 block text-[12px] font-medium"
-                    style={{ color: "#4A6060" }}
+                    style={{ color: "#555555" }}
                   >
                     Enter OTP
                   </label>
@@ -272,11 +284,11 @@ export default function RegisterPage() {
                   onClick={verifyOtp}
                   disabled={loading || otp.trim().length !== 6}
                   className={`inline-flex w-full items-center justify-center rounded-[10px] px-4 py-[11px] text-[14px] font-medium text-white transition-colors ${
-                    loading ? "" : "hover:bg-[#5DAFAD]"
+                    loading ? "" : "hover:bg-[#5B79B3]"
                   }`}
                   style={{
                     background:
-                      loading || otp.trim().length !== 6 ? "#5DAFAD" : "#3A7D7B",
+                      loading || otp.trim().length !== 6 ? "#5B79B3" : "#4A6FA9",
                   }}
                 >
                   {loading ? (
@@ -294,7 +306,7 @@ export default function RegisterPage() {
 
                 <div className="text-center">
                   {countdown > 0 ? (
-                    <span className="text-[12px]" style={{ color: "#8A9BA8" }}>
+                    <span className="text-[12px]" style={{ color: "#999999" }}>
                       Resend in {countdown}s
                     </span>
                   ) : (
@@ -302,7 +314,7 @@ export default function RegisterPage() {
                       type="button"
                       onClick={sendOtp}
                       className="text-[12px]"
-                      style={{ color: "#3A7D7B" }}
+                      style={{ color: "#4A6FA9" }}
                     >
                       Resend OTP
                     </button>
@@ -317,7 +329,7 @@ export default function RegisterPage() {
               <label
                 htmlFor="name"
                 className="mb-1.5 block text-[12px] font-medium"
-                style={{ color: "#4A6060" }}
+                style={{ color: "#555555" }}
               >
                 Full Name
               </label>
@@ -338,7 +350,7 @@ export default function RegisterPage() {
               <label
                 htmlFor="email"
                 className="mb-1.5 block text-[12px] font-medium"
-                style={{ color: "#4A6060" }}
+                style={{ color: "#555555" }}
               >
                 Email address
               </label>
@@ -359,7 +371,7 @@ export default function RegisterPage() {
               <label
                 htmlFor="password"
                 className="mb-1.5 block text-[12px] font-medium"
-                style={{ color: "#4A6060" }}
+                style={{ color: "#555555" }}
               >
                 Password
               </label>
@@ -379,7 +391,7 @@ export default function RegisterPage() {
                   type="button"
                   onClick={() => setShowPassword((previous) => !previous)}
                   className="absolute right-3 top-1/2 -translate-y-1/2"
-                  style={{ color: "#8A9BA8" }}
+                  style={{ color: "#999999" }}
                   aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -391,7 +403,7 @@ export default function RegisterPage() {
               <label
                 htmlFor="city"
                 className="mb-1.5 block text-[12px] font-medium"
-                style={{ color: "#4A6060" }}
+                style={{ color: "#555555" }}
               >
                 City
               </label>
@@ -409,7 +421,31 @@ export default function RegisterPage() {
                 <option value="Ludhiana">Ludhiana</option>
                 <option value="Amritsar">Amritsar</option>
                 <option value="Chandigarh">Chandigarh</option>
-                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div>
+              <label
+                htmlFor="state"
+                className="mb-1.5 block text-[12px] font-medium"
+                style={{ color: "#555555" }}
+              >
+                State
+              </label>
+              <select
+                id="state"
+                value={state}
+                onChange={(event) => setState(event.target.value)}
+                required
+                className="w-full rounded-[10px] border px-[14px] py-[10px] text-[14px] focus:outline-none focus:ring-0"
+                style={getInputStyle()}
+                onFocus={handleInputFocus}
+                onBlur={handleInputBlur}
+              >
+                <option value="Punjab">Punjab</option>
+                <option value="Haryana">Haryana</option>
+                <option value="Himachal Pradesh">Himachal Pradesh</option>
+                <option value="Chandigarh">Chandigarh</option>
               </select>
             </div>
 
@@ -417,9 +453,9 @@ export default function RegisterPage() {
               type="submit"
               disabled={loading || !phoneVerified}
               className={`inline-flex w-full items-center justify-center rounded-[10px] px-4 py-[11px] text-[14px] font-medium text-white transition-colors ${
-                loading ? "" : "hover:bg-[#5DAFAD]"
+                loading ? "" : "hover:bg-[#5B79B3]"
               }`}
-              style={{ background: loading || !phoneVerified ? "#5DAFAD" : "#3A7D7B" }}
+              style={{ background: loading || !phoneVerified ? "#5B79B3" : "#4A6FA9" }}
             >
               {loading ? (
                 <span className="inline-flex items-center gap-2">
@@ -442,9 +478,9 @@ export default function RegisterPage() {
           </p>
         ) : null}
 
-        <p className="mt-5 text-center text-[13px]" style={{ color: "#8A9BA8" }}>
+        <p className="mt-5 text-center text-[13px]" style={{ color: "#666666" }}>
           Already have an account?{" "}
-          <Link href="/login" className="no-underline" style={{ color: "#3A7D7B" }}>
+          <Link href="/login" className="no-underline" style={{ color: "#4A6FA9" }}>
             Login
           </Link>
         </p>

@@ -113,11 +113,11 @@ export default function GrievanceDetailPage() {
 
   function statusBadgeStyle(status) {
     if (status === "resolved") {
-      return { background: "#E8F5E9", color: "#2E7D32" };
+      return { background: "#DCFCE7", color: "#16A34A" };
     }
 
     if (status === "in_progress") {
-      return { background: "#EAF4F4", color: "#3A7D7B" };
+      return { background: "#ECF0FF", color: "#4A6FA9" };
     }
 
     return { background: "#FEF3C7", color: "#B45309" };
@@ -231,25 +231,25 @@ export default function GrievanceDetailPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center" style={{ background: "#F5F8F8" }}>
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-teal-600 border-t-transparent" />
+      <div className="flex min-h-screen items-center justify-center" style={{ background: "#FAFAF8" }}>
+        <div className="h-8 w-8 animate-spin rounded-full border-2" style={{ borderColor: "#4A6FA9", borderTopColor: "transparent" }} />
       </div>
     );
   }
 
   if (!grievance) {
     return (
-      <div className="min-h-screen" style={{ background: "#F5F8F8" }}>
+      <div className="min-h-screen" style={{ background: "#FAFAF8" }}>
         <Navbar />
         <main className="mx-auto max-w-[900px] px-10 pt-20">
-          <Link href="/grievances" className="text-[14px] no-underline" style={{ color: "#3A7D7B" }}>
+          <Link href="/grievances" className="text-[14px] no-underline" style={{ color: "#4A6FA9" }}>
             ← All Issues
           </Link>
           <div
             className="mt-4 rounded-[14px] bg-white px-6 py-10 text-center"
-            style={{ border: "0.5px solid #E4E8EA" }}
+            style={{ border: "0.5px solid #E8E1D5" }}
           >
-            <p className="text-[16px] font-medium" style={{ color: "#1C2B2B" }}>
+            <p className="text-[18px] font-semibold" style={{ color: "#171717" }}>
               Issue not found
             </p>
           </div>
@@ -259,18 +259,18 @@ export default function GrievanceDetailPage() {
   }
 
   return (
-    <div className="min-h-screen" style={{ background: "#F5F8F8" }}>
+    <div className="min-h-screen" style={{ background: "#FAFAF8" }}>
       <Navbar />
 
       <main className="mx-auto max-w-[1200px] px-10 pb-10 pt-20">
         <div className="flex flex-wrap items-center gap-3">
-          <Link href={dashboardHref} className="text-[14px] no-underline" style={{ color: "#3A7D7B" }}>
+          <Link href={dashboardHref} className="text-[14px] no-underline" style={{ color: "#4A6FA9" }}>
             ← Dashboard
           </Link>
-          <span className="text-[12px]" style={{ color: "#B0BEC5" }}>
+          <span className="text-[12px]" style={{ color: "#999999" }}>
             |
           </span>
-          <Link href="/grievances" className="text-[14px] no-underline" style={{ color: "#3A7D7B" }}>
+          <Link href="/grievances" className="text-[14px] no-underline" style={{ color: "#4A6FA9" }}>
             My Grievances
           </Link>
         </div>
@@ -278,19 +278,19 @@ export default function GrievanceDetailPage() {
         <div className="mt-4 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_300px]">
           <section>
             <article
-              className="rounded-[14px] bg-white px-8 py-7"
-              style={{ border: "0.5px solid #E4E8EA" }}
+              className="rounded-[14px] bg-white px-9 py-8"
+              style={{ border: "0.5px solid #E8E1D5" }}
             >
               <div className="flex flex-wrap items-center gap-2">
                 <span
-                  className="rounded-[20px] px-[10px] py-[2px] text-[11px] font-medium uppercase"
-                  style={{ background: "#EAF4F4", color: "#3A7D7B" }}
+                  className="rounded-[20px] px-3 py-1.5 text-[11px] font-medium uppercase"
+                  style={{ background: "#ECF0FF", color: "#4A6FA9" }}
                 >
                   {grievance?.category || "GENERAL"}
                 </span>
 
                 <span
-                  className="rounded-[20px] px-[10px] py-[2px] text-[11px] font-medium"
+                  className="rounded-[20px] px-3 py-1.5 text-[11px] font-medium"
                   style={statusBadgeStyle(grievance?.status)}
                 >
                   {prettyStatus(grievance?.status)}
@@ -298,11 +298,11 @@ export default function GrievanceDetailPage() {
 
               </div>
 
-              <h1 className="mt-3 text-[24px] font-medium leading-[1.3]" style={{ color: "#1C2B2B" }}>
+              <h1 className="mt-3 text-[30px] font-semibold leading-[1.25]" style={{ color: "#171717" }}>
                 {grievance?.title || "Untitled issue"}
               </h1>
 
-              <div className="mt-3 flex flex-wrap items-center gap-5 text-[13px]" style={{ color: "#8A9BA8" }}>
+              <div className="mt-3 flex flex-wrap items-center gap-5 text-[14px]" style={{ color: "#666666" }}>
                 <span className="inline-flex items-center gap-1.5">
                   <MapPin size={14} />
                   {grievance?.location || grievance?.city || "Jalandhar"}
@@ -317,15 +317,15 @@ export default function GrievanceDetailPage() {
                 </span>
               </div>
 
-              <div className="my-5 h-px" style={{ background: "#E4E8EA" }} />
+              <div className="my-5 h-px" style={{ background: "#E8E1D5" }} />
 
               <p
                 className="text-[12px] uppercase tracking-[0.08em]"
-                style={{ color: "#B0BEC5" }}
+                style={{ color: "#999999" }}
               >
                 Description
               </p>
-              <p className="mt-2 text-[15px] leading-[1.8]" style={{ color: "#4A6060" }}>
+              <p className="mt-2 text-[16px] leading-[1.8]" style={{ color: "#666666" }}>
                 {grievance?.description || "No description available."}
               </p>
 
@@ -333,7 +333,7 @@ export default function GrievanceDetailPage() {
                 <div className="mt-5">
                   <p
                     className="text-[12px] uppercase tracking-[0.08em]"
-                    style={{ color: "#B0BEC5" }}
+                    style={{ color: "#999999" }}
                   >
                     Evidence
                   </p>
@@ -345,7 +345,7 @@ export default function GrievanceDetailPage() {
                           src={url}
                           alt="Evidence"
                           className="h-[90px] w-[120px] rounded-[10px] object-cover"
-                          style={{ border: "0.5px solid #E4E8EA" }}
+                          style={{ border: "0.5px solid #E8E1D5" }}
                         />
                       </a>
                     ))}
@@ -356,13 +356,13 @@ export default function GrievanceDetailPage() {
               {grievance?.legalContext ? (
                 <div
                   className="mt-5 rounded-[12px] px-5 py-4"
-                  style={{ background: "#EEF0FB", border: "0.5px solid #C7CFE8" }}
+                  style={{ background: "#F0F3FF", border: "0.5px solid #D4DFF5" }}
                 >
-                  <div className="inline-flex items-center gap-1.5 text-[12px] font-medium" style={{ color: "#5B6FA6" }}>
+                  <div className="inline-flex items-center gap-1.5 text-[12px] font-medium" style={{ color: "#4A6FA9" }}>
                     <Sparkles size={13} />
                     AI Legal Context
                   </div>
-                  <p className="mt-2 text-[13px] leading-[1.7]" style={{ color: "#4A6060" }}>
+                  <p className="mt-2 text-[14px] leading-[1.7]" style={{ color: "#666666" }}>
                     {grievance.legalContext}
                   </p>
                 </div>
@@ -370,13 +370,13 @@ export default function GrievanceDetailPage() {
             </article>
 
             <section className="mt-5">
-              <h2 className="text-[16px] font-medium" style={{ color: "#1C2B2B" }}>
+              <h2 className="text-[20px] font-semibold" style={{ color: "#171717" }}>
                 Status History
               </h2>
 
               <div
                 className="mt-3 rounded-[14px] bg-white px-6 py-5"
-                style={{ border: "0.5px solid #E4E8EA" }}
+                style={{ border: "0.5px solid #E8E1D5" }}
               >
                 {statusHistory.map((entry, index) => {
                   const isLatest = index === statusHistory.length - 1;
@@ -385,34 +385,34 @@ export default function GrievanceDetailPage() {
                       <div className="relative flex flex-col items-center">
                         <span
                           className="block h-2 w-2 rounded-full"
-                          style={{ background: isLatest ? "#3A7D7B" : "#B0BEC5" }}
+                          style={{ background: isLatest ? "#4A6FA9" : "#D4D4D8" }}
                         />
                         {index < statusHistory.length - 1 ? (
                           <span
                             className="mt-1 block w-px"
-                            style={{ background: "#E4E8EA", minHeight: "24px" }}
+                            style={{ background: "#E8E1D5", minHeight: "24px" }}
                           />
                         ) : null}
                       </div>
 
                       <div>
-                        <p className="text-[14px] font-medium" style={{ color: "#1C2B2B" }}>
+                        <p className="text-[15px] font-medium" style={{ color: "#171717" }}>
                           {prettyStatus(entry?.status)}
                         </p>
-                        <p className="text-[12px]" style={{ color: "#B0BEC5" }}>
+                        <p className="text-[13px]" style={{ color: "#999999" }}>
                           {new Date(entry?.date || Date.now()).toLocaleString()}
                         </p>
 
                         {entry?.status === "resolved" && entry?.proof ? (
                           <div className="mt-2">
-                            <p className="text-[12px]" style={{ color: "#8A9BA8" }}>
+                            <p className="text-[12px]" style={{ color: "#666666" }}>
                               Resolution proof
                             </p>
                             <img
                               src={entry.proof}
                               alt="Resolution proof"
                               className="mt-1 h-[90px] w-[120px] rounded-[10px] object-cover"
-                              style={{ border: "0.5px solid #E4E8EA" }}
+                              style={{ border: "0.5px solid #E8E1D5" }}
                             />
                           </div>
                         ) : null}
@@ -427,36 +427,36 @@ export default function GrievanceDetailPage() {
           <aside className="h-fit lg:sticky lg:top-20">
             <div
               className="rounded-[14px] bg-white px-5 py-5"
-              style={{ border: "0.5px solid #E4E8EA" }}
+              style={{ border: "0.5px solid #E8E1D5" }}
             >
-              <p className="text-[16px] font-medium" style={{ color: "#1C2B2B" }}>
+              <p className="text-[18px] font-semibold" style={{ color: "#171717" }}>
                 Private Grievance
               </p>
-              <p className="mt-1 text-[13px]" style={{ color: "#8A9BA8" }}>
+              <p className="mt-1 text-[14px]" style={{ color: "#666666" }}>
                 Visible only to owner and assigned authority.
               </p>
 
-              <div className="my-4 h-px" style={{ background: "#E4E8EA" }} />
+              <div className="my-4 h-px" style={{ background: "#E8E1D5" }} />
 
-              <p className="text-[12px] uppercase tracking-[0.08em]" style={{ color: "#B0BEC5" }}>
+              <p className="text-[12px] uppercase tracking-[0.08em]" style={{ color: "#999999" }}>
                 Assigned to
               </p>
-              <p className="mt-1 text-[14px] font-medium" style={{ color: "#4A6060" }}>
+              <p className="mt-1 text-[15px] font-medium" style={{ color: "#666666" }}>
                 {grievance?.assignedAuthority?.name || grievance?.authorityName || "Not assigned"}
               </p>
 
               {grievance?.petitionId ? (
-                <div className="mt-4 rounded-[10px] px-3 py-3" style={{ background: "#EEF0FB", border: "0.5px solid #C7CFE8" }}>
-                  <p className="text-[12px] uppercase tracking-[0.08em]" style={{ color: "#5B6FA6" }}>
+                <div className="mt-4 rounded-[10px] px-3 py-3" style={{ background: "#F0F3FF", border: "0.5px solid #D4DFF5" }}>
+                  <p className="text-[12px] uppercase tracking-[0.08em]" style={{ color: "#4A6FA9" }}>
                     Linked Petition
                   </p>
-                  <p className="mt-1 text-[13px]" style={{ color: "#4A6060" }}>
+                  <p className="mt-1 text-[14px]" style={{ color: "#666666" }}>
                     {grievance?.petitionId?.title || "Cited petition"}
                   </p>
                   <Link
                     href={`/petition/${grievance?.petitionId?._id || grievance?.petitionId?.id || grievance?.petitionId}`}
                     className="mt-1 inline-block text-[12px] no-underline"
-                    style={{ color: "#3A7D7B" }}
+                    style={{ color: "#4A6FA9" }}
                   >
                     View petition →
                   </Link>
@@ -471,11 +471,11 @@ export default function GrievanceDetailPage() {
                     fetchCiteCandidates(citeSearch);
                   }}
                   disabled={!canCitePetition}
-                  className="mt-3 inline-flex w-full items-center justify-center rounded-[10px] px-4 py-2.5 text-[14px]"
+                  className="mt-3 inline-flex w-full items-center justify-center rounded-[10px] px-4 py-3 text-[15px]"
                   style={
                     canCitePetition
-                      ? { border: "1.5px solid #5B6FA6", background: "transparent", color: "#5B6FA6" }
-                      : { border: "1.5px solid #E4E8EA", background: "#EEF2F2", color: "#8A9BA8", cursor: "not-allowed" }
+                      ? { border: "1.5px solid #4A6FA9", background: "transparent", color: "#4A6FA9" }
+                      : { border: "1.5px solid #E8E1D5", background: "#F5F2ED", color: "#999999", cursor: "not-allowed" }
                   }
                 >
                   Cite Existing Petition
@@ -483,7 +483,7 @@ export default function GrievanceDetailPage() {
               ) : null}
 
               {grievance?.status !== "resolved" && !grievance?.petitionId && !canCitePetition ? (
-                <p className="mt-2 text-[12px]" style={{ color: "#8A9BA8" }}>
+                <p className="mt-2 text-[13px]" style={{ color: "#666666" }}>
                   Only the grievance creator can cite a petition.
                 </p>
               ) : null}
@@ -493,11 +493,11 @@ export default function GrievanceDetailPage() {
                   type="button"
                   onClick={() => router.push(`/petition/new?grievanceId=${grievanceId}`)}
                   disabled={!canEscalatePetition}
-                  className="mt-3 inline-flex w-full items-center justify-center rounded-[10px] px-4 py-2.5 text-[14px]"
+                  className="mt-3 inline-flex w-full items-center justify-center rounded-[10px] px-4 py-3 text-[15px]"
                   style={
                     canEscalatePetition
-                      ? { border: "1.5px solid #3A7D7B", background: "transparent", color: "#3A7D7B" }
-                      : { border: "1.5px solid #E4E8EA", background: "#EEF2F2", color: "#8A9BA8", cursor: "not-allowed" }
+                      ? { border: "1.5px solid #4A6FA9", background: "transparent", color: "#4A6FA9" }
+                      : { border: "1.5px solid #E8E1D5", background: "#F5F2ED", color: "#999999", cursor: "not-allowed" }
                   }
                 >
                   Escalate to Petition
@@ -505,7 +505,7 @@ export default function GrievanceDetailPage() {
               ) : null}
 
               {grievance?.status !== "resolved" && !canEscalatePetition ? (
-                <p className="mt-2 text-[12px]" style={{ color: "#8A9BA8" }}>
+                <p className="mt-2 text-[13px]" style={{ color: "#666666" }}>
                   Only the grievance creator can escalate it to a petition.
                 </p>
               ) : null}
@@ -528,22 +528,22 @@ export default function GrievanceDetailPage() {
 
       {showCiteModal ? (
         <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/35 px-4">
-          <div className="w-full max-w-[680px] rounded-[14px] bg-white px-6 py-5" style={{ border: "0.5px solid #E4E8EA" }}>
+          <div className="w-full max-w-[680px] rounded-[14px] bg-white px-6 py-5" style={{ border: "0.5px solid #E8E1D5" }}>
             <div className="flex items-center justify-between gap-3">
-              <h3 className="text-[18px] font-medium" style={{ color: "#1C2B2B" }}>
+              <h3 className="text-[20px] font-semibold" style={{ color: "#171717" }}>
                 Cite a Petition
               </h3>
               <button
                 type="button"
                 onClick={() => setShowCiteModal(false)}
                 className="rounded-[8px] px-2 py-1 text-[13px]"
-                style={{ background: "#EEF2F2", color: "#4A6060" }}
+                style={{ background: "#F5F2ED", color: "#666666" }}
               >
                 Close
               </button>
             </div>
 
-            <p className="mt-1 text-[13px]" style={{ color: "#8A9BA8" }}>
+            <p className="mt-1 text-[14px]" style={{ color: "#666666" }}>
               Search among petitions created by you and attach one to this grievance.
             </p>
 
@@ -553,14 +553,14 @@ export default function GrievanceDetailPage() {
                 value={citeSearch}
                 onChange={(event) => setCiteSearch(event.target.value)}
                 placeholder="Search by title or description"
-                className="flex-1 rounded-[10px] px-3 py-2 text-[14px] focus:outline-none"
-                style={{ border: "0.5px solid #E4E8EA", background: "#FFFFFF" }}
+                className="flex-1 rounded-[10px] px-4 py-2.5 text-[15px] focus:outline-none"
+                style={{ border: "0.5px solid #E8E1D5", background: "#F5F2ED" }}
               />
               <button
                 type="button"
                 onClick={() => fetchCiteCandidates(citeSearch)}
-                className="rounded-[10px] px-4 py-2 text-[13px] font-medium text-white"
-                style={{ background: "#3A7D7B" }}
+                className="rounded-[10px] px-4 py-2.5 text-[14px] font-medium text-white"
+                style={{ background: "#4A6FA9" }}
               >
                 Search
               </button>
@@ -575,12 +575,12 @@ export default function GrievanceDetailPage() {
             <div className="mt-4 max-h-[340px] space-y-2 overflow-y-auto pr-1">
               {citeLoading ? (
                 <>
-                  <div className="h-[74px] animate-pulse rounded-[10px] bg-gray-100" />
-                  <div className="h-[74px] animate-pulse rounded-[10px] bg-gray-100" />
+                  <div className="h-[84px] animate-pulse rounded-[10px]" style={{ background: "#F5F2ED" }} />
+                  <div className="h-[84px] animate-pulse rounded-[10px]" style={{ background: "#F5F2ED" }} />
                 </>
               ) : citeCandidates.length === 0 ? (
-                <div className="rounded-[10px] px-4 py-6 text-center" style={{ background: "#F5F8F8", border: "0.5px solid #E4E8EA" }}>
-                  <p className="text-[13px]" style={{ color: "#8A9BA8" }}>
+                <div className="rounded-[10px] px-4 py-6 text-center" style={{ background: "#FAFAF8", border: "0.5px solid #E8E1D5" }}>
+                  <p className="text-[14px]" style={{ color: "#666666" }}>
                     No unlinked petitions created by you found.
                   </p>
                 </div>
@@ -588,13 +588,13 @@ export default function GrievanceDetailPage() {
                 citeCandidates.map((petition) => {
                   const petitionKey = String(petition?._id || petition?.id || "");
                   return (
-                    <article key={petitionKey} className="rounded-[10px] px-4 py-3" style={{ border: "0.5px solid #E4E8EA" }}>
+                    <article key={petitionKey} className="rounded-[10px] px-4 py-3" style={{ border: "0.5px solid #E8E1D5" }}>
                       <div className="flex items-start justify-between gap-3">
                         <div>
-                          <p className="text-[14px] font-medium" style={{ color: "#1C2B2B" }}>
+                          <p className="text-[15px] font-medium" style={{ color: "#171717" }}>
                             {petition?.title || "Untitled petition"}
                           </p>
-                          <p className="mt-1 text-[12px]" style={{ color: "#8A9BA8" }}>
+                          <p className="mt-1 text-[13px]" style={{ color: "#666666" }}>
                             {String(petition?.description || "").slice(0, 120)}
                             {String(petition?.description || "").length > 120 ? "..." : ""}
                           </p>
@@ -605,7 +605,7 @@ export default function GrievanceDetailPage() {
                           disabled={citeSubmittingId === petitionKey}
                           onClick={() => handleCitePetition(petitionKey)}
                           className="shrink-0 rounded-[9px] px-3 py-1.5 text-[12px] font-medium text-white"
-                          style={{ background: "#5B6FA6" }}
+                          style={{ background: "#4A6FA9" }}
                         >
                           {citeSubmittingId === petitionKey ? "Citing..." : "Cite"}
                         </button>

@@ -42,12 +42,23 @@ export async function POST(request, { params }) {
       );
     }
 
+    if (petition.status === "victory_declared") {
+      return NextResponse.json(
+        { success: false, message: "Petition has been closed by its creator" },
+        { status: 409 }
+      );
+    }
+
     const userId = String(authUser._id);
     const alreadySigned = (petition.signatures || []).some(
       (signerId) => String(signerId) === userId
     );
 
-    if (alreadySigned) {
+    const alreadySignedInEntries = Array.isArray(petition.signerEntries)
+      ? petition.signerEntries.some((entry) => String(entry?.user || "") === userId)
+      : false;
+
+    if (alreadySigned || alreadySignedInEntries) {
       return NextResponse.json(
         { success: false, message: "Already signed" },
         { status: 400 }
@@ -56,6 +67,8 @@ export async function POST(request, { params }) {
 
     petition.signatures = Array.isArray(petition.signatures) ? petition.signatures : [];
     petition.signatures.push(authUser._id);
+    petition.signerEntries = Array.isArray(petition.signerEntries) ? petition.signerEntries : [];
+    petition.signerEntries.push({ user: authUser._id, signedAt: new Date() });
     await petition.save();
 
     return NextResponse.json(

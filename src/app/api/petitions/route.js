@@ -152,7 +152,10 @@ export async function POST(request) {
       createdBy: authUser._id,
       issueId: issueId || null,
       signatures: [],
+      signerEntries: [],
       type: type || (issueId ? "linked" : "independent"),
+      status: "active",
+      victoryDeclaredAt: null,
     });
 
     if (linkedGrievance) {

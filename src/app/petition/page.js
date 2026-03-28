@@ -77,6 +77,10 @@ export default function PetitionsPage() {
   }, [petitions, filter]);
 
   function signatureCount(petition) {
+    if (Array.isArray(petition?.signerEntries)) {
+      return petition.signerEntries.length;
+    }
+
     if (Number.isFinite(Number(petition?.signatureCount))) {
       return Number(petition.signatureCount);
     }
@@ -85,25 +89,25 @@ export default function PetitionsPage() {
   }
 
   return (
-    <div className="min-h-screen" style={{ background: "#F5F8F8" }}>
+    <div className="min-h-screen" style={{ background: "#FAFAF8" }}>
       <Navbar />
 
       <main className="mx-auto max-w-[1100px] px-6 pb-10 pt-20">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <h1 className="text-[26px] font-medium" style={{ color: "#1C2B2B" }}>
+          <h1 className="text-[32px] font-semibold" style={{ color: "#171717" }}>
             Public Petitions
           </h1>
           {user ? (
             <Link
               href={dashboardHref}
-              className="inline-flex items-center justify-center rounded-[10px] px-4 py-2 text-[13px] font-medium no-underline"
-              style={{ border: "1.5px solid #3A7D7B", color: "#3A7D7B", background: "transparent" }}
+              className="inline-flex items-center justify-center rounded-[10px] px-4 py-2.5 text-[15px] font-medium no-underline transition-colors hover:bg-[#ECF0FF]"
+              style={{ border: "1.5px solid #4A6FA9", color: "#4A6FA9", background: "transparent" }}
             >
               Back to Dashboard
             </Link>
           ) : null}
         </div>
-        <p className="mt-1 text-[14px]" style={{ color: "#8A9BA8" }}>
+        <p className="mt-1 text-[16px]" style={{ color: "#666666" }}>
           Browse, sign, and track civic petitions.
         </p>
 
@@ -113,15 +117,15 @@ export default function PetitionsPage() {
             placeholder="Search petitions..."
             value={search}
             onChange={(event) => setSearch(event.target.value)}
-            className="min-w-[260px] flex-1 rounded-[10px] px-4 py-2.5 text-[14px] focus:outline-none"
-            style={{ border: "0.5px solid #E4E8EA", background: "#FFFFFF" }}
+            className="min-w-[260px] flex-1 rounded-[10px] px-4 py-3 text-[15px] focus:outline-none"
+            style={{ border: "0.5px solid #E8E1D5", background: "#F5F2ED" }}
           />
 
           <select
             value={filter}
             onChange={(event) => setFilter(event.target.value)}
-            className="w-[180px] rounded-[10px] px-4 py-2.5 text-[14px] focus:outline-none"
-            style={{ border: "0.5px solid #E4E8EA", background: "#FFFFFF" }}
+            className="w-[200px] rounded-[10px] px-4 py-3 text-[15px] focus:outline-none"
+            style={{ border: "0.5px solid #E8E1D5", background: "#F5F2ED" }}
           >
             <option value="all">All Petitions</option>
             <option value="linked">Linked to Grievance</option>
@@ -130,30 +134,30 @@ export default function PetitionsPage() {
 
           <Link
             href="/petition/new"
-            className="inline-flex items-center justify-center rounded-[10px] px-5 py-2.5 text-[14px] font-medium text-white no-underline"
-            style={{ background: "#3A7D7B" }}
+            className="inline-flex items-center justify-center rounded-[10px] px-6 py-3 text-[15px] font-medium text-white no-underline transition-colors hover:bg-[#5B79B3]"
+            style={{ background: "#4A6FA9" }}
           >
             Start Petition
           </Link>
         </div>
 
         <section
-          className="mt-6 grid gap-4"
-          style={{ gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))" }}
+          className="mt-6 grid gap-5"
+          style={{ gridTemplateColumns: "repeat(auto-fill, minmax(360px, 1fr))" }}
         >
           {loading ? (
             Array.from({ length: 6 }).map((_, index) => (
-              <div key={index} className="h-[180px] animate-pulse rounded-[14px] bg-gray-100" />
+              <div key={index} className="h-[220px] animate-pulse rounded-[14px]" style={{ background: "#F5F2ED" }} />
             ))
           ) : visiblePetitions.length === 0 ? (
             <div
               className="col-span-full rounded-[14px] bg-white px-6 py-10 text-center"
-              style={{ border: "0.5px solid #E4E8EA" }}
+              style={{ border: "0.5px solid #E8E1D5" }}
             >
-              <p className="text-[16px] font-medium" style={{ color: "#1C2B2B" }}>
+              <p className="text-[18px] font-semibold" style={{ color: "#171717" }}>
                 No petitions found
               </p>
-              <p className="mt-1 text-[13px]" style={{ color: "#8A9BA8" }}>
+              <p className="mt-1 text-[14px]" style={{ color: "#666666" }}>
                 Try a different keyword or start a new petition.
               </p>
             </div>
@@ -166,47 +170,47 @@ export default function PetitionsPage() {
               return (
                 <article
                   key={id || petition?.title}
-                  className="rounded-[14px] bg-white px-5 py-[18px]"
-                  style={{ border: "0.5px solid #E4E8EA" }}
+                  className="rounded-[14px] bg-white px-6 py-6"
+                  style={{ border: "0.5px solid #E8E1D5" }}
                 >
                   <div className="flex items-center justify-between gap-2">
                     <span
-                      className="rounded-[20px] px-[10px] py-[2px] text-[11px]"
+                      className="rounded-[20px] px-3 py-1.5 text-[11px]"
                       style={{
-                        background: linkedIssueTitle ? "#EAF4F4" : "#EEF2F2",
-                        color: linkedIssueTitle ? "#3A7D7B" : "#8A9BA8",
+                        background: linkedIssueTitle ? "#ECF0FF" : "#F5F2ED",
+                        color: linkedIssueTitle ? "#4A6FA9" : "#666666",
                       }}
                     >
                       {linkedIssueTitle ? "Linked" : "Independent"}
                     </span>
-                    <span className="text-[12px]" style={{ color: "#B0BEC5" }}>
+                    <span className="text-[13px]" style={{ color: "#999999" }}>
                       {new Date(petition?.createdAt || Date.now()).toLocaleDateString()}
                     </span>
                   </div>
 
-                  <h2 className="mt-2 text-[16px] font-medium" style={{ color: "#1C2B2B" }}>
+                  <h2 className="mt-3 text-[20px] font-semibold" style={{ color: "#171717" }}>
                     {petition?.title || "Untitled petition"}
                   </h2>
 
-                  <p className="mt-1 text-[13px] leading-[1.6]" style={{ color: "#8A9BA8" }}>
+                  <p className="mt-2 text-[15px] leading-[1.6]" style={{ color: "#666666" }}>
                     {String(petition?.description || "No description available.").slice(0, 140)}
                     {String(petition?.description || "").length > 140 ? "..." : ""}
                   </p>
 
                   {linkedIssueTitle ? (
-                    <p className="mt-2 text-[12px]" style={{ color: "#4A6060" }}>
+                    <p className="mt-2 text-[13px]" style={{ color: "#666666" }}>
                       Linked issue: {linkedIssueTitle}
                     </p>
                   ) : null}
 
                   <div className="mt-3 flex items-center justify-between">
-                    <span className="text-[13px] font-medium" style={{ color: "#3A7D7B" }}>
+                    <span className="text-[14px] font-medium" style={{ color: "#4A6FA9" }}>
                       {signatureCount(petition)} signatures
                     </span>
                     <Link
                       href={`/petition/${id}`}
-                      className="text-[13px] no-underline"
-                      style={{ color: "#3A7D7B" }}
+                      className="text-[14px] no-underline"
+                      style={{ color: "#4A6FA9" }}
                     >
                       View →
                     </Link>

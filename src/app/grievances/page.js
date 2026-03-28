@@ -124,11 +124,11 @@ export default function GrievancesFeedPage() {
 
   function statusBadgeStyle(status) {
     if (status === "resolved") {
-      return { background: "#E8F5E9", color: "#2E7D32" };
+      return { background: "#DCFCE7", color: "#16A34A" };
     }
 
     if (status === "in_progress") {
-      return { background: "#EAF4F4", color: "#3A7D7B" };
+      return { background: "#ECF0FF", color: "#4A6FA9" };
     }
 
     return { background: "#FEF3C7", color: "#B45309" };
@@ -157,8 +157,8 @@ export default function GrievancesFeedPage() {
 
   if (userLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center" style={{ background: "#F5F8F8" }}>
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-teal-600 border-t-transparent" />
+      <div className="flex min-h-screen items-center justify-center" style={{ background: "#FAFAF8" }}>
+        <div className="h-8 w-8 animate-spin rounded-full border-2" style={{ borderColor: "#4A6FA9", borderTopColor: "transparent" }} />
       </div>
     );
   }
@@ -175,103 +175,105 @@ export default function GrievancesFeedPage() {
   const dashboardHref = user?.role === "authority" ? "/dashboard/authority" : "/dashboard/citizen";
 
   return (
-    <div className="min-h-screen" style={{ background: "#F5F8F8" }}>
+    <div className="min-h-screen" style={{ background: "#FAFAF8" }}>
       <Navbar />
 
-      <main className="px-10 pb-10 pt-20">
+      <main className="px-10 pb-12 pt-20">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <h1 className="text-[26px] font-medium" style={{ color: "#1C2B2B" }}>{pageTitle}</h1>
+          <h1 className="text-[40px] font-semibold leading-[1.15]" style={{ color: "#171717" }}>{pageTitle}</h1>
           <Link
             href={dashboardHref}
-            className="inline-flex items-center justify-center rounded-[10px] px-4 py-2 text-[13px] font-medium no-underline"
-            style={{ border: "1.5px solid #3A7D7B", color: "#3A7D7B", background: "transparent" }}
+            className="inline-flex items-center justify-center rounded-[10px] px-5 py-3 text-[16px] font-medium no-underline transition-colors hover:bg-[#ECF0FF]"
+            style={{ border: "1.5px solid #4A6FA9", color: "#4A6FA9", background: "transparent" }}
           >
             Back to Dashboard
           </Link>
         </div>
-        <p className="mt-1 text-[14px]" style={{ color: "#8A9BA8" }}>
+        <p className="mt-2 text-[18px]" style={{ color: "#666666" }}>
           {pageSubtitle}
         </p>
 
-        <div className="mt-5 flex flex-wrap gap-3">
-          <input
-            type="text"
-            placeholder="Search issues..."
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-            className="min-w-[220px] flex-1 rounded-[10px] px-4 py-2.5 text-[14px] focus:outline-none"
-            style={{ border: "0.5px solid #E4E8EA", background: "#FFFFFF" }}
-          />
+        <div className="mt-6 rounded-[16px] bg-white p-4" style={{ border: "0.5px solid #E8E1D5" }}>
+          <div className="flex flex-wrap gap-3">
+            <input
+              type="text"
+              placeholder="Search issues..."
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+              className="min-w-[220px] flex-1 rounded-[12px] px-4 py-3.5 text-[16px] focus:outline-none"
+              style={{ border: "0.5px solid #E8E1D5", background: "#F5F2ED" }}
+            />
 
-          <select
-            value={category}
-            onChange={(event) => setCategory(event.target.value)}
-            className="w-[180px] rounded-[10px] px-4 py-2.5 text-[14px] focus:outline-none"
-            style={{ border: "0.5px solid #E4E8EA", background: "#FFFFFF" }}
-          >
-            <option value="All">All Categories</option>
-            <option value="Water">Water</option>
-            <option value="Roads">Roads</option>
-            <option value="Electricity">Electricity</option>
-            <option value="Sanitation">Sanitation</option>
-            <option value="Parks">Parks</option>
-            <option value="Other">Other</option>
-          </select>
+            <select
+              value={category}
+              onChange={(event) => setCategory(event.target.value)}
+              className="w-[210px] rounded-[12px] px-4 py-3.5 text-[16px] focus:outline-none"
+              style={{ border: "0.5px solid #E8E1D5", background: "#F5F2ED" }}
+            >
+              <option value="All">All Categories</option>
+              <option value="Water">Water</option>
+              <option value="Roads">Roads</option>
+              <option value="Electricity">Electricity</option>
+              <option value="Sanitation">Sanitation</option>
+              <option value="Parks">Parks</option>
+              <option value="Other">Other</option>
+            </select>
 
-          <select
-            value={sortBy}
-            onChange={(event) => setSortBy(event.target.value)}
-            className="w-[160px] rounded-[10px] px-4 py-2.5 text-[14px] focus:outline-none"
-            style={{ border: "0.5px solid #E4E8EA", background: "#FFFFFF" }}
-          >
-            <option>Newest</option>
-            <option>Oldest</option>
-          </select>
-        </div>
+            <select
+              value={sortBy}
+              onChange={(event) => setSortBy(event.target.value)}
+              className="w-[190px] rounded-[12px] px-4 py-3.5 text-[16px] focus:outline-none"
+              style={{ border: "0.5px solid #E8E1D5", background: "#F5F2ED" }}
+            >
+              <option>Newest</option>
+              <option>Oldest</option>
+            </select>
+          </div>
 
-        <div className="mt-3.5 flex flex-wrap gap-2">
-          {CATEGORY_OPTIONS.map((item) => {
-            const isActive = category.toLowerCase() === item.toLowerCase();
+          <div className="mt-4 flex flex-wrap gap-2">
+            {CATEGORY_OPTIONS.map((item) => {
+              const isActive = category.toLowerCase() === item.toLowerCase();
 
-            return (
-              <button
-                key={item}
-                type="button"
-                onClick={() => setCategory(item)}
-                className="rounded-[20px] px-4 py-1.5 text-[13px]"
-                style={
-                  isActive
-                    ? { background: "#3A7D7B", color: "#FFFFFF" }
-                    : {
-                        background: "#FFFFFF",
-                        color: "#4A6060",
-                        border: "0.5px solid #E4E8EA",
-                      }
-                }
-              >
-                {item}
-              </button>
-            );
-          })}
+              return (
+                <button
+                  key={item}
+                  type="button"
+                  onClick={() => setCategory(item)}
+                  className="rounded-[20px] px-4 py-2.5 text-[15px] font-medium"
+                  style={
+                    isActive
+                      ? { background: "#4A6FA9", color: "#FFFFFF" }
+                      : {
+                          background: "#FFFFFF",
+                          color: "#666666",
+                          border: "0.5px solid #E8E1D5",
+                        }
+                  }
+                >
+                  {item}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         <section
-          className="mt-6 grid gap-4"
-          style={{ gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))" }}
+          className="mt-7 grid gap-6"
+          style={{ gridTemplateColumns: "repeat(auto-fill, minmax(400px, 1fr))" }}
         >
           {loading ? (
             Array.from({ length: 9 }).map((_, index) => (
-              <div key={index} className="h-[210px] animate-pulse rounded-[14px] bg-gray-100" />
+              <div key={index} className="h-[280px] animate-pulse rounded-[18px]" style={{ background: "#F5F2ED" }} />
             ))
           ) : filteredIssues.length === 0 ? (
             <div
-              className="col-span-full rounded-[14px] bg-white px-6 py-12 text-center"
-              style={{ border: "0.5px solid #E4E8EA" }}
+              className="col-span-full rounded-[18px] bg-white px-6 py-14 text-center"
+              style={{ border: "0.5px solid #E8E1D5" }}
             >
-              <p className="text-[16px] font-medium" style={{ color: "#1C2B2B" }}>
+              <p className="text-[22px] font-semibold" style={{ color: "#171717" }}>
                 No issues match your filters
               </p>
-              <p className="mt-1 text-[13px]" style={{ color: "#8A9BA8" }}>
+              <p className="mt-2 text-[16px]" style={{ color: "#666666" }}>
                 Try changing category, search term, or sort order.
               </p>
             </div>
@@ -280,24 +282,24 @@ export default function GrievancesFeedPage() {
               <article
                 key={issue?._id || issue?.id || issue?.title}
                 onClick={() => router.push(`/grievances/${issue?._id || issue?.id || ""}`)}
-                className="rounded-[14px] bg-white px-5 py-[18px] transition-colors"
-                style={{ border: "0.5px solid #E4E8EA", cursor: "pointer" }}
+                className="rounded-[18px] bg-white px-7 py-7 transition-colors"
+                style={{ border: "0.5px solid #E8E1D5", cursor: "pointer" }}
                 onMouseEnter={(event) => {
-                  event.currentTarget.style.borderColor = "#3A7D7B";
+                  event.currentTarget.style.borderColor = "#4A6FA9";
                 }}
                 onMouseLeave={(event) => {
-                  event.currentTarget.style.borderColor = "#E4E8EA";
+                  event.currentTarget.style.borderColor = "#E8E1D5";
                 }}
               >
                 <div className="flex items-center justify-between gap-2">
                   <span
-                    className="rounded-[20px] px-[10px] py-[2px] text-[11px] font-medium uppercase"
-                    style={{ background: "#EAF4F4", color: "#3A7D7B" }}
+                    className="rounded-[20px] px-3 py-1.5 text-[11px] font-medium uppercase"
+                    style={{ background: "#ECF0FF", color: "#4A6FA9" }}
                   >
                     {issue?.category || "GENERAL"}
                   </span>
                   <span
-                    className="rounded-[20px] px-[10px] py-[2px] text-[11px] font-medium"
+                    className="rounded-[20px] px-3 py-1.5 text-[11px] font-medium"
                     style={statusBadgeStyle(issue?.status)}
                   >
                     {String(issue?.status || "reported").replace("_", " ")}
@@ -305,16 +307,16 @@ export default function GrievancesFeedPage() {
                 </div>
 
                 <h2
-                  className="mt-2.5 overflow-hidden text-[16px] font-medium leading-[1.4]"
-                  style={{ color: "#1C2B2B", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" }}
+                  className="mt-3 overflow-hidden text-[24px] font-semibold leading-[1.35]"
+                  style={{ color: "#171717", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" }}
                 >
                   {issue?.title || "Untitled issue"}
                 </h2>
 
                 <p
-                  className="mt-1.5 overflow-hidden text-[13px] leading-[1.5]"
+                  className="mt-3 overflow-hidden text-[16px] leading-[1.7]"
                   style={{
-                    color: "#8A9BA8",
+                    color: "#666666",
                     display: "-webkit-box",
                     WebkitLineClamp: 2,
                     WebkitBoxOrient: "vertical",
@@ -323,23 +325,23 @@ export default function GrievancesFeedPage() {
                   {issue?.description || "No description available."}
                 </p>
 
-                <div className="mt-2.5 flex items-center gap-1.5 text-[12px]" style={{ color: "#B0BEC5" }}>
+                <div className="mt-3 flex items-center gap-1.5 text-[13px]" style={{ color: "#999999" }}>
                   <MapPin size={12} />
                   <span>{issue?.location || issue?.city || "Jalandhar"}</span>
                 </div>
 
                 <div
                   className="mt-3 flex items-center justify-between border-t pt-3"
-                  style={{ borderTop: "0.5px solid #E4E8EA" }}
+                  style={{ borderTop: "0.5px solid #E8E1D5" }}
                 >
-                  <span className="text-[11px] font-mono" style={{ color: "#B0BEC5" }}>
+                  <span className="text-[12px] font-mono" style={{ color: "#999999" }}>
                     {getRelativeTime(issue?.createdAt)}
                   </span>
 
                   <Link
                     href={`/grievances/${issue?._id || issue?.id || ""}`}
-                    className="text-[13px] no-underline"
-                    style={{ color: "#3A7D7B" }}
+                    className="text-[16px] no-underline font-medium"
+                    style={{ color: "#4A6FA9" }}
                     onClick={(event) => event.stopPropagation()}
                   >
                     View →
@@ -353,8 +355,8 @@ export default function GrievancesFeedPage() {
 
       <Link
         href="/grievances/new"
-        className="fixed bottom-6 right-6 z-50 inline-flex items-center justify-center rounded-[10px] px-5 py-3 text-[14px] font-medium text-white no-underline"
-        style={{ background: "#3A7D7B", boxShadow: "none" }}
+        className="fixed bottom-6 right-6 z-50 inline-flex items-center justify-center rounded-[12px] px-7 py-4 text-[17px] font-medium text-white no-underline transition-colors hover:bg-[#5B79B3]"
+        style={{ background: "#4A6FA9", boxShadow: "none" }}
       >
         Report Issue
       </Link>

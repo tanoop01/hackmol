@@ -143,7 +143,7 @@ export default function AuthorityDashboardPage() {
       return { label: "Medium", style: { background: "#FEF3C7", color: "#B45309" } };
     }
 
-    return { label: "Low", style: { background: "#EEF2F2", color: "#8A9BA8" } };
+    return { label: "Low", style: { background: "#F5F2ED", color: "#666666" } };
   }
 
   function getStatusBadgeStyle(status) {
@@ -152,7 +152,7 @@ export default function AuthorityDashboardPage() {
     }
 
     if (status === "in_progress") {
-      return { background: "#EAF4F4", color: "#3A7D7B" };
+      return { background: "#ECF0FF", color: "#4A6FA9" };
     }
 
     return { background: "#FEF3C7", color: "#B45309" };
@@ -181,8 +181,8 @@ export default function AuthorityDashboardPage() {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center" style={{ background: "#F5F8F8" }}>
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-teal-600 border-t-transparent" />
+      <div className="flex min-h-screen items-center justify-center" style={{ background: "#FAFAF8" }}>
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#4A6FA9] border-t-transparent" />
       </div>
     );
   }
@@ -192,40 +192,40 @@ export default function AuthorityDashboardPage() {
   }
 
   return (
-    <div className="min-h-screen" style={{ background: "#F5F8F8" }}>
+    <div className="min-h-screen" style={{ background: "#FAFAF8" }}>
       <Navbar />
 
       <section
         className="mt-14 flex flex-wrap items-center justify-between gap-3 bg-white px-10 py-5"
-        style={{ borderBottom: "0.5px solid #E4E8EA" }}
+        style={{ borderBottom: "0.5px solid #E8E1D5" }}
       >
         <div className="flex flex-wrap items-center gap-2">
-          <h1 className="text-[20px] font-medium" style={{ color: "#1C2B2B" }}>
+          <h1 className="text-[20px] font-semibold" style={{ color: "#171717" }}>
             {departmentName}
           </h1>
           <span
             className="rounded-[20px] px-3 py-[3px] text-[12px]"
-            style={{ background: "#EEF0FB", color: "#5B6FA6" }}
+            style={{ background: "#ECF0FF", color: "#4A6FA9" }}
           >
             {user?.city || "Jalandhar"}
           </span>
           <span
             className="rounded-[20px] px-3 py-[3px] text-[12px]"
-            style={{ background: "#EAF4F4", color: "#3A7D7B" }}
+            style={{ background: "#ECF0FF", color: "#4A6FA9" }}
           >
             {departmentType}
           </span>
         </div>
 
         <div className="flex items-center gap-3">
-          <span className="text-[13px]" style={{ color: "#8A9BA8" }}>
+          <span className="text-[13px]" style={{ color: "#666666" }}>
             {user?.name}
           </span>
           <button
             type="button"
             onClick={handleLogout}
             className="inline-flex items-center justify-center rounded-[10px] px-[16px] py-[8px] text-[13px]"
-            style={{ background: "#EEF2F2", border: "0.5px solid #E4E8EA", color: "#8A9BA8" }}
+            style={{ background: "#F5F2ED", border: "0.5px solid #E8E1D5", color: "#666666" }}
           >
             Logout
           </button>
@@ -234,40 +234,40 @@ export default function AuthorityDashboardPage() {
 
       <main className="px-10 py-8">
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-          <div className="rounded-[14px] bg-white px-6 py-5" style={{ border: "0.5px solid #E4E8EA" }}>
+          <div className="rounded-[14px] bg-white px-6 py-5" style={{ border: "0.5px solid #E8E1D5" }}>
             <div className="flex items-start justify-between">
-              <p className="text-[12px] uppercase tracking-[0.08em]" style={{ color: "#8A9BA8" }}>
+              <p className="text-[12px] uppercase tracking-[0.08em]" style={{ color: "#666666" }}>
                 Assigned Issues
               </p>
-              <Inbox size={20} style={{ color: "#3A7D7B" }} />
+              <Inbox size={20} style={{ color: "#4A6FA9" }} />
             </div>
-            <p className="mt-2 text-[32px] font-medium" style={{ color: "#1C2B2B" }}>
+            <p className="mt-2 text-[32px] font-medium" style={{ color: "#171717" }}>
               {stats.assignedIssues}
             </p>
           </div>
 
-          <div className="rounded-[14px] bg-white px-6 py-5" style={{ border: "0.5px solid #E4E8EA" }}>
+          <div className="rounded-[14px] bg-white px-6 py-5" style={{ border: "0.5px solid #E8E1D5" }}>
             <div className="flex items-start justify-between">
-              <p className="text-[12px] uppercase tracking-[0.08em]" style={{ color: "#8A9BA8" }}>
+              <p className="text-[12px] uppercase tracking-[0.08em]" style={{ color: "#666666" }}>
                 In Progress
               </p>
               <span className="rounded-full p-1.5" style={{ background: "#FEF3C7" }}>
                 <Clock size={16} style={{ color: "#B45309" }} />
               </span>
             </div>
-            <p className="mt-2 text-[32px] font-medium" style={{ color: "#1C2B2B" }}>
+            <p className="mt-2 text-[32px] font-medium" style={{ color: "#171717" }}>
               {stats.inProgress}
             </p>
           </div>
 
-          <div className="rounded-[14px] bg-white px-6 py-5" style={{ border: "0.5px solid #E4E8EA" }}>
+          <div className="rounded-[14px] bg-white px-6 py-5" style={{ border: "0.5px solid #E8E1D5" }}>
             <div className="flex items-start justify-between">
-              <p className="text-[12px] uppercase tracking-[0.08em]" style={{ color: "#8A9BA8" }}>
+              <p className="text-[12px] uppercase tracking-[0.08em]" style={{ color: "#666666" }}>
                 Resolved This Month
               </p>
               <CheckCircle size={20} style={{ color: "#2E7D32" }} />
             </div>
-            <p className="mt-2 text-[32px] font-medium" style={{ color: "#1C2B2B" }}>
+            <p className="mt-2 text-[32px] font-medium" style={{ color: "#171717" }}>
               {stats.resolvedThisMonth}
             </p>
           </div>
@@ -275,7 +275,7 @@ export default function AuthorityDashboardPage() {
 
         <section className="mt-10">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <h2 className="text-[20px] font-medium" style={{ color: "#1C2B2B" }}>
+            <h2 className="text-[20px] font-semibold" style={{ color: "#171717" }}>
               Assigned Grievances
             </h2>
 
@@ -286,8 +286,8 @@ export default function AuthorityDashboardPage() {
                 className="rounded-[20px] px-4 py-1.5 text-[13px]"
                 style={
                   sortBy === "supported"
-                    ? { background: "#1C2B2B", color: "#FFFFFF" }
-                    : { background: "#EEF2F2", color: "#8A9BA8" }
+                    ? { background: "#171717", color: "#FFFFFF" }
+                    : { background: "#F5F2ED", color: "#666666" }
                 }
               >
                 Most Supported
@@ -298,8 +298,8 @@ export default function AuthorityDashboardPage() {
                 className="rounded-[20px] px-4 py-1.5 text-[13px]"
                 style={
                   sortBy === "newest"
-                    ? { background: "#1C2B2B", color: "#FFFFFF" }
-                    : { background: "#EEF2F2", color: "#8A9BA8" }
+                    ? { background: "#171717", color: "#FFFFFF" }
+                    : { background: "#F5F2ED", color: "#666666" }
                 }
               >
                 Newest
@@ -316,8 +316,8 @@ export default function AuthorityDashboardPage() {
                 className="rounded-[20px] px-4 py-1.5 text-[13px]"
                 style={
                   filterBy === tab
-                    ? { background: "#3A7D7B", color: "#FFFFFF" }
-                    : { background: "#EEF2F2", color: "#4A6060" }
+                    ? { background: "#4A6FA9", color: "#FFFFFF" }
+                    : { background: "#F5F2ED", color: "#666666" }
                 }
               >
                 {tab === "all"
@@ -341,12 +341,12 @@ export default function AuthorityDashboardPage() {
             ) : sortedAndFilteredIssues.length === 0 ? (
               <div
                 className="rounded-[14px] bg-white px-6 py-10 text-center"
-                style={{ border: "0.5px solid #E4E8EA" }}
+                style={{ border: "0.5px solid #E8E1D5" }}
               >
-                <p className="text-[16px] font-medium" style={{ color: "#1C2B2B" }}>
+                <p className="text-[16px] font-medium" style={{ color: "#171717" }}>
                   No assigned grievances found
                 </p>
-                <p className="mt-1 text-[13px]" style={{ color: "#8A9BA8" }}>
+                <p className="mt-1 text-[13px]" style={{ color: "#666666" }}>
                   Assigned issues will appear here as citizens report them.
                 </p>
               </div>
@@ -357,13 +357,13 @@ export default function AuthorityDashboardPage() {
                   <article
                     key={issue?._id || issue?.id || issue?.title}
                     className="rounded-[14px] bg-white px-5 py-[18px]"
-                    style={{ border: "0.5px solid #E4E8EA" }}
+                    style={{ border: "0.5px solid #E8E1D5" }}
                   >
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <div className="flex flex-wrap items-center gap-2">
                         <span
                           className="rounded-[20px] px-[10px] py-[2px] text-[11px] font-medium uppercase"
-                          style={{ background: "#EAF4F4", color: "#3A7D7B" }}
+                          style={{ background: "#ECF0FF", color: "#4A6FA9" }}
                         >
                           {issue?.category || "GENERAL"}
                         </span>
@@ -384,27 +384,27 @@ export default function AuthorityDashboardPage() {
                       </span>
                     </div>
 
-                    <h3 className="mt-2 text-[16px] font-medium" style={{ color: "#1C2B2B" }}>
+                    <h3 className="mt-2 text-[16px] font-semibold" style={{ color: "#171717" }}>
                       {issue?.title || "Untitled issue"}
                     </h3>
 
-                    <p className="mt-1 text-[13px]" style={{ color: "#8A9BA8" }}>
+                    <p className="mt-1 text-[13px]" style={{ color: "#666666" }}>
                       {String(issue?.description || "No description available").slice(0, 100)}
                       {String(issue?.description || "").length > 100 ? "..." : ""}
                     </p>
 
                     <div className="mt-3 flex flex-wrap items-center gap-4">
-                      <div className="inline-flex items-center gap-1.5 text-[13px] font-medium" style={{ color: "#3A7D7B" }}>
+                      <div className="inline-flex items-center gap-1.5 text-[13px] font-medium" style={{ color: "#4A6FA9" }}>
                         <ThumbsUp size={14} />
                         <span>{issue?.supportCount || 0}</span>
                       </div>
 
-                      <div className="inline-flex items-center gap-1.5 text-[13px]" style={{ color: "#8A9BA8" }}>
+                      <div className="inline-flex items-center gap-1.5 text-[13px]" style={{ color: \"#666666\" }}>
                         <MapPin size={14} />
-                        <span>{issue?.location || issue?.city || "Jalandhar"}</span>
+                        <span>{issue?.location || issue?.city || \"Jalandhar\"}</span>
                       </div>
 
-                      <div className="inline-flex items-center gap-1.5 text-[13px]" style={{ color: "#8A9BA8" }}>
+                      <div className="inline-flex items-center gap-1.5 text-[13px]" style={{ color: \"#666666\" }}>
                         <Clock size={14} />
                         <span>{getRelativeTime(issue?.createdAt)}</span>
                       </div>
@@ -412,7 +412,7 @@ export default function AuthorityDashboardPage() {
                       <Link
                         href={`/dashboard/authority/issue/${issue?._id || issue?.id || ""}`}
                         className="ml-auto inline-flex items-center justify-center rounded-[8px] px-3.5 py-1.5 text-[13px] no-underline"
-                        style={{ border: "1.5px solid #3A7D7B", color: "#3A7D7B", background: "transparent" }}
+                        style={{ border: "1.5px solid #4A6FA9", color: "#4A6FA9", background: "transparent" }}
                       >
                         Update Status →
                       </Link>

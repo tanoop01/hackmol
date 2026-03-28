@@ -104,11 +104,11 @@ export default function AuthorityIssueDetailPage() {
 
   function statusBadgeStyle(status) {
     if (status === "resolved") {
-      return { background: "#E8F5E9", color: "#2E7D32" };
+      return { background: "#DCFCE7", color: "#16A34A" };
     }
 
     if (status === "in_progress") {
-      return { background: "#EAF4F4", color: "#3A7D7B" };
+      return { background: "#ECF0FF", color: "#4A6FA9" };
     }
 
     return { background: "#FEF3C7", color: "#B45309" };
@@ -148,9 +148,9 @@ export default function AuthorityIssueDetailPage() {
 
       toast.success("Status updated successfully", {
         style: {
-          border: "0.5px solid #D6F2DE",
-          background: "#E8F5E9",
-          color: "#2E7D32",
+          border: "0.5px solid #BBEF63",
+          background: "#DCFCE7",
+          color: "#16A34A",
         },
       });
 
@@ -166,8 +166,8 @@ export default function AuthorityIssueDetailPage() {
 
   if (userLoading || loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center" style={{ background: "#F5F8F8" }}>
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-teal-600 border-t-transparent" />
+      <div className="flex min-h-screen items-center justify-center" style={{ background: "#FAFAF8" }}>
+        <div className="h-8 w-8 animate-spin rounded-full border-2" style={{ borderColor: "#4A6FA9", borderTopColor: "transparent" }} />
       </div>
     );
   }
@@ -177,12 +177,12 @@ export default function AuthorityIssueDetailPage() {
   }
 
   return (
-    <div className="min-h-screen" style={{ background: "#F5F8F8" }}>
+    <div className="min-h-screen" style={{ background: "#FAFAF8" }}>
       <Navbar />
       <Toaster position="top-center" />
 
       <main className="px-10 pb-10 pt-20">
-        <Link href="/dashboard/authority" className="text-[14px] no-underline" style={{ color: "#3A7D7B" }}>
+        <Link href="/dashboard/authority" className="text-[14px] no-underline" style={{ color: "#4A6FA9" }}>
           ← Back to Dashboard
         </Link>
 
@@ -190,12 +190,12 @@ export default function AuthorityIssueDetailPage() {
           <section className="xl:col-span-2">
             <article
               className="rounded-[14px] bg-white px-7 py-6"
-              style={{ border: "0.5px solid #E4E8EA" }}
+              style={{ border: "0.5px solid #E8E1D5" }}
             >
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <span
-                  className="rounded-[20px] px-[10px] py-[2px] text-[11px] font-medium uppercase"
-                  style={{ background: "#EAF4F4", color: "#3A7D7B" }}
+                  className="rounded-[20px] px-3 py-1.5 text-[11px] font-medium uppercase"
+                  style={{ background: "#ECF0FF", color: "#4A6FA9" }}
                 >
                   {grievance?.category || "GENERAL"}
                 </span>
@@ -207,11 +207,11 @@ export default function AuthorityIssueDetailPage() {
                 </span>
               </div>
 
-              <h1 className="mt-2.5 text-[22px] font-medium" style={{ color: "#1C2B2B" }}>
+              <h1 className="mt-2.5 text-[28px] font-semibold" style={{ color: "#171717" }}>
                 {grievance?.title || "Untitled issue"}
               </h1>
 
-              <div className="mt-3 flex flex-wrap items-center gap-4 text-[13px]" style={{ color: "#8A9BA8" }}>
+              <div className="mt-3 flex flex-wrap items-center gap-4 text-[13px]" style={{ color: "#666666" }}>
                 <span className="inline-flex items-center gap-1.5">
                   <MapPin size={14} />
                   {grievance?.location || grievance?.city || "Jalandhar"}
@@ -226,15 +226,15 @@ export default function AuthorityIssueDetailPage() {
                 </span>
               </div>
 
-              <div className="my-4 h-px" style={{ background: "#E4E8EA" }} />
+              <div className="my-4 h-px" style={{ background: "#E8E1D5" }} />
 
               <p
                 className="text-[12px] uppercase tracking-[0.08em]"
-                style={{ color: "#B0BEC5" }}
+                style={{ color: "#999999" }}
               >
                 Issue Description
               </p>
-              <p className="mt-2 text-[15px] leading-[1.7]" style={{ color: "#4A6060" }}>
+              <p className="mt-2 text-[16px] leading-[1.7]" style={{ color: "#666666" }}>
                 {grievance?.description || "No description provided."}
               </p>
 
@@ -242,7 +242,7 @@ export default function AuthorityIssueDetailPage() {
                 <div className="mt-6">
                   <p
                     className="text-[12px] uppercase tracking-[0.08em]"
-                    style={{ color: "#B0BEC5" }}
+                    style={{ color: "#999999" }}
                   >
                     Evidence
                   </p>
@@ -253,7 +253,7 @@ export default function AuthorityIssueDetailPage() {
                           src={imageUrl}
                           alt="Evidence"
                           className="h-20 w-20 rounded-[8px] object-cover"
-                          style={{ border: "0.5px solid #E4E8EA", cursor: "pointer" }}
+                          style={{ border: "0.5px solid #E8E1D5", cursor: "pointer" }}
                         />
                       </a>
                     ))}
@@ -265,13 +265,13 @@ export default function AuthorityIssueDetailPage() {
                 <div className="mt-6">
                   <p
                     className="text-[12px] uppercase tracking-[0.08em]"
-                    style={{ color: "#B0BEC5" }}
+                    style={{ color: "#999999" }}
                   >
                     Legal Context
                   </p>
                   <div
                     className="mt-2 rounded-[10px] px-4 py-3 text-[13px]"
-                    style={{ background: "#EEF0FB", border: "0.5px solid #C7CFE8", color: "#4A6060" }}
+                    style={{ background: "#F0F3FF", border: "0.5px solid #D4DFF5", color: "#666666" }}
                   >
                     {grievance.legalContext}
                   </div>
@@ -279,7 +279,7 @@ export default function AuthorityIssueDetailPage() {
               ) : null}
 
               <div className="mt-7">
-                <p className="text-[16px] font-medium" style={{ color: "#1C2B2B" }}>
+                <p className="text-[18px] font-semibold" style={{ color: "#171717" }}>
                   Status History
                 </p>
 
@@ -291,21 +291,21 @@ export default function AuthorityIssueDetailPage() {
                         <div className="relative flex flex-col items-center">
                           <span
                             className="block h-2 w-2 rounded-full"
-                            style={{ background: isLatest ? "#3A7D7B" : "#B0BEC5" }}
+                            style={{ background: isLatest ? "#4A6FA9" : "#D4D4D8" }}
                           />
                           {index < statusHistory.length - 1 ? (
                             <span
                               className="mt-1 block w-px flex-1"
-                              style={{ background: "#E4E8EA", minHeight: "20px" }}
+                              style={{ background: "#E8E1D5", minHeight: "20px" }}
                             />
                           ) : null}
                         </div>
 
                         <div>
-                          <p className="text-[13px] font-medium" style={{ color: "#1C2B2B" }}>
+                          <p className="text-[13px] font-medium" style={{ color: "#171717" }}>
                             {prettyStatus(entry?.status)}
                           </p>
-                          <p className="text-[12px]" style={{ color: "#8A9BA8" }}>
+                          <p className="text-[12px]" style={{ color: "#999999" }}>
                             {new Date(entry?.date || Date.now()).toLocaleString()}
                           </p>
                         </div>
@@ -321,9 +321,9 @@ export default function AuthorityIssueDetailPage() {
             <form
               onSubmit={handleSubmit}
               className="rounded-[14px] bg-white px-6 py-6"
-              style={{ border: "0.5px solid #E4E8EA" }}
+              style={{ border: "0.5px solid #E8E1D5" }}
             >
-              <h2 className="text-[16px] font-medium" style={{ color: "#1C2B2B" }}>
+              <h2 className="text-[18px] font-semibold" style={{ color: "#171717" }}>
                 Update Status
               </h2>
 
@@ -356,10 +356,10 @@ export default function AuthorityIssueDetailPage() {
                       onClick={() => setSelectedStatus(option.key)}
                       className="w-full rounded-[10px] px-4 py-3 text-left text-[14px]"
                       style={{
-                        border: `0.5px solid ${isSelected ? option.border : "#E4E8EA"}`,
+                        border: `0.5px solid ${isSelected ? option.border : "#E8E1D5"}`,
                         borderLeft: `3px solid ${option.border}`,
                         background: isSelected ? option.tint : "#FFFFFF",
-                        color: "#1C2B2B",
+                        color: "#171717",
                         cursor: "pointer",
                       }}
                     >
@@ -375,7 +375,7 @@ export default function AuthorityIssueDetailPage() {
                     <label
                       htmlFor="resolution-note"
                       className="block text-[13px] font-medium"
-                      style={{ color: "#4A6060" }}
+                      style={{ color: "#666666" }}
                     >
                       Resolution Note
                     </label>
@@ -386,27 +386,27 @@ export default function AuthorityIssueDetailPage() {
                       placeholder="Describe how this issue was resolved..."
                       className="mt-1.5 w-full resize-none rounded-[10px] px-[14px] py-[10px] text-[14px] focus:outline-none"
                       style={{
-                        border: "0.5px solid #E4E8EA",
-                        background: "#EEF2F2",
+                        border: "0.5px solid #E8E1D5",
+                        background: "#F5F2ED",
                         minHeight: "100px",
                       }}
                     />
                   </div>
 
                   <div className="mt-4">
-                    <p className="text-[13px] font-medium" style={{ color: "#4A6060" }}>
+                    <p className="text-[13px] font-medium" style={{ color: "#666666" }}>
                       Upload Proof (optional)
                     </p>
                     <label
                       htmlFor="proof-upload"
                       className="mt-1.5 block cursor-pointer rounded-[10px] px-4 py-5 text-center"
-                      style={{ border: "1.5px dashed #E4E8EA", color: "#B0BEC5" }}
+                      style={{ border: "1.5px dashed #E8E1D5", color: "#999999" }}
                     >
                       <div className="flex flex-col items-center gap-1">
                         <Upload size={18} />
                         <span className="text-[13px]">Click to upload image</span>
                         {proofFile ? (
-                          <span className="text-[12px]" style={{ color: "#4A6060" }}>
+                          <span className="text-[12px]" style={{ color: "#666666" }}>
                             {proofFile.name}
                           </span>
                         ) : null}
@@ -426,8 +426,8 @@ export default function AuthorityIssueDetailPage() {
               <button
                 type="submit"
                 disabled={submitLoading}
-                className="mt-5 inline-flex w-full items-center justify-center rounded-[10px] px-4 py-[11px] text-[14px] font-medium text-white"
-                style={{ background: "#3A7D7B" }}
+                className="mt-5 inline-flex w-full items-center justify-center rounded-[10px] px-4 py-[11px] text-[14px] font-medium text-white transition-colors hover:bg-[#5B79B3]"
+                style={{ background: "#4A6FA9" }}
               >
                 {submitLoading ? (
                   <span className="inline-flex items-center gap-2">

@@ -10,9 +10,9 @@ export async function POST(request) {
   try {
     await db();
 
-    const { name, email, password, city, phone, phoneVerified } = await request.json();
+    const { name, email, password, city, state, phone, phoneVerified } = await request.json();
 
-    if (!name || !email || !password || !city || !phone) {
+    if (!name || !email || !password || !city || !state || !phone) {
       return NextResponse.json(
         { success: false, message: "All fields are required" },
         { status: 400 }
@@ -71,6 +71,7 @@ export async function POST(request) {
       email: normalizedEmail,
       password: hashedPassword,
       city: String(city).trim(),
+      state: String(state).trim(),
       phone: normalizedPhone,
       isPhoneVerified: true,
       role: "citizen",
@@ -90,6 +91,7 @@ export async function POST(request) {
           name: user.name,
           email: user.email,
           city: user.city,
+          state: user.state,
           role: user.role,
         },
       },

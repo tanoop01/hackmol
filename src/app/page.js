@@ -1,259 +1,269 @@
+import Image from "next/image";
 import Link from "next/link";
-import { CheckCircle, FileText, MapPin, Users } from "lucide-react";
+import {
+  ArrowRight,
+  CheckCircle2,
+  FileText,
+  Landmark,
+  ScrollText,
+  ShieldCheck,
+} from "lucide-react";
 import Navbar from "@/components/Navbar";
 
 export default function Home() {
-  const sampleIssues = [
+  const stats = [
+    { label: "Private grievances processed", value: "2,400+" },
+    { label: "Public petition signatures", value: "31,000+" },
+    { label: "Departments onboarded", value: "40+" },
+  ];
+
+  const featureCards = [
     {
-      category: "WATER",
-      title: "No water supply for 3 days in Model Town",
-      city: "Jalandhar",
-      supports: 142,
-      status: "Pending",
+      icon: FileText,
+      title: "Private Grievance Desk",
+      text: "Report an issue privately. Only you and the assigned authority can access details and updates.",
+      tint: "#EEF4FF",
+      iconColor: "#2F4D86",
     },
     {
-      category: "ROADS",
-      title: "Broken streetlights on GT Road",
-      city: "Jalandhar",
-      supports: 87,
-      status: "In Progress",
+      icon: ScrollText,
+      title: "Public Petition Layer",
+      text: "Mobilize civic pressure transparently. Citizens discover public petitions and sign in one click.",
+      tint: "#EEF8F7",
+      iconColor: "#2B6B68",
     },
     {
-      category: "SANITATION",
-      title: "Garbage not collected for a week",
-      city: "Jalandhar",
-      supports: 203,
-      status: "Resolved",
+      icon: ShieldCheck,
+      title: "Accountability by Design",
+      text: "Status timelines, authority ownership, and proof-based updates keep action visible and trackable.",
+      tint: "#F3F0FF",
+      iconColor: "#4A4A85",
     },
   ];
 
-  const getStatusStyles = (status) => {
-    if (status === "Resolved") {
-      return { background: "#E8F5E9", color: "#2E7D32" };
-    }
-
-    if (status === "In Progress") {
-      return { background: "#EAF4F4", color: "#3A7D7B" };
-    }
-
-    return { background: "#FEF3C7", color: "#B45309" };
-  };
-
   return (
-    <div className="min-h-screen" style={{ background: "#F5F8F8" }}>
+    <div className="min-h-screen" style={{ background: "#FAFAF8" }}>
       <Navbar />
 
       <main>
-        <section className="w-full px-6 pt-[100px] pb-20 text-center">
-          <div className="mx-auto flex max-w-4xl flex-col items-center">
+        <section className="relative overflow-hidden px-6 pb-24 pt-[108px] md:px-10">
+          <div
+            className="pointer-events-none absolute -right-28 -top-10 h-[320px] w-[320px] rounded-full"
+            style={{ background: "radial-gradient(circle, rgba(74,111,169,0.18) 0%, rgba(74,111,169,0) 72%)" }}
+          />
+          <div
+            className="pointer-events-none absolute -left-24 top-24 h-[240px] w-[240px] rounded-full"
+            style={{ background: "radial-gradient(circle, rgba(16,80,88,0.12) 0%, rgba(16,80,88,0) 72%)" }}
+          />
+
+          <div className="mx-auto max-w-6xl">
             <span
-              className="inline-block rounded-[20px] px-[14px] py-1 text-[12px]"
-              style={{ background: "#EAF4F4", color: "#3A7D7B" }}
+              className="inline-flex items-center rounded-full px-4 py-1.5 text-[12px] font-medium tracking-[0.04em]"
+              style={{ background: "#EAE6DF", color: "#3A3A3A" }}
             >
-              Built for Jalandhar · Expanding to all cities
+              Civic operations platform for Indian cities
             </span>
 
-            <h1
-              className="mx-auto mt-4 max-w-[640px] text-4xl font-medium leading-[1.3]"
-              style={{ color: "#1C2B2B" }}
-            >
-              Report civic issues. Build community pressure. Force resolution.
-            </h1>
+            <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-[1.2fr_0.8fr]">
+              <div>
+                <h1
+                  className="text-[48px] font-semibold leading-[1.08] tracking-[-0.02em] md:text-[64px]"
+                  style={{ color: "#171717", fontFamily: "Georgia, 'Times New Roman', serif" }}
+                >
+                  Make civic issues impossible to ignore.
+                </h1>
 
-            <p className="mx-auto mt-4 max-w-[480px] text-[15px]" style={{ color: "#8A9BA8" }}>
-              NagarSeva connects citizens with city authorities through AI-structured complaints
-              grounded in real laws.
-            </p>
+                <p
+                  className="mt-6 max-w-[720px] text-[19px] leading-[1.75] md:text-[22px]"
+                  style={{ color: "#3F3F3F" }}
+                >
+                  NyaySetu combines private grievance handling with public petition momentum. Citizens
+                  get secure reporting, authorities get structured workflows, and cities get faster
+                  resolution with measurable accountability.
+                </p>
 
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Link
-                href="/grievances/new"
-                className="btn-primary inline-flex items-center justify-center no-underline"
-                style={{ padding: "11px 24px", fontSize: "14px" }}
-              >
-                Report an Issue
-              </Link>
-              <Link
-                href="/grievances"
-                className="btn-outline inline-flex items-center justify-center no-underline"
-                style={{ padding: "11px 24px", fontSize: "14px" }}
-              >
-                Browse Issues
-              </Link>
-            </div>
+                <div className="mt-10 flex flex-wrap items-center gap-4">
+                  <Link
+                    href="/grievances/new"
+                    className="inline-flex items-center justify-center rounded-[12px] px-7 py-3.5 text-[16px] font-medium text-white no-underline"
+                    style={{ background: "#4A6FA9" }}
+                  >
+                    Report a Grievance
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                  <Link
+                    href="/petition"
+                    className="inline-flex items-center justify-center rounded-[12px] px-7 py-3.5 text-[16px] font-medium no-underline"
+                    style={{ border: "1.5px solid #4A6FA9", color: "#4A6FA9", background: "transparent" }}
+                  >
+                    Explore Petitions
+                  </Link>
+                </div>
+              </div>
 
-            <div className="mt-6 flex w-full max-w-[440px] items-center gap-2 max-[480px]:flex-col">
-              <input
-                type="text"
-                placeholder="Search issues in Jalandhar..."
-                className="w-full"
-                style={{
-                  borderRadius: "10px",
-                  border: "0.5px solid #E4E8EA",
-                  background: "#FFFFFF",
-                  padding: "10px 16px",
-                  fontSize: "14px",
-                  boxShadow: "none",
-                  outline: "none",
-                }}
-              />
-              <button
-                type="button"
-                className="btn-primary max-[480px]:w-full"
-                style={{ padding: "10px 16px", fontSize: "13px" }}
+              <aside
+                className="rounded-[24px] bg-white p-7"
+                style={{ border: "1px solid #E8E1D5" }}
               >
-                Search
-              </button>
+                <p className="text-[12px] font-semibold tracking-[0.12em]" style={{ color: "#6A6A6A" }}>
+                  WHY CITIES CHOOSE THIS
+                </p>
+
+                <div className="mt-5 space-y-5">
+                  <div className="rounded-[16px] px-4 py-4" style={{ background: "#F5F7FC" }}>
+                    <div className="inline-flex items-center gap-2 text-[15px] font-medium" style={{ color: "#4A6FA9" }}>
+                      <Landmark className="h-4 w-4" />
+                      Authority-first workflow
+                    </div>
+                    <p className="mt-2 text-[14px] leading-[1.6]" style={{ color: "#4B4B4B" }}>
+                      Every grievance is directly assigned to relevant departments with status tracking.
+                    </p>
+                  </div>
+
+                  <div className="rounded-[16px] px-4 py-4" style={{ background: "#F1F7F6" }}>
+                    <div className="inline-flex items-center gap-2 text-[15px] font-medium" style={{ color: "#1B5B68" }}>
+                      <CheckCircle2 className="h-4 w-4" />
+                      Clear citizen journey
+                    </div>
+                    <p className="mt-2 text-[14px] leading-[1.6]" style={{ color: "#4B4B4B" }}>
+                      Private issue resolution first. Public petition signing only when collective push is needed.
+                    </p>
+                  </div>
+                </div>
+              </aside>
             </div>
           </div>
         </section>
 
-        <section className="bg-white py-5" style={{ borderTop: "0.5px solid #E4E8EA", borderBottom: "0.5px solid #E4E8EA" }}>
-          <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-12 px-6">
-            <div className="text-center">
-              <p className="text-[26px] font-semibold" style={{ color: "#3A7D7B" }}>
-                247
-              </p>
-              <p className="mt-1 text-[13px]" style={{ color: "#8A9BA8" }}>
-                Issues Reported
-              </p>
-            </div>
-            <div className="text-center">
-              <p className="text-[26px] font-semibold" style={{ color: "#3A7D7B" }}>
-                89
-              </p>
-              <p className="mt-1 text-[13px]" style={{ color: "#8A9BA8" }}>
-                Resolved
-              </p>
-            </div>
-            <div className="text-center">
-              <p className="text-[26px] font-semibold" style={{ color: "#3A7D7B" }}>
-                12k+
-              </p>
-              <p className="mt-1 text-[13px]" style={{ color: "#8A9BA8" }}>
-                Citizens Supported
-              </p>
-            </div>
+        <section className="px-6 pb-16 md:px-10">
+          <div
+            className="mx-auto grid max-w-6xl grid-cols-1 gap-4 rounded-[24px] bg-white p-7 md:grid-cols-3 md:p-10"
+            style={{ border: "1px solid #E8E1D5" }}
+          >
+            {stats.map((item) => (
+              <div key={item.label} className="rounded-[16px] px-4 py-3" style={{ background: "#FAF8F2" }}>
+                <p className="text-[38px] font-semibold leading-none md:text-[46px]" style={{ color: "#171717" }}>
+                  {item.value}
+                </p>
+                <p className="mt-2 text-[14px] md:text-[15px]" style={{ color: "#666666" }}>
+                  {item.label}
+                </p>
+              </div>
+            ))}
           </div>
         </section>
 
-        <section className="px-8 py-16 text-center" style={{ background: "#F5F8F8" }}>
-          <p className="text-[11px] font-medium tracking-[0.09em]" style={{ color: "#B0BEC5" }}>
-            HOW IT WORKS
-          </p>
-          <h2 className="mt-2 text-2xl font-medium" style={{ color: "#1C2B2B" }}>
-            Three steps to civic change
-          </h2>
-
-          <div className="mx-auto mt-10 grid max-w-6xl grid-cols-1 gap-5 md:grid-cols-3">
-            <div
-              className="mx-auto w-full max-w-[300px] rounded-[14px] bg-white px-5 py-6 text-left"
-              style={{ border: "0.5px solid #E4E8EA" }}
-            >
-              <p className="text-[11px] font-medium tracking-[0.09em]" style={{ color: "#3A7D7B" }}>
-                01
-              </p>
-              <FileText className="mt-3 h-5 w-5" style={{ color: "#3A7D7B" }} />
-              <h3 className="mt-3 text-[15px] font-medium" style={{ color: "#1C2B2B" }}>
-                Report
-              </h3>
-              <p className="mt-1.5 text-[13px] leading-[1.6]" style={{ color: "#8A9BA8" }}>
-                Describe your civic issue. Our AI structures it and maps it to the right authority
-                with legal context.
-              </p>
-            </div>
-
-            <div
-              className="mx-auto w-full max-w-[300px] rounded-[14px] bg-white px-5 py-6 text-left"
-              style={{ border: "0.5px solid #E4E8EA" }}
-            >
-              <p className="text-[11px] font-medium tracking-[0.09em]" style={{ color: "#3A7D7B" }}>
-                02
-              </p>
-              <Users className="mt-3 h-5 w-5" style={{ color: "#3A7D7B" }} />
-              <h3 className="mt-3 text-[15px] font-medium" style={{ color: "#1C2B2B" }}>
-                Support
-              </h3>
-              <p className="mt-1.5 text-[13px] leading-[1.6]" style={{ color: "#8A9BA8" }}>
-                Other citizens validate the issue by supporting it. More support = more pressure
-                on authorities.
-              </p>
-            </div>
-
-            <div
-              className="mx-auto w-full max-w-[300px] rounded-[14px] bg-white px-5 py-6 text-left"
-              style={{ border: "0.5px solid #E4E8EA" }}
-            >
-              <p className="text-[11px] font-medium tracking-[0.09em]" style={{ color: "#3A7D7B" }}>
-                03
-              </p>
-              <CheckCircle className="mt-3 h-5 w-5" style={{ color: "#3A7D7B" }} />
-              <h3 className="mt-3 text-[15px] font-medium" style={{ color: "#1C2B2B" }}>
-                Resolve
-              </h3>
-              <p className="mt-1.5 text-[13px] leading-[1.6]" style={{ color: "#8A9BA8" }}>
-                Assigned authority is notified and must update status with proof. Escalate via
-                petition if ignored.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section className="bg-white px-8 py-16">
+        <section className="px-6 py-10 md:px-10 md:py-16">
           <div className="mx-auto max-w-6xl">
-            <h2 className="text-[22px] font-medium" style={{ color: "#1C2B2B" }}>
-              What people are reporting
+            <p className="text-[12px] font-semibold tracking-[0.12em]" style={{ color: "#6A6A6A" }}>
+              PLATFORM CAPABILITIES
+            </p>
+            <h2
+              className="mt-4 max-w-4xl text-[36px] font-semibold leading-[1.15] md:text-[52px]"
+              style={{ color: "#171717", fontFamily: "Georgia, 'Times New Roman', serif" }}
+            >
+              Built for calm operations, trusted data, and visible civic outcomes.
             </h2>
 
             <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-3">
-              {sampleIssues.map((issue) => (
-                <article
-                  key={issue.title}
-                  className="rounded-[14px] px-5 py-4"
-                  style={{ background: "#F5F8F8", border: "0.5px solid #E4E8EA" }}
-                >
-                  <span className="tag">{issue.category}</span>
-
-                  <h3 className="mt-3 text-[15px] font-medium leading-[1.4]" style={{ color: "#1C2B2B" }}>
-                    {issue.title}
-                  </h3>
-
-                  <p className="mt-2 flex items-center gap-1.5 text-[12px]" style={{ color: "#B0BEC5" }}>
-                    <MapPin className="h-3.5 w-3.5" />
-                    {issue.city}
-                  </p>
-
-                  <div className="mt-4 flex items-center justify-between">
-                    <p className="text-[13px]" style={{ color: "#4A6060" }}>
-                      {issue.supports} supports
-                    </p>
-                    <span
-                      className="rounded-[20px] px-[10px] py-[2px] text-[11px] font-medium"
-                      style={getStatusStyles(issue.status)}
+              {featureCards.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <article
+                    key={item.title}
+                    className="rounded-[22px] bg-white p-7"
+                    style={{ border: "1px solid #E8E1D5" }}
+                  >
+                    <div
+                      className="inline-flex h-11 w-11 items-center justify-center rounded-[12px]"
+                      style={{ background: item.tint }}
                     >
-                      {issue.status}
-                    </span>
-                  </div>
-                </article>
-              ))}
+                      <Icon className="h-5 w-5" style={{ color: item.iconColor }} />
+                    </div>
+                    <h3 className="mt-5 text-[24px] font-semibold leading-[1.25]" style={{ color: "#171717" }}>
+                      {item.title}
+                    </h3>
+                    <p className="mt-3 text-[16px] leading-[1.75]" style={{ color: "#555555" }}>
+                      {item.text}
+                    </p>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        <section className="px-6 pb-20 md:px-10">
+          <div
+            className="mx-auto max-w-6xl rounded-[28px] bg-white px-7 py-10 md:px-12 md:py-14"
+            style={{ border: "1px solid #E8E1D5" }}
+          >
+            <h2
+              className="text-[34px] font-semibold leading-[1.18] md:text-[46px]"
+              style={{ color: "#171717", fontFamily: "Georgia, 'Times New Roman', serif" }}
+            >
+              One platform. Two focused civic channels.
+            </h2>
+
+            <div className="mt-7 grid grid-cols-1 gap-5 md:grid-cols-2">
+              <div className="rounded-[18px] px-5 py-5" style={{ background: "#FAF8F2" }}>
+                <p className="text-[12px] font-semibold tracking-[0.1em]" style={{ color: "#6A6A6A" }}>
+                  PRIVATE CHANNEL
+                </p>
+                <p className="mt-2 text-[24px] font-semibold" style={{ color: "#171717" }}>
+                  Grievance to authority workflow
+                </p>
+                <p className="mt-2 text-[16px] leading-[1.75]" style={{ color: "#555555" }}>
+                  Citizens report securely, authorities respond with status and proof, and ownership stays clear.
+                </p>
+              </div>
+
+              <div className="rounded-[18px] px-5 py-5" style={{ background: "#EEF4FF" }}>
+                <p className="text-[12px] font-semibold tracking-[0.1em]" style={{ color: "#425A8B" }}>
+                  PUBLIC CHANNEL
+                </p>
+                <p className="mt-2 text-[24px] font-semibold" style={{ color: "#1B2D55" }}>
+                  Petition discovery and signatures
+                </p>
+                <p className="mt-2 text-[16px] leading-[1.75]" style={{ color: "#425A8B" }}>
+                  Community momentum happens through petitions. Citizens sign, track, and escalate together.
+                </p>
+              </div>
             </div>
 
-            <div className="mt-8 text-center">
-              <Link href="/grievances" className="text-[14px] no-underline" style={{ color: "#3A7D7B" }}>
-                View All Issues →
+            <div className="mt-9 flex flex-wrap items-center gap-4">
+              <Link
+                href="/grievances/new"
+                className="inline-flex items-center justify-center rounded-[12px] px-6 py-3 text-[15px] font-medium text-white no-underline"
+                style={{ background: "#4A6FA9" }}
+              >
+                Start with a Grievance
+              </Link>
+              <Link
+                href="/petition"
+                className="inline-flex items-center justify-center rounded-[12px] px-6 py-3 text-[15px] font-medium no-underline"
+                style={{ border: "1.5px solid #4A6FA9", color: "#4A6FA9", background: "transparent" }}
+              >
+                Browse Public Petitions
               </Link>
             </div>
           </div>
         </section>
       </main>
 
-      <footer className="px-8 py-8 text-center" style={{ background: "#1C2B2B" }}>
-        <p className="text-base font-semibold text-white">NagarSeva</p>
-        <p className="mt-1.5 text-[13px]" style={{ color: "#4A6060" }}>
-          AI-powered civic accountability for Indian cities.
+      <footer className="px-8 py-10 text-center" style={{ background: "#141414" }}>
+        <Image
+          src="/logo2.png"
+          alt="NyaySetu"
+          width={190}
+          height={46}
+          className="mx-auto h-[46px] w-[190px] object-contain"
+        />
+        <p className="mt-2 text-[14px]" style={{ color: "#B7B7B7" }}>
+          Clean civic operations for citizens, departments, and modern city governance.
         </p>
-        <p className="mt-4 text-[12px]" style={{ color: "#4A6060" }}>
-          © 2025 NagarSeva · Jalandhar MVP
+        <p className="mt-4 text-[12px]" style={{ color: "#8A8A8A" }}>
+          © 2026 NyaySetu
         </p>
       </footer>
     </div>

@@ -57,6 +57,7 @@ export async function POST(request) {
           name: user.name,
           email: user.email,
           city: user.city,
+          state: user.state || "Punjab",
           role: user.role,
         },
       },

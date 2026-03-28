@@ -146,8 +146,8 @@ export default function NewPetitionPage() {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center" style={{ background: "#F5F8F8" }}>
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-teal-600 border-t-transparent" />
+      <div className="flex min-h-screen items-center justify-center" style={{ background: "#FAFAF8" }}>
+        <div className="h-8 w-8 animate-spin rounded-full border-2" style={{ borderColor: "#4A6FA9", borderTopColor: "transparent" }} />
       </div>
     );
   }
@@ -157,39 +157,42 @@ export default function NewPetitionPage() {
   }
 
   return (
-    <div className="min-h-screen" style={{ background: "#F5F8F8" }}>
+    <div className="min-h-screen" style={{ background: "#FAFAF8" }}>
       <Navbar />
 
-      <main className="mx-auto max-w-[700px] px-5 pb-10 pt-24">
+      <main className="mx-auto max-w-[860px] px-5 pb-12 pt-24">
         <div className="mb-3 flex flex-wrap items-center gap-3">
-          <Link href={dashboardHref} className="text-[14px] no-underline" style={{ color: "#3A7D7B" }}>
+          <Link href={dashboardHref} className="text-[14px] no-underline" style={{ color: "#4A6FA9" }}>
             ← Dashboard
           </Link>
-          <span className="text-[12px]" style={{ color: "#B0BEC5" }}>
+          <span className="text-[12px]" style={{ color: "#999999" }}>
             |
           </span>
-          <Link href="/petition" className="text-[14px] no-underline" style={{ color: "#3A7D7B" }}>
+          <Link href="/petition" className="text-[14px] no-underline" style={{ color: "#4A6FA9" }}>
             All Petitions
           </Link>
         </div>
 
-        <h1 className="text-[26px] font-medium" style={{ color: "#1C2B2B" }}>
+        <h1 className="text-[42px] font-semibold leading-[1.15]" style={{ color: "#171717" }}>
           Start a Petition
         </h1>
+        <p className="mt-2 text-[18px]" style={{ color: "#666666" }}>
+          Write clearly, add context, and gather civic support faster.
+        </p>
 
         {grievanceId ? (
-          <div className="mt-4 rounded-[14px] bg-white px-6 py-4" style={{ border: "0.5px solid #E4E8EA" }}>
-            <p className="text-[12px] uppercase tracking-[0.08em]" style={{ color: "#B0BEC5" }}>
+          <div className="mt-5 rounded-[16px] bg-white px-7 py-5" style={{ border: "0.5px solid #E8E1D5" }}>
+            <p className="text-[12px] uppercase tracking-[0.08em]" style={{ color: "#999999" }}>
               Linked Issue
             </p>
             {issueLoading ? (
               <div className="mt-2 h-[42px] animate-pulse rounded-[10px] bg-gray-100" />
             ) : (
               <div
-                className="mt-2 rounded-[10px] bg-[#F5F8F8] px-3.5 py-2.5"
-                style={{ border: "0.5px solid #E4E8EA" }}
+                className="mt-2 rounded-[12px] bg-[#FAFAF8] px-4 py-3"
+                style={{ border: "0.5px solid #E8E1D5" }}
               >
-                <p className="text-[13px]" style={{ color: "#4A6060" }}>
+                <p className="text-[16px]" style={{ color: "#666666" }}>
                   {linkedIssue?.title || "Linked grievance"}
                 </p>
               </div>
@@ -205,15 +208,15 @@ export default function NewPetitionPage() {
 
         <form
           onSubmit={handleSubmit}
-          className="mt-4 rounded-[14px] bg-white px-8 py-7"
-          style={{ border: "0.5px solid #E4E8EA" }}
+          className="mt-6 rounded-[18px] bg-white px-10 py-10"
+          style={{ border: "0.5px solid #E8E1D5" }}
         >
-          <div className="space-y-5">
+          <div className="space-y-6">
             <div>
               <label
                 htmlFor="petition-title"
-                className="mb-1.5 block text-[12px] font-medium"
-                style={{ color: "#4A6060" }}
+                className="mb-2 block text-[14px] font-medium"
+                style={{ color: "#666666" }}
               >
                 Title
               </label>
@@ -223,16 +226,16 @@ export default function NewPetitionPage() {
                 required
                 value={title}
                 onChange={(event) => setTitle(event.target.value)}
-                className="w-full rounded-[10px] border px-[14px] py-[10px] text-[14px] focus:outline-none"
-                style={{ border: "0.5px solid #E4E8EA", background: "#EEF2F2", color: "#1C2B2B" }}
+                className="w-full rounded-[12px] border px-4 py-3.5 text-[16px] focus:outline-none"
+                style={{ border: "0.5px solid #E8E1D5", background: "#F5F2ED", color: "#171717" }}
               />
             </div>
 
             <div>
               <label
                 htmlFor="petition-description"
-                className="mb-1.5 block text-[12px] font-medium"
-                style={{ color: "#4A6060" }}
+                className="mb-2 block text-[14px] font-medium"
+                style={{ color: "#666666" }}
               >
                 Description
               </label>
@@ -241,12 +244,12 @@ export default function NewPetitionPage() {
                 required
                 value={description}
                 onChange={(event) => setDescription(event.target.value)}
-                className="w-full resize-none rounded-[10px] border px-[14px] py-[10px] text-[14px] focus:outline-none"
+                className="w-full resize-none rounded-[12px] border px-4 py-3.5 text-[16px] leading-[1.65] focus:outline-none"
                 style={{
-                  border: "0.5px solid #E4E8EA",
-                  background: "#EEF2F2",
-                  color: "#1C2B2B",
-                  minHeight: "140px",
+                  border: "0.5px solid #E8E1D5",
+                  background: "#F5F2ED",
+                  color: "#171717",
+                  minHeight: "220px",
                 }}
               />
             </div>
@@ -254,8 +257,8 @@ export default function NewPetitionPage() {
             <button
               type="submit"
               disabled={submitting || !canEscalateThisIssue}
-              className="inline-flex w-full items-center justify-center rounded-[10px] px-4 py-3 text-[15px] font-medium text-white"
-              style={canEscalateThisIssue ? { background: "#3A7D7B" } : { background: "#8A9BA8" }}
+              className="inline-flex w-full items-center justify-center rounded-[12px] px-4 py-4 text-[18px] font-medium text-white"
+              style={canEscalateThisIssue ? { background: "#4A6FA9" } : { background: "#999999" }}
             >
               {submitting ? (
                 <span className="inline-flex items-center gap-2">

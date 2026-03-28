@@ -10,6 +10,7 @@ const UserSchema = new Schema(
     phone: { type: String, default: "", trim: true },
     role: { type: String, enum: ["citizen", "authority"], default: "citizen" },
     city: { type: String, required: true, trim: true },
+    state: { type: String, required: true, trim: true, default: "Punjab" },
     authorityId: { type: Schema.Types.ObjectId, ref: "Authority", default: null },
     authorityName: { type: String, default: "", trim: true },
     isPhoneVerified: { type: Boolean, default: false },

@@ -28,7 +28,7 @@ export async function POST(request) {
     // const params = new URLSearchParams({
     //   authorization: fast2smsKey,
     //   route: "q",
-    //   message: `Your NagarSeva OTP is ${otp}. Valid for 10 minutes.`,
+    //   message: `Your NyaySetu OTP is ${otp}. Valid for 10 minutes.`,
     //   numbers: normalizedPhone,
     //   schedule_time: "",
     //   flash: "0",

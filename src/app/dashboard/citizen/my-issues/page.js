@@ -84,8 +84,8 @@ export default function MyIssuesPage() {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center" style={{ background: "#F5F8F8" }}>
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-teal-600 border-t-transparent" />
+      <div className="flex min-h-screen items-center justify-center" style={{ background: "#FAFAF8" }}>
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#4A6FA9] border-t-transparent" />
       </div>
     );
   }
@@ -106,7 +106,7 @@ export default function MyIssuesPage() {
     }
 
     if (status === "in_progress") {
-      return { background: "#EAF4F4", color: "#3A7D7B" };
+      return { background: "#ECF0FF", color: "#4A6FA9" };
     }
 
     return { background: "#FEF3C7", color: "#B45309" };
@@ -121,7 +121,7 @@ export default function MyIssuesPage() {
       return { borderLeft: "3px solid #B45309" };
     }
 
-    return { borderLeft: "3px solid #3A7D7B" };
+    return { borderLeft: "3px solid #4A6FA9" };
   }
 
   async function handleDelete(issueId) {
@@ -150,18 +150,18 @@ export default function MyIssuesPage() {
   }
 
   return (
-    <div className="min-h-screen" style={{ background: "#F5F8F8" }}>
+    <div className="min-h-screen" style={{ background: "#FAFAF8" }}>
       <Navbar />
 
       <main className="flex min-h-screen pt-14">
         <CitizenSidebar user={user} />
 
         <section className="flex-1 px-6 py-8 md:px-10" style={{ paddingTop: "32px" }}>
-          <h1 className="text-[24px] font-medium" style={{ color: "#1C2B2B" }}>
+          <h1 className="text-[28px] font-semibold" style={{ color: "#171717" }}>
             My Issues
           </h1>
 
-          <div className="mt-5 flex flex-wrap items-center gap-2">
+          <div className="mt-6 flex flex-wrap items-center gap-2">
             {filterButtons.map((item) => {
               const isActive = activeFilter === item.key;
               return (
@@ -172,8 +172,8 @@ export default function MyIssuesPage() {
                   className="rounded-[20px] px-4 py-1.5 text-[13px]"
                   style={
                     isActive
-                      ? { background: "#3A7D7B", color: "#FFFFFF" }
-                      : { background: "#EEF2F2", color: "#4A6060" }
+                      ? { background: "#4A6FA9", color: "#FFFFFF" }
+                      : { background: "#F5F2ED", color: "#666666" }
                   }
                 >
                   {item.label}
@@ -182,7 +182,7 @@ export default function MyIssuesPage() {
             })}
           </div>
 
-          <div className="mt-5 space-y-3">
+          <div className="mt-6 space-y-3">
             {issuesLoading ? (
               <>
                 <div className="h-[140px] animate-pulse rounded-[14px] bg-gray-100" />
@@ -192,12 +192,12 @@ export default function MyIssuesPage() {
             ) : filteredIssues.length === 0 ? (
               <div
                 className="rounded-[14px] bg-white px-6 py-10 text-center"
-                style={{ border: "0.5px solid #E4E8EA" }}
+                style={{ border: "0.5px solid #E8E1D5" }}
               >
-                <p className="text-[16px] font-medium" style={{ color: "#1C2B2B" }}>
+                <p className="text-[16px] font-medium" style={{ color: "#171717" }}>
                   No issues found
                 </p>
-                <p className="mt-1 text-[13px]" style={{ color: "#8A9BA8" }}>
+                <p className="mt-1 text-[13px]" style={{ color: "#666666" }}>
                   Try switching filters or report your first issue.
                 </p>
               </div>
@@ -206,12 +206,12 @@ export default function MyIssuesPage() {
                 <article
                   key={issue?._id || issue?.id || issue?.title}
                   className="rounded-[14px] bg-white px-5 py-[18px]"
-                  style={{ border: "0.5px solid #E4E8EA", ...getCardBorderStyle(issue?.status) }}
+                  style={{ border: "0.5px solid #E8E1D5", ...getCardBorderStyle(issue?.status) }}
                 >
                   <div className="flex items-center justify-between">
                     <span
                       className="rounded-[20px] px-[10px] py-[2px] text-[11px] font-medium uppercase"
-                      style={{ background: "#EAF4F4", color: "#3A7D7B" }}
+                      style={{ background: "#ECF0FF", color: "#4A6FA9" }}
                     >
                       {issue?.category || "GENERAL"}
                     </span>
@@ -226,7 +226,7 @@ export default function MyIssuesPage() {
                     </span>
                   </div>
 
-                  <h2 className="mt-2 text-[16px] font-medium" style={{ color: "#1C2B2B" }}>
+                  <h2 className="mt-2 text-[16px] font-semibold" style={{ color: "#171717" }}>
                     {issue?.title || "Untitled issue"}
                   </h2>
 
@@ -243,7 +243,7 @@ export default function MyIssuesPage() {
                     <Link
                       href={`/grievances/${issue?._id || issue?.id || ""}`}
                       className="text-[13px] no-underline"
-                      style={{ color: "#3A7D7B" }}
+                      style={{ color: "#4A6FA9" }}
                     >
                       View Details →
                     </Link>
