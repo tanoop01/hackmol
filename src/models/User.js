@@ -14,6 +14,7 @@ const UserSchema = new Schema(
     authorityId: { type: Schema.Types.ObjectId, ref: "Authority", default: null },
     authorityName: { type: String, default: "", trim: true },
     isPhoneVerified: { type: Boolean, default: false },
+    isEmailVerified: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

@@ -5,22 +5,54 @@ import { NextResponse } from "next/server";
 import db from "@/lib/db";
 import User from "@/models/User";
 
+function normalizePhone(rawPhone) {
+  const digits = String(rawPhone || "").replace(/\D/g, "");
+
+  if (digits.length === 10) {
+    return digits;
+  }
+
+  if (digits.length === 12 && digits.startsWith("91")) {
+    return digits.slice(2);
+  }
+
+  if (digits.length === 11 && digits.startsWith("0")) {
+    return digits.slice(1);
+  }
+
+  return "";
+}
+
+function isEmailIdentifier(value) {
+  return value.includes("@");
+}
+
 export async function POST(request) {
   try {
     await db();
 
-    const { email, password } = await request.json();
+    const { identifier, password } = await request.json();
 
-    if (!email || !password) {
+    if (!identifier || !password) {
       return NextResponse.json(
-        { success: false, message: "Email and password are required" },
+        { success: false, message: "Email or mobile number and password are required" },
         { status: 400 }
       );
     }
 
-    const normalizedEmail = String(email).trim().toLowerCase();
+    const normalizedIdentifier = String(identifier).trim();
+    const query = isEmailIdentifier(normalizedIdentifier)
+      ? { email: normalizedIdentifier.toLowerCase() }
+      : { phone: normalizePhone(normalizedIdentifier) };
 
-    const user = await User.findOne({ email: normalizedEmail }).select("+password");
+    if (!query.email && !query.phone) {
+      return NextResponse.json(
+        { success: false, message: "Please enter a valid email or mobile number" },
+        { status: 400 }
+      );
+    }
+
+    const user = await User.findOne(query).select("+password");
     if (!user) {
       return NextResponse.json(
         { success: false, message: "Invalid credentials" },
