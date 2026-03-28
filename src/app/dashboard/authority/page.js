@@ -192,90 +192,166 @@ export default function AuthorityDashboardPage() {
   }
 
   return (
-    <div className="min-h-screen" style={{ background: "#FAFAF8" }}>
+    <div className="min-h-screen" style={{ background: "#FAFAF8", fontFamily: "DM Sans, sans-serif" }}>
       <Navbar />
 
-      <section
-        className="mt-14 flex flex-wrap items-center justify-between gap-3 bg-white px-10 py-5"
-        style={{ borderBottom: "0.5px solid #E8E1D5" }}
-      >
-        <div className="flex flex-wrap items-center gap-2">
-          <h1 className="text-[20px] font-semibold" style={{ color: "#171717" }}>
-            {departmentName}
-          </h1>
-          <span
-            className="rounded-[20px] px-3 py-[3px] text-[12px]"
-            style={{ background: "#ECF0FF", color: "#4A6FA9" }}
-          >
-            {user?.city || "Jalandhar"}
-          </span>
-          <span
-            className="rounded-[20px] px-3 py-[3px] text-[12px]"
-            style={{ background: "#ECF0FF", color: "#4A6FA9" }}
-          >
-            {departmentType}
-          </span>
-        </div>
+      <main className="mx-auto flex min-h-screen w-full max-w-[1380px] pt-16">
+        <aside
+          className="h-[calc(100vh-64px)] w-[272px] shrink-0 flex-col justify-between p-7 flex"
+          style={{ borderRight: "0.5px solid #E8E1D5", background: "#FCFBF8" }}
+        >
+          <div>
+            <Link
+              href="/"
+              className="no-underline"
+              style={{
+                fontFamily: "Fraunces, serif",
+                fontSize: 22,
+                fontWeight: 700,
+                color: "#0D1B2A",
+                letterSpacing: "-0.03em",
+              }}
+            >
+              Nyay<span style={{ color: "#F5C842" }}>Setu</span>
+            </Link>
 
-        <div className="flex items-center gap-3">
-          <span className="text-[13px]" style={{ color: "#666666" }}>
-            {user?.name}
-          </span>
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="inline-flex items-center justify-center rounded-[10px] px-[16px] py-[8px] text-[13px]"
-            style={{ background: "#F5F2ED", border: "0.5px solid #E8E1D5", color: "#666666" }}
-          >
-            Logout
-          </button>
-        </div>
-      </section>
+            <p
+              className="mt-6 text-[22px] leading-[1.15]"
+              style={{ color: "#0D1B2A", fontFamily: "Fraunces, serif", fontWeight: 700 }}
+            >
+              Authority Desk
+            </p>
+            <p className="mt-2 text-[13px]" style={{ color: "#4A5568", lineHeight: 1.6 }}>
+              Track assigned grievances, update statuses, and close issues with proof.
+            </p>
 
-      <main className="px-10 py-8">
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-          <div className="rounded-[14px] bg-white px-6 py-5" style={{ border: "0.5px solid #E8E1D5" }}>
+            <div className="mt-8 flex flex-col gap-3">
+              <Link
+                href="/dashboard/authority"
+                className="rounded-[50px] px-5 py-3.5 text-[15px] font-semibold no-underline"
+                style={{ background: "#FFF8DC", color: "#0D1B2A" }}
+              >
+                Dashboard
+              </Link>
+              <Link
+                href="/grievances"
+                className="rounded-[50px] px-5 py-3.5 text-[15px] font-medium no-underline"
+                style={{ color: "#4A5568" }}
+              >
+                Public Grievances
+              </Link>
+              <Link
+                href="/legal-assistant"
+                className="rounded-[50px] px-5 py-3.5 text-[15px] font-medium no-underline"
+                style={{ color: "#4A5568" }}
+              >
+                Legal Assistant
+              </Link>
+            </div>
+          </div>
+
+          <div className="space-y-3.5">
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="inline-flex w-full items-center justify-center rounded-[50px] px-4 py-3.5 text-[14px] font-semibold"
+              style={{ background: "#F5C842", border: "1px solid #F5C842", color: "#0D1B2A" }}
+            >
+              Logout
+            </button>
+          </div>
+        </aside>
+
+        <section className="min-w-0 flex-1 px-6 pb-12 pt-12 md:px-9 lg:px-12">
+          <div className="mx-auto w-full max-w-[1020px]">
+            <section
+              className="rounded-[24px] bg-white px-7 py-8 md:px-9"
+              style={{ boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}
+            >
+              <div className="flex flex-wrap items-center justify-between gap-4">
+                <div>
+                  <h1
+                    className="text-[30px] leading-[1.1] md:text-[34px]"
+                    style={{ color: "#0D1B2A", fontFamily: "Fraunces, serif", fontWeight: 700 }}
+                  >
+                    {departmentName}
+                  </h1>
+
+                  <div className="mt-4 flex flex-wrap items-center gap-2">
+                    <span
+                      className="rounded-[999px] px-3 py-1 text-[12px] font-semibold"
+                      style={{ background: "#FFF8DC", color: "#0D1B2A" }}
+                    >
+                      {user?.city || "Jalandhar"}
+                    </span>
+                    <span
+                      className="rounded-[999px] px-3 py-1 text-[12px] font-semibold"
+                      style={{ background: "#FFF8DC", color: "#0D1B2A" }}
+                    >
+                      {departmentType}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <span className="text-[13px]" style={{ color: "#4A5568" }}>
+                    {user?.name}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={handleLogout}
+                    className="inline-flex items-center justify-center rounded-[50px] px-4 py-2 text-[13px] font-semibold"
+                    style={{ background: "#F5C842", border: "1px solid #F5C842", color: "#0D1B2A" }}
+                  >
+                    Logout
+                  </button>
+                </div>
+              </div>
+            </section>
+
+            <section className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-3">
+          <article className="rounded-[20px] bg-white px-5 py-7" style={{ boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
             <div className="flex items-start justify-between">
-              <p className="text-[12px] uppercase tracking-[0.08em]" style={{ color: "#666666" }}>
+              <p style={{ color: "#4A5568", fontSize: 12, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase" }}>
                 Assigned Issues
               </p>
               <Inbox size={20} style={{ color: "#4A6FA9" }} />
             </div>
-            <p className="mt-2 text-[32px] font-medium" style={{ color: "#171717" }}>
+            <p className="mt-4 text-[38px] leading-none" style={{ color: "#0D1B2A", fontFamily: "Fraunces, serif", fontWeight: 800 }}>
               {stats.assignedIssues}
             </p>
-          </div>
+          </article>
 
-          <div className="rounded-[14px] bg-white px-6 py-5" style={{ border: "0.5px solid #E8E1D5" }}>
+          <article className="rounded-[20px] bg-white px-5 py-7" style={{ boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
             <div className="flex items-start justify-between">
-              <p className="text-[12px] uppercase tracking-[0.08em]" style={{ color: "#666666" }}>
+              <p style={{ color: "#4A5568", fontSize: 12, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase" }}>
                 In Progress
               </p>
               <span className="rounded-full p-1.5" style={{ background: "#FEF3C7" }}>
                 <Clock size={16} style={{ color: "#B45309" }} />
               </span>
             </div>
-            <p className="mt-2 text-[32px] font-medium" style={{ color: "#171717" }}>
+            <p className="mt-4 text-[38px] leading-none" style={{ color: "#0D1B2A", fontFamily: "Fraunces, serif", fontWeight: 800 }}>
               {stats.inProgress}
             </p>
-          </div>
+          </article>
 
-          <div className="rounded-[14px] bg-white px-6 py-5" style={{ border: "0.5px solid #E8E1D5" }}>
+          <article className="rounded-[20px] bg-white px-5 py-7" style={{ boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
             <div className="flex items-start justify-between">
-              <p className="text-[12px] uppercase tracking-[0.08em]" style={{ color: "#666666" }}>
+              <p style={{ color: "#4A5568", fontSize: 12, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase" }}>
                 Resolved This Month
               </p>
               <CheckCircle size={20} style={{ color: "#2E7D32" }} />
             </div>
-            <p className="mt-2 text-[32px] font-medium" style={{ color: "#171717" }}>
+            <p className="mt-4 text-[38px] leading-none" style={{ color: "#0D1B2A", fontFamily: "Fraunces, serif", fontWeight: 800 }}>
               {stats.resolvedThisMonth}
             </p>
-          </div>
-        </div>
+          </article>
+          </section>
 
-        <section className="mt-10">
+            <section className="mt-14 rounded-[24px] bg-white px-6 py-7 md:px-7" style={{ boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <h2 className="text-[20px] font-semibold" style={{ color: "#171717" }}>
+            <h2 className="text-[30px] leading-[1.05]" style={{ color: "#0D1B2A", fontFamily: "Fraunces, serif", fontWeight: 700 }}>
               Assigned Grievances
             </h2>
 
@@ -283,11 +359,11 @@ export default function AuthorityDashboardPage() {
               <button
                 type="button"
                 onClick={() => setSortBy("supported")}
-                className="rounded-[20px] px-4 py-1.5 text-[13px]"
+                className="rounded-[50px] px-4 py-2 text-[13px] font-semibold"
                 style={
                   sortBy === "supported"
-                    ? { background: "#171717", color: "#FFFFFF" }
-                    : { background: "#F5F2ED", color: "#666666" }
+                    ? { background: "#F5C842", color: "#0D1B2A" }
+                    : { background: "#F5F2ED", color: "#4A5568" }
                 }
               >
                 Most Supported
@@ -295,11 +371,11 @@ export default function AuthorityDashboardPage() {
               <button
                 type="button"
                 onClick={() => setSortBy("newest")}
-                className="rounded-[20px] px-4 py-1.5 text-[13px]"
+                className="rounded-[50px] px-4 py-2 text-[13px] font-semibold"
                 style={
                   sortBy === "newest"
-                    ? { background: "#171717", color: "#FFFFFF" }
-                    : { background: "#F5F2ED", color: "#666666" }
+                    ? { background: "#F5C842", color: "#0D1B2A" }
+                    : { background: "#F5F2ED", color: "#4A5568" }
                 }
               >
                 Newest
@@ -307,17 +383,17 @@ export default function AuthorityDashboardPage() {
             </div>
           </div>
 
-          <div className="mt-3 flex flex-wrap gap-2">
+          <div className="mt-5 flex flex-wrap gap-2.5">
             {["all", "pending", "in_progress", "resolved"].map((tab) => (
               <button
                 key={tab}
                 type="button"
                 onClick={() => setFilterBy(tab)}
-                className="rounded-[20px] px-4 py-1.5 text-[13px]"
+                className="rounded-[50px] px-4 py-2 text-[13px] font-semibold"
                 style={
                   filterBy === tab
-                    ? { background: "#4A6FA9", color: "#FFFFFF" }
-                    : { background: "#F5F2ED", color: "#666666" }
+                    ? { background: "#F5C842", color: "#0D1B2A" }
+                    : { background: "#F5F2ED", color: "#4A5568" }
                 }
               >
                 {tab === "all"
@@ -331,22 +407,22 @@ export default function AuthorityDashboardPage() {
             ))}
           </div>
 
-          <div className="mt-4 space-y-3">
+          <div className="mt-6 space-y-5">
             {issuesLoading ? (
               <>
-                <div className="h-[160px] animate-pulse rounded-[14px] bg-gray-100" />
-                <div className="h-[160px] animate-pulse rounded-[14px] bg-gray-100" />
-                <div className="h-[160px] animate-pulse rounded-[14px] bg-gray-100" />
+                <div className="h-[170px] animate-pulse rounded-[20px] bg-gray-100" />
+                <div className="h-[170px] animate-pulse rounded-[20px] bg-gray-100" />
+                <div className="h-[170px] animate-pulse rounded-[20px] bg-gray-100" />
               </>
             ) : sortedAndFilteredIssues.length === 0 ? (
               <div
-                className="rounded-[14px] bg-white px-6 py-10 text-center"
-                style={{ border: "0.5px solid #E8E1D5" }}
+                className="rounded-[20px] bg-[#FAFAF8] px-6 py-10 text-center"
+                style={{ border: "1px solid rgba(0,0,0,0.06)" }}
               >
-                <p className="text-[16px] font-medium" style={{ color: "#171717" }}>
+                <p className="text-[16px] font-medium" style={{ color: "#0D1B2A" }}>
                   No assigned grievances found
                 </p>
-                <p className="mt-1 text-[13px]" style={{ color: "#666666" }}>
+                <p className="mt-1 text-[13px]" style={{ color: "#4A5568" }}>
                   Assigned issues will appear here as citizens report them.
                 </p>
               </div>
@@ -356,20 +432,20 @@ export default function AuthorityDashboardPage() {
                 return (
                   <article
                     key={issue?._id || issue?.id || issue?.title}
-                    className="rounded-[14px] bg-white px-5 py-[18px]"
-                    style={{ border: "0.5px solid #E8E1D5" }}
+                    className="rounded-[20px] bg-[#FAFAF8] px-6 py-6"
+                    style={{ border: "1px solid rgba(0,0,0,0.06)" }}
                   >
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <div className="flex flex-wrap items-center gap-2">
                         <span
-                          className="rounded-[20px] px-[10px] py-[2px] text-[11px] font-medium uppercase"
-                          style={{ background: "#ECF0FF", color: "#4A6FA9" }}
+                          className="rounded-[50px] px-[10px] py-[4px] text-[11px] font-medium uppercase"
+                          style={{ background: "#FFF8DC", color: "#0D1B2A" }}
                         >
                           {issue?.category || "GENERAL"}
                         </span>
 
                         <span
-                          className="rounded-[20px] px-[10px] py-[2px] text-[11px] font-medium"
+                          className="rounded-[50px] px-[10px] py-[4px] text-[11px] font-medium"
                           style={priority.style}
                         >
                           {priority.label}
@@ -377,42 +453,42 @@ export default function AuthorityDashboardPage() {
                       </div>
 
                       <span
-                        className="rounded-[20px] px-[10px] py-[2px] text-[11px] font-medium"
+                        className="rounded-[50px] px-[10px] py-[4px] text-[11px] font-medium capitalize"
                         style={getStatusBadgeStyle(issue?.status)}
                       >
                         {String(issue?.status || "reported").replace("_", " ")}
                       </span>
                     </div>
 
-                    <h3 className="mt-2 text-[16px] font-semibold" style={{ color: "#171717" }}>
+                    <h3 className="mt-3 text-[17px] font-semibold" style={{ color: "#0D1B2A" }}>
                       {issue?.title || "Untitled issue"}
                     </h3>
 
-                    <p className="mt-1 text-[13px]" style={{ color: "#666666" }}>
+                    <p className="mt-2 text-[13px] leading-[1.6]" style={{ color: "#4A5568" }}>
                       {String(issue?.description || "No description available").slice(0, 100)}
                       {String(issue?.description || "").length > 100 ? "..." : ""}
                     </p>
 
-                    <div className="mt-3 flex flex-wrap items-center gap-4">
+                    <div className="mt-5 flex flex-wrap items-center gap-4">
                       <div className="inline-flex items-center gap-1.5 text-[13px] font-medium" style={{ color: "#4A6FA9" }}>
                         <ThumbsUp size={14} />
                         <span>{issue?.supportCount || 0}</span>
                       </div>
 
-                      <div className="inline-flex items-center gap-1.5 text-[13px]" style={{ color: "#666666" }}>
+                      <div className="inline-flex items-center gap-1.5 text-[13px]" style={{ color: "#4A5568" }}>
                         <MapPin size={14} />
                         <span>{issue?.location || issue?.city || "Jalandhar"}</span>
                       </div>
 
-                      <div className="inline-flex items-center gap-1.5 text-[13px]" style={{ color: "#666666" }}>
+                      <div className="inline-flex items-center gap-1.5 text-[13px]" style={{ color: "#4A5568" }}>
                         <Clock size={14} />
                         <span>{getRelativeTime(issue?.createdAt)}</span>
                       </div>
 
                       <Link
                         href={`/dashboard/authority/issue/${issue?._id || issue?.id || ""}`}
-                        className="ml-auto inline-flex items-center justify-center rounded-[8px] px-3.5 py-1.5 text-[13px] no-underline"
-                        style={{ border: "1.5px solid #4A6FA9", color: "#4A6FA9", background: "transparent" }}
+                        className="ml-auto inline-flex items-center justify-center rounded-[50px] px-4 py-2 text-[13px] font-semibold no-underline"
+                        style={{ border: "1px solid #F5C842", color: "#0D1B2A", background: "#F5C842" }}
                       >
                         Update Status →
                       </Link>
@@ -421,6 +497,8 @@ export default function AuthorityDashboardPage() {
                 );
               })
             )}
+          </div>
+            </section>
           </div>
         </section>
       </main>

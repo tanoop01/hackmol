@@ -1,249 +1,839 @@
-import Image from "next/image";
+"use client";
+
+import { useEffect } from "react";
 import Link from "next/link";
-import {
-  ArrowRight,
-  CheckCircle2,
-  FileText,
-  Landmark,
-  ScrollText,
-  ShieldCheck,
-} from "lucide-react";
+
 import Navbar from "@/components/Navbar";
+import HoverCard from "@/components/HoverCard";
+
+const tickerItems = [
+  ["No water supply - Model Town", "Water", "142 supporters"],
+  ["Broken streetlights on GT Road", "Roads", "87 supporters"],
+  ["Garbage not collected for a week", "Sanitation", "203 supporters"],
+  ["Daily power cuts - Basti Sheikh", "Electricity", "178 supporters"],
+  ["Pothole near railway crossing", "Roads", "56 supporters"],
+  ["Park encroachment - Lajpat Nagar", "Parks", "91 supporters"],
+];
+
+const tagColors = {
+  Water: { bg: "#EAF4F0", color: "#1A5C4A" },
+  Roads: { bg: "#FEF3C7", color: "#92400E" },
+  Electricity: { bg: "#EEF0FB", color: "#3730A3" },
+  Sanitation: { bg: "#FDF2F8", color: "#9D174D" },
+  Parks: { bg: "#EAF4F0", color: "#1A5C4A" },
+};
+
+const whyCards = [
+  {
+    icon: "🏛️",
+    title: "Authority-first workflow",
+    desc: "Every grievance is directly assigned to relevant departments with clear ownership and status tracking.",
+  },
+  {
+    icon: "🛤️",
+    title: "Clear citizen journey",
+    desc: "Private issue resolution first. Public petition signing only when collective push is needed.",
+  },
+  {
+    icon: "📊",
+    title: "Measurable accountability",
+    desc: "Proof-based resolution, status timelines, and public visibility make every outcome traceable.",
+  },
+];
+
+const capabilityCards = [
+  {
+    num: "01",
+    title: "Private Grievance Desk",
+    desc: "Report privately. Only you and the assigned authority can access details and status updates. Secure by design.",
+  },
+  {
+    num: "02",
+    title: "Public Petition Layer",
+    desc: "Mobilize civic pressure transparently. Citizens discover public petitions and sign in one click. Momentum is visible.",
+  },
+  {
+    num: "03",
+    title: "Accountability by Design",
+    desc: "Status timelines, authority ownership, and proof-based updates keep every action visible and every outcome trackable.",
+  },
+];
+
+const signRows = [
+  { initials: "RK", bg: "#F5C842", color: "#0D1B2A", name: "Ravi Kumar", time: "2 min ago" },
+  { initials: "PS", bg: "#EAF4F0", color: "#1A5C4A", name: "Priya Sharma", time: "5 min ago" },
+  { initials: "AM", bg: "#EEF0FB", color: "#3730A3", name: "Amit Malhotra", time: "8 min ago" },
+];
 
 export default function Home() {
-  const stats = [
-    { label: "Private grievances processed", value: "2,400+" },
-    { label: "Public petition signatures", value: "31,000+" },
-    { label: "Departments onboarded", value: "40+" },
-  ];
-
-  const featureCards = [
-    {
-      icon: FileText,
-      title: "Private Grievance Desk",
-      text: "Report an issue privately. Only you and the assigned authority can access details and updates.",
-      tint: "#EEF4FF",
-      iconColor: "#2F4D86",
-    },
-    {
-      icon: ScrollText,
-      title: "Public Petition Layer",
-      text: "Mobilize civic pressure transparently. Citizens discover public petitions and sign in one click.",
-      tint: "#EEF8F7",
-      iconColor: "#2B6B68",
-    },
-    {
-      icon: ShieldCheck,
-      title: "Accountability by Design",
-      text: "Status timelines, authority ownership, and proof-based updates keep action visible and trackable.",
-      tint: "#F3F0FF",
-      iconColor: "#4A4A85",
-    },
-  ];
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) e.target.classList.add("visible");
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+    );
+    document.querySelectorAll(".fade-up").forEach((el) => observer.observe(el));
+    setTimeout(() => {
+      document.querySelectorAll(".hero-anim").forEach((el) => el.classList.add("visible"));
+    }, 100);
+    const navbar = document.getElementById("main-navbar");
+    const onScroll = () => navbar?.classList.toggle("scrolled", window.scrollY > 10);
+    window.addEventListener("scroll", onScroll);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
 
   return (
-    <div className="min-h-screen" style={{ background: "#FAFAF8" }}>
-      <Navbar />
+    <div style={{ background: "#FAFAF8" }}>
+      <div id="main-navbar">
+        <Navbar />
+      </div>
 
       <main>
-        <section className="relative overflow-hidden px-6 pb-24 pt-[108px] md:px-10">
-          <div
-            className="pointer-events-none absolute -right-28 -top-10 h-[320px] w-[320px] rounded-full"
-            style={{ background: "radial-gradient(circle, rgba(74,111,169,0.18) 0%, rgba(74,111,169,0) 72%)" }}
-          />
-          <div
-            className="pointer-events-none absolute -left-24 top-24 h-[240px] w-[240px] rounded-full"
-            style={{ background: "radial-gradient(circle, rgba(16,80,88,0.12) 0%, rgba(16,80,88,0) 72%)" }}
-          />
-
-          <div className="mx-auto max-w-6xl">
+        <section
+          style={{
+            background: "#FFF8DC",
+            padding: "120px 24px 100px",
+            textAlign: "center",
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
+          <div className="fade-up hero-anim d1">
             <span
-              className="inline-flex items-center rounded-full px-4 py-1.5 text-[12px] font-medium tracking-[0.04em]"
-              style={{ background: "#EAE6DF", color: "#3A3A3A" }}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
+                background: "white",
+                borderRadius: 50,
+                padding: "6px 18px 6px 8px",
+                fontSize: 13,
+                fontWeight: 500,
+                color: "#4A5568",
+                boxShadow: "0 2px 12px rgba(0,0,0,0.08)",
+                marginBottom: 36,
+              }}
             >
-              Civic operations platform for Indian cities
+              <span
+                style={{
+                  width: 8,
+                  height: 8,
+                  borderRadius: "50%",
+                  background: "#F5C842",
+                  flexShrink: 0,
+                  display: "inline-block",
+                }}
+              />
+              Civic accountability for Jalandhar · AI-powered
             </span>
+          </div>
 
-            <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-[1.2fr_0.8fr]">
-              <div>
-                <h1
-                  className="text-[48px] font-semibold leading-[1.08] tracking-[-0.02em] md:text-[64px]"
-                  style={{ color: "#171717", fontFamily: "Georgia, 'Times New Roman', serif" }}
-                >
-                  Make civic issues impossible to ignore.
-                </h1>
+          <h1
+            className="fade-up hero-anim d2"
+            style={{
+              fontFamily: "Fraunces, serif",
+              fontSize: "clamp(42px,7vw,72px)",
+              fontWeight: 800,
+              color: "#0D1B2A",
+              lineHeight: 1.05,
+              letterSpacing: "-0.035em",
+              maxWidth: 760,
+              margin: "0 auto 24px",
+            }}
+          >
+            Make civic issues
+            <br />
+            <em style={{ fontStyle: "italic", color: "#4A5568", fontWeight: 300 }}>
+              impossible to ignore.
+            </em>
+          </h1>
 
-                <p
-                  className="mt-6 max-w-[720px] text-[19px] leading-[1.75] md:text-[22px]"
-                  style={{ color: "#3F3F3F" }}
-                >
-                  NyaySetu combines private grievance handling with public petition momentum. Citizens
-                  get secure reporting, authorities get structured workflows, and cities get faster
-                  resolution with measurable accountability.
-                </p>
+          <p
+            className="fade-up hero-anim d3"
+            style={{
+              fontSize: 19,
+              color: "#4A5568",
+              lineHeight: 1.65,
+              maxWidth: 560,
+              margin: "0 auto 44px",
+            }}
+          >
+            NyaySetu combines private grievance handling with public petition momentum. Citizens get
+            secure reporting, authorities get structured workflows.
+          </p>
 
-                <div className="mt-10 flex flex-wrap items-center gap-4">
-                  <Link
-                    href="/grievances/new"
-                    className="inline-flex items-center justify-center rounded-[12px] px-7 py-3.5 text-[16px] font-medium text-white no-underline"
-                    style={{ background: "#4A6FA9" }}
-                  >
-                    Report a Grievance
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                  <Link
-                    href="/petition"
-                    className="inline-flex items-center justify-center rounded-[12px] px-7 py-3.5 text-[16px] font-medium no-underline"
-                    style={{ border: "1.5px solid #4A6FA9", color: "#4A6FA9", background: "transparent" }}
-                  >
-                    Explore Petitions
-                  </Link>
-                </div>
+          <div
+            className="fade-up hero-anim d4 flex"
+            style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}
+          >
+            <Link href="/grievances/new" className="btn-yellow">
+              Report a Grievance
+            </Link>
+            <Link href="/grievances" className="btn-dark">
+              Explore Petitions
+            </Link>
+          </div>
+
+          <div className="fade-up hero-anim d4" style={{ marginTop: 64 }}>
+            <div
+              style={{
+                overflow: "hidden",
+                maskImage:
+                  "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
+                WebkitMaskImage:
+                  "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
+              }}
+            >
+              <div className="ticker-track flex" style={{ display: "flex", gap: 16, width: "max-content" }}>
+                {tickerItems.concat(tickerItems).map((item, idx) => {
+                  const colors = tagColors[item[1]];
+                  return (
+                    <div
+                      key={`${item[0]}-${idx}`}
+                      style={{
+                        flexShrink: 0,
+                        width: 230,
+                        background: "white",
+                        borderRadius: 18,
+                        padding: "16px 18px",
+                        boxShadow: "0 2px 16px rgba(0,0,0,0.07)",
+                        textAlign: "left",
+                      }}
+                    >
+                      <span
+                        style={{
+                          fontSize: 10,
+                          fontWeight: 700,
+                          letterSpacing: "0.08em",
+                          textTransform: "uppercase",
+                          padding: "3px 10px",
+                          borderRadius: 50,
+                          display: "inline-block",
+                          marginBottom: 8,
+                          background: colors.bg,
+                          color: colors.color,
+                        }}
+                      >
+                        {item[1]}
+                      </span>
+                      <div
+                        style={{
+                          fontSize: 13,
+                          fontWeight: 600,
+                          color: "#0D1B2A",
+                          lineHeight: 1.4,
+                          marginBottom: 8,
+                        }}
+                      >
+                        {item[0]}
+                      </div>
+                      <div style={{ fontSize: 11, color: "#8A9BAA" }}>{item[2]}</div>
+                    </div>
+                  );
+                })}
               </div>
-
-              <aside
-                className="rounded-[24px] bg-white p-7"
-                style={{ border: "1px solid #E8E1D5" }}
-              >
-                <p className="text-[12px] font-semibold tracking-[0.12em]" style={{ color: "#6A6A6A" }}>
-                  WHY CITIES CHOOSE THIS
-                </p>
-
-                <div className="mt-5 space-y-5">
-                  <div className="rounded-[16px] px-4 py-4" style={{ background: "#F5F7FC" }}>
-                    <div className="inline-flex items-center gap-2 text-[15px] font-medium" style={{ color: "#4A6FA9" }}>
-                      <Landmark className="h-4 w-4" />
-                      Authority-first workflow
-                    </div>
-                    <p className="mt-2 text-[14px] leading-[1.6]" style={{ color: "#4B4B4B" }}>
-                      Every grievance is directly assigned to relevant departments with status tracking.
-                    </p>
-                  </div>
-
-                  <div className="rounded-[16px] px-4 py-4" style={{ background: "#F1F7F6" }}>
-                    <div className="inline-flex items-center gap-2 text-[15px] font-medium" style={{ color: "#1B5B68" }}>
-                      <CheckCircle2 className="h-4 w-4" />
-                      Clear citizen journey
-                    </div>
-                    <p className="mt-2 text-[14px] leading-[1.6]" style={{ color: "#4B4B4B" }}>
-                      Private issue resolution first. Public petition signing only when collective push is needed.
-                    </p>
-                  </div>
-                </div>
-              </aside>
             </div>
           </div>
         </section>
 
-        <section className="px-6 pb-16 md:px-10">
-          <div
-            className="mx-auto grid max-w-6xl grid-cols-1 gap-4 rounded-[24px] bg-white p-7 md:grid-cols-3 md:p-10"
-            style={{ border: "1px solid #E8E1D5" }}
-          >
-            {stats.map((item) => (
-              <div key={item.label} className="rounded-[16px] px-4 py-3" style={{ background: "#FAF8F2" }}>
-                <p className="text-[38px] font-semibold leading-none md:text-[46px]" style={{ color: "#171717" }}>
-                  {item.value}
-                </p>
-                <p className="mt-2 text-[14px] md:text-[15px]" style={{ color: "#666666" }}>
-                  {item.label}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="px-6 py-10 md:px-10 md:py-16">
-          <div className="mx-auto max-w-6xl">
-            <p className="text-[12px] font-semibold tracking-[0.12em]" style={{ color: "#6A6A6A" }}>
-              PLATFORM CAPABILITIES
-            </p>
-            <h2
-              className="mt-4 max-w-4xl text-[36px] font-semibold leading-[1.15] md:text-[52px]"
-              style={{ color: "#171717", fontFamily: "Georgia, 'Times New Roman', serif" }}
+        <section id="why" style={{ background: "white", padding: "110px 0" }}>
+          <div style={{ maxWidth: 1080, margin: "0 auto", padding: "0 24px" }}>
+            <span
+              className="fade-up"
+              style={{
+                fontSize: 11,
+                fontWeight: 600,
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: "#8A9BAA",
+                marginBottom: 18,
+                display: "block",
+              }}
             >
-              Built for calm operations, trusted data, and visible civic outcomes.
+              WHY CITIES CHOOSE THIS
+            </span>
+
+            <h2
+              className="fade-up"
+              style={{
+                fontFamily: "Fraunces, serif",
+                fontSize: "clamp(32px,4vw,48px)",
+                fontWeight: 700,
+                color: "#0D1B2A",
+                lineHeight: 1.15,
+                letterSpacing: "-0.025em",
+                maxWidth: 500,
+                marginBottom: 56,
+              }}
+            >
+              A platform authorities actually use.
             </h2>
 
-            <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-3">
-              {featureCards.map((item) => {
-                const Icon = item.icon;
+            <div className="grid md:grid-cols-3" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20 }}>
+              {whyCards.map((card, idx) => {
+                const delayClass = idx === 0 ? "d1" : idx === 1 ? "d2" : "d3";
                 return (
-                  <article
-                    key={item.title}
-                    className="rounded-[22px] bg-white p-7"
-                    style={{ border: "1px solid #E8E1D5" }}
+                  <HoverCard
+                    key={card.title}
+                    className={`fade-up ${delayClass}`}
+                    style={{
+                      background: "#FAFAF8",
+                      borderRadius: 22,
+                      padding: "28px 26px",
+                      transition: "transform 0.2s, box-shadow 0.2s",
+                      cursor: "default",
+                      boxShadow: "none",
+                    }}
                   >
                     <div
-                      className="inline-flex h-11 w-11 items-center justify-center rounded-[12px]"
-                      style={{ background: item.tint }}
+                      style={{
+                        width: 44,
+                        height: 44,
+                        borderRadius: 12,
+                        background: "#F5C842",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: 20,
+                        marginBottom: 18,
+                      }}
                     >
-                      <Icon className="h-5 w-5" style={{ color: item.iconColor }} />
+                      {card.icon}
                     </div>
-                    <h3 className="mt-5 text-[24px] font-semibold leading-[1.25]" style={{ color: "#171717" }}>
-                      {item.title}
-                    </h3>
-                    <p className="mt-3 text-[16px] leading-[1.75]" style={{ color: "#555555" }}>
-                      {item.text}
-                    </p>
-                  </article>
+                    <div style={{ fontSize: 17, fontWeight: 700, color: "#0D1B2A", marginBottom: 8 }}>
+                      {card.title}
+                    </div>
+                    <div style={{ fontSize: 14, color: "#4A5568", lineHeight: 1.6 }}>{card.desc}</div>
+                  </HoverCard>
                 );
               })}
             </div>
           </div>
         </section>
 
-        <section className="px-6 pb-20 md:px-10">
+        <section style={{ background: "#0D1B2A", padding: "80px 0" }}>
+          <div className="grid md:grid-cols-3" style={{ maxWidth: 1080, margin: "0 auto", padding: "0 24px", display: "grid", gridTemplateColumns: "repeat(3,1fr)" }}>
+            {[
+              ["2,400+", "Private grievances processed"],
+              ["31,000+", "Public petition signatures"],
+              ["40+", "Departments onboarded"],
+            ].map((stat, idx) => (
+              <div
+                key={stat[0]}
+                style={{
+                  textAlign: "center",
+                  padding: 20,
+                  borderRight: idx === 2 ? "none" : "1px solid rgba(255,255,255,0.08)",
+                }}
+              >
+                <div
+                  style={{
+                    fontFamily: "Fraunces, serif",
+                    fontSize: "clamp(40px,5vw,58px)",
+                    fontWeight: 800,
+                    color: "#F5C842",
+                    letterSpacing: "-0.03em",
+                    lineHeight: 1,
+                    marginBottom: 8,
+                  }}
+                >
+                  {stat[0]}
+                </div>
+                <div style={{ fontSize: 15, color: "rgba(255,255,255,0.55)", fontWeight: 400 }}>{stat[1]}</div>
+              </div>
+            ))}
+          </div>
           <div
-            className="mx-auto max-w-6xl rounded-[28px] bg-white px-7 py-10 md:px-12 md:py-14"
-            style={{ border: "1px solid #E8E1D5" }}
+            style={{
+              textAlign: "center",
+              marginTop: 32,
+              fontSize: 13,
+              color: "rgba(255,255,255,0.3)",
+              letterSpacing: "0.06em",
+              textTransform: "uppercase",
+            }}
           >
-            <h2
-              className="text-[34px] font-semibold leading-[1.18] md:text-[46px]"
-              style={{ color: "#171717", fontFamily: "Georgia, 'Times New Roman', serif" }}
+            All in Jalandhar · Growing every day
+          </div>
+        </section>
+
+        <section id="how" style={{ background: "#FAFAF8", padding: "110px 0" }}>
+          <div style={{ maxWidth: 1080, margin: "0 auto", padding: "0 24px", textAlign: "center", marginBottom: 64 }}>
+            <span
+              className="fade-up"
+              style={{
+                fontSize: 11,
+                fontWeight: 600,
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: "#8A9BAA",
+                marginBottom: 18,
+                display: "block",
+              }}
             >
-              One platform. Two focused civic channels.
+              PLATFORM CAPABILITIES
+            </span>
+            <h2
+              className="fade-up"
+              style={{
+                fontFamily: "Fraunces, serif",
+                fontSize: "clamp(32px,4vw,48px)",
+                fontWeight: 700,
+                color: "#0D1B2A",
+                lineHeight: 1.2,
+                letterSpacing: "-0.025em",
+                maxWidth: 600,
+                margin: "0 auto",
+              }}
+            >
+              Built for calm operations, trusted data, and visible civic outcomes.
             </h2>
+          </div>
 
-            <div className="mt-7 grid grid-cols-1 gap-5 md:grid-cols-2">
-              <div className="rounded-[18px] px-5 py-5" style={{ background: "#FAF8F2" }}>
-                <p className="text-[12px] font-semibold tracking-[0.1em]" style={{ color: "#6A6A6A" }}>
-                  PRIVATE CHANNEL
-                </p>
-                <p className="mt-2 text-[24px] font-semibold" style={{ color: "#171717" }}>
-                  Grievance to authority workflow
-                </p>
-                <p className="mt-2 text-[16px] leading-[1.75]" style={{ color: "#555555" }}>
-                  Citizens report securely, authorities respond with status and proof, and ownership stays clear.
-                </p>
-              </div>
+          <div className="grid md:grid-cols-3" style={{ maxWidth: 1080, margin: "0 auto", padding: "0 24px", display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20 }}>
+            {capabilityCards.map((card) => {
+              return (
+                <HoverCard
+                  key={card.num}
+                  className="fade-up"
+                  style={{
+                    background: "white",
+                    borderRadius: 22,
+                    padding: "30px 26px",
+                    boxShadow: "0 2px 12px rgba(0,0,0,0.05)",
+                    transition: "transform 0.25s, box-shadow 0.25s",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontFamily: "Fraunces, serif",
+                      fontSize: 13,
+                      fontWeight: 700,
+                      color: "#F5C842",
+                      marginBottom: 16,
+                      letterSpacing: "0.05em",
+                    }}
+                  >
+                    {card.num}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: 18,
+                      fontWeight: 700,
+                      color: "#0D1B2A",
+                      marginBottom: 10,
+                      lineHeight: 1.3,
+                    }}
+                  >
+                    {card.title}
+                  </div>
+                  <div style={{ fontSize: 14, color: "#4A5568", lineHeight: 1.65 }}>{card.desc}</div>
+                </HoverCard>
+              );
+            })}
+          </div>
+        </section>
 
-              <div className="rounded-[18px] px-5 py-5" style={{ background: "#EEF4FF" }}>
-                <p className="text-[12px] font-semibold tracking-[0.1em]" style={{ color: "#425A8B" }}>
-                  PUBLIC CHANNEL
-                </p>
-                <p className="mt-2 text-[24px] font-semibold" style={{ color: "#1B2D55" }}>
-                  Petition discovery and signatures
-                </p>
-                <p className="mt-2 text-[16px] leading-[1.75]" style={{ color: "#425A8B" }}>
-                  Community momentum happens through petitions. Citizens sign, track, and escalate together.
-                </p>
-              </div>
+        <section style={{ background: "white", padding: "100px 0" }}>
+          <div
+            className="flex"
+            style={{
+              maxWidth: 1080,
+              margin: "0 auto",
+              padding: "0 24px",
+              display: "flex",
+              gap: 72,
+              alignItems: "center",
+            }}
+          >
+            <div className="fade-up" style={{ flex: 1 }}>
+              <span
+                style={{
+                  fontSize: 11,
+                  fontWeight: 600,
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  color: "#8A9BAA",
+                  marginBottom: 18,
+                  display: "block",
+                }}
+              >
+                PRIVATE CHANNEL
+              </span>
+              <h2
+                style={{
+                  fontFamily: "Fraunces, serif",
+                  fontSize: "clamp(32px,4vw,48px)",
+                  fontWeight: 700,
+                  color: "#0D1B2A",
+                  lineHeight: 1.15,
+                  letterSpacing: "-0.025em",
+                  marginBottom: 20,
+                }}
+              >
+                Grievance to authority, securely.
+              </h2>
+              <p style={{ fontSize: 18, color: "#4A5568", lineHeight: 1.7, maxWidth: 440 }}>
+                Citizens report issues privately. Authorities respond with status updates and
+                resolution proof. Ownership stays clear from start to finish.
+              </p>
             </div>
 
-            <div className="mt-9 flex flex-wrap items-center gap-4">
-              <Link
-                href="/grievances/new"
-                className="inline-flex items-center justify-center rounded-[12px] px-6 py-3 text-[15px] font-medium text-white no-underline"
-                style={{ background: "#4A6FA9" }}
+            <div className="fade-up d2" style={{ flex: 1, display: "flex", justifyContent: "center" }}>
+              <div
+                style={{
+                  background: "white",
+                  borderRadius: 24,
+                  padding: 28,
+                  maxWidth: 400,
+                  width: "100%",
+                  boxShadow: "0 8px 40px rgba(0,0,0,0.10)",
+                  position: "relative",
+                }}
               >
+                <div
+                  style={{
+                    position: "absolute",
+                    top: -16,
+                    right: -16,
+                    background: "#F5C842",
+                    color: "#0D1B2A",
+                    borderRadius: 50,
+                    padding: "8px 16px",
+                    fontSize: 12,
+                    fontWeight: 700,
+                    boxShadow: "0 4px 16px rgba(0,0,0,0.15)",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  🔒 Private
+                </div>
+
+                <span
+                  style={{
+                    background: "#FFF8DC",
+                    borderRadius: 50,
+                    padding: "4px 12px",
+                    fontSize: 10,
+                    fontWeight: 700,
+                    letterSpacing: "0.12em",
+                    textTransform: "uppercase",
+                    color: "#92400E",
+                    display: "inline-block",
+                    marginBottom: 20,
+                  }}
+                >
+                  YOUR GRIEVANCE DESK
+                </span>
+
+                <div className="mock-input">No water supply - Model Town Phase 2</div>
+                <div className="mock-input" style={{ height: 56 }}>
+                  Locality has had no supply since Monday...
+                </div>
+
+                <div className="flex" style={{ display: "flex", gap: 8, marginBottom: 10 }}>
+                  <span
+                    style={{
+                      background: "#EAF4F0",
+                      color: "#1A5C4A",
+                      borderRadius: 50,
+                      padding: "4px 10px",
+                      fontSize: 11,
+                      fontWeight: 600,
+                    }}
+                  >
+                    Water Supply
+                  </span>
+                  <span
+                    style={{
+                      background: "#FFF8DC",
+                      color: "#92400E",
+                      borderRadius: 50,
+                      padding: "4px 10px",
+                      fontSize: 11,
+                      fontWeight: 600,
+                    }}
+                  >
+                    Jalandhar
+                  </span>
+                </div>
+
+                <button type="button" className="mock-btn">
+                  Submit Grievance →
+                </button>
+
+                <div style={{ height: 1, background: "rgba(0,0,0,0.07)", margin: "18px 0 10px" }} />
+
+                <div
+                  style={{
+                    fontSize: 11,
+                    color: "#8A9BAA",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.1em",
+                    marginBottom: 2,
+                  }}
+                >
+                  STATUS UPDATES
+                </div>
+
+                {[
+                  ["#22C55E", "Assigned to Water Supply Dept", "Assigned", "#DCFCE7", "#166534"],
+                  ["#F59E0B", "Site inspection scheduled", "In Progress", "#FEF3C7", "#92400E"],
+                  ["#3B82F6", "Resolution proof uploaded", "Resolved", "#DBEAFE", "#1E40AF"],
+                ].map((row) => (
+                  <div
+                    key={row[1]}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 10,
+                      padding: "12px 0",
+                      borderBottom: "1px solid rgba(0,0,0,0.07)",
+                    }}
+                  >
+                    <span
+                      style={{
+                        width: 8,
+                        height: 8,
+                        borderRadius: "50%",
+                        background: row[0],
+                        flexShrink: 0,
+                      }}
+                    />
+                    <span style={{ fontSize: 13, color: "#4A5568", flex: 1 }}>{row[1]}</span>
+                    <span
+                      style={{
+                        background: row[3],
+                        color: row[4],
+                        borderRadius: 50,
+                        padding: "3px 10px",
+                        fontSize: 11,
+                        fontWeight: 600,
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {row[2]}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section style={{ background: "#EAF4F0", padding: "100px 0" }}>
+          <div
+            className="flex"
+            style={{
+              maxWidth: 1080,
+              margin: "0 auto",
+              padding: "0 24px",
+              display: "flex",
+              gap: 72,
+              alignItems: "center",
+              flexDirection: "row-reverse",
+            }}
+          >
+            <div className="fade-up" style={{ flex: 1 }}>
+              <span
+                style={{
+                  fontSize: 11,
+                  fontWeight: 600,
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  color: "#8A9BAA",
+                  marginBottom: 18,
+                  display: "block",
+                }}
+              >
+                PUBLIC CHANNEL
+              </span>
+              <h2
+                style={{
+                  fontFamily: "Fraunces, serif",
+                  fontSize: "clamp(32px,4vw,48px)",
+                  fontWeight: 700,
+                  color: "#0D1B2A",
+                  lineHeight: 1.15,
+                  letterSpacing: "-0.025em",
+                  marginBottom: 20,
+                }}
+              >
+                Petition discovery and collective momentum.
+              </h2>
+              <p style={{ fontSize: 18, color: "#4A5568", lineHeight: 1.7, maxWidth: 440 }}>
+                Community pressure happens through petitions. Citizens discover, sign, and track
+                public campaigns. Momentum is transparent, visible, and measurable.
+              </p>
+            </div>
+
+            <div className="fade-up d2" style={{ flex: 1, display: "flex", justifyContent: "center" }}>
+              <div
+                style={{
+                  background: "white",
+                  borderRadius: 24,
+                  padding: 28,
+                  maxWidth: 400,
+                  width: "100%",
+                  boxShadow: "0 8px 40px rgba(0,0,0,0.10)",
+                  position: "relative",
+                }}
+              >
+                <div
+                  style={{
+                    position: "absolute",
+                    top: -16,
+                    right: -16,
+                    background: "#0D1B2A",
+                    color: "white",
+                    borderRadius: 50,
+                    padding: "8px 16px",
+                    fontSize: 12,
+                    fontWeight: 700,
+                    boxShadow: "0 4px 16px rgba(0,0,0,0.15)",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  📢 Public
+                </div>
+
+                <span
+                  style={{
+                    background: "#EAF4F0",
+                    borderRadius: 50,
+                    padding: "4px 12px",
+                    fontSize: 10,
+                    fontWeight: 700,
+                    letterSpacing: "0.12em",
+                    textTransform: "uppercase",
+                    color: "#1A5C4A",
+                    display: "inline-block",
+                    marginBottom: 20,
+                  }}
+                >
+                  ACTIVE PETITION
+                </span>
+
+                <div
+                  style={{
+                    fontSize: 16,
+                    fontWeight: 700,
+                    color: "#0D1B2A",
+                    marginBottom: 6,
+                    lineHeight: 1.35,
+                  }}
+                >
+                  Fix the GT Road potholes before monsoon
+                </div>
+                <div
+                  style={{
+                    fontSize: 13,
+                    color: "#4A5568",
+                    marginBottom: 16,
+                    lineHeight: 1.5,
+                  }}
+                >
+                  3 accidents reported this week. PWD must act before rains make this critical.
+                </div>
+
+                <div className="progress-bar">
+                  <div className="progress-fill" />
+                </div>
+
+                <div className="flex" style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: "#8A9BAA" }}>
+                  <span>6,740 signed</span>
+                  <span>Goal: 10,000</span>
+                </div>
+
+                <button type="button" className="mock-btn dark" style={{ marginTop: 16 }}>
+                  Sign this Petition →
+                </button>
+
+                <div style={{ height: 1, background: "rgba(0,0,0,0.07)", margin: "18px 0 12px" }} />
+
+                {signRows.map((row) => (
+                  <div
+                    key={row.initials}
+                    style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}
+                  >
+                    <div
+                      style={{
+                        width: 32,
+                        height: 32,
+                        borderRadius: "50%",
+                        fontSize: 12,
+                        fontWeight: 700,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        background: row.bg,
+                        color: row.color,
+                      }}
+                    >
+                      {row.initials}
+                    </div>
+                    <div style={{ fontSize: 13, color: "#4A5568" }}>
+                      {row.name} signed · {row.time}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section style={{ background: "#0D1B2A", padding: "110px 24px", textAlign: "center" }}>
+          <div className="fade-up">
+            <span
+              style={{
+                fontSize: 11,
+                fontWeight: 600,
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: "rgba(255,255,255,0.35)",
+                marginBottom: 18,
+                display: "block",
+              }}
+            >
+              MODERN CIVIC OPERATIONS
+            </span>
+            <h2
+              style={{
+                fontFamily: "Fraunces, serif",
+                fontSize: "clamp(32px,4vw,50px)",
+                fontWeight: 700,
+                color: "white",
+                lineHeight: 1.2,
+                letterSpacing: "-0.025em",
+                maxWidth: 780,
+                margin: "0 auto 20px",
+              }}
+            >
+              Clean civic operations for citizens, departments, and modern cities.
+            </h2>
+            <p
+              style={{
+                fontSize: 17,
+                lineHeight: 1.7,
+                color: "rgba(255,255,255,0.5)",
+                maxWidth: 520,
+                margin: "0 auto 44px",
+              }}
+            >
+              Start with a grievance. Escalate with a petition. Every step is tracked, every
+              authority accountable.
+            </p>
+            <div className="flex" style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+              <Link href="/grievances/new" className="btn-yellow">
                 Start with a Grievance
               </Link>
-              <Link
-                href="/petition"
-                className="inline-flex items-center justify-center rounded-[12px] px-6 py-3 text-[15px] font-medium no-underline"
-                style={{ border: "1.5px solid #4A6FA9", color: "#4A6FA9", background: "transparent" }}
-              >
+              <Link href="/grievances" className="btn-outline-white">
                 Browse Public Petitions
               </Link>
             </div>
@@ -251,20 +841,41 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="px-8 py-10 text-center" style={{ background: "#141414" }}>
-        <Image
-          src="/logo2.png"
-          alt="NyaySetu"
-          width={190}
-          height={46}
-          className="mx-auto h-[46px] w-[190px] object-contain"
-        />
-        <p className="mt-2 text-[14px]" style={{ color: "#B7B7B7" }}>
-          Clean civic operations for citizens, departments, and modern city governance.
-        </p>
-        <p className="mt-4 text-[12px]" style={{ color: "#8A8A8A" }}>
-          © 2026 NyaySetu
-        </p>
+      <footer
+        className="flex"
+        style={{
+          background: "#0D1B2A",
+          borderTop: "1px solid rgba(255,255,255,0.06)",
+          padding: "32px 40px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          flexWrap: "wrap",
+          gap: 12,
+        }}
+      >
+        <div style={{ fontFamily: "Fraunces, serif", fontSize: 18, fontWeight: 700, color: "white" }}>
+          Nyay<span style={{ color: "#F5C842" }}>Setu</span>
+        </div>
+
+        <div className="flex" style={{ display: "flex", gap: 24 }}>
+          {[
+            ["Privacy", "#"],
+            ["Terms", "#"],
+            ["Help", "#"],
+            ["About", "#"],
+          ].map((item) => (
+            <Link
+              key={item[0]}
+              href={item[1]}
+              style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", textDecoration: "none" }}
+            >
+              {item[0]}
+            </Link>
+          ))}
+        </div>
+
+        <div style={{ fontSize: 12, color: "rgba(255,255,255,0.25)" }}>© 2025 NyaySetu · Jalandhar</div>
       </footer>
     </div>
   );
